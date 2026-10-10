@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "generated_utc": "2026-10-10T12:49:31.005000Z",
+  "latest_closed_5m_end_utc": "2026-10-10T12:45:00Z",
+  "markets": {
+    "binance": {
+      "15m": {
+        "coverage": "complete",
+        "intervals": 3,
+        "expected": 3,
+        "buy_usd": 2760498.78,
+        "sell_usd": 2017113.22,
+        "cvd_usd": 743385.56,
+        "taker_ratio": 1.36854
+      },
+      "60m": {
+        "coverage": "complete",
+        "intervals": 12,
+        "expected": 12,
+        "buy_usd": 11634267.44,
+        "sell_usd": 13084186.53,
+        "cvd_usd": -1449919.09,
+        "taker_ratio": 0.88919
+      }
+    },
+    "coinbase": {
+      "15m": {
+        "coverage": "complete",
+        "intervals": 3,
+        "expected": 3,
+        "buy_usd": 410811.91,
+        "sell_usd": 164044.42,
+        "cvd_usd": 246767.49,
+        "taker_ratio": 2.50427
+      },
+      "60m": {
+        "coverage": "complete",
+        "intervals": 12,
+        "expected": 12,
+        "buy_usd": 1722472.63,
+        "sell_usd": 1912002.73,
+        "cvd_usd": -189530.1,
+        "taker_ratio": 0.90087
+      }
+    }
+  },
+  "last_intervals": [
+    {
+      "exchange": "binance",
+      "start_utc": "2026-10-10T12:40:00Z",
+      "end_utc": "2026-10-10T12:45:00Z",
+      "buy_usd": 1907525.24,
+      "sell_usd": 293393.7,
+      "cvd_usd": 1614131.54,
+      "taker_ratio": 6.50159,
+      "trades": 1643,
+      "coverage": "complete",
+      "reason": "1m closed candle taker quote volumes"
+    },
+    {
+      "exchange": "coinbase",
+      "start_utc": "2026-10-10T12:40:00Z",
+      "end_utc": "2026-10-10T12:45:00Z",
+      "buy_usd": 253974.44,
+      "sell_usd": 49492.73,
+      "cvd_usd": 204481.71,
+      "taker_ratio": 5.13155,
+      "trades": 463,
+      "coverage": "complete",
+      "reason": ""
+    }
+  ],
+  "warnings": [
+    "Coinbase side is maker side and must be inverted for taker direction.",
+    "Incomplete windows must not be used for directional signals.",
+    "Binance BTCUSDT quote is USDT, approximated as USD for comparison."
+  ],
+  "errors": {}
+}
