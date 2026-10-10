@@ -13,6 +13,7 @@ def get(url,params=None):
             if attempt==3:raise
             time.sleep(2**attempt)
 def utc(ms):return datetime.fromtimestamp(ms/1000,timezone.utc).isoformat().replace('+00:00','Z')
+def timestamp_ms(value):return int(datetime.fromisoformat(value.replace('Z','+00:00')).timestamp()*1000)
 def save(rows):
     path=DATA/'history.csv'; fields=['exchange','start_utc','end_utc','buy_usd','sell_usd','cvd_usd','taker_ratio','trades','coverage','reason']
     old={}
@@ -23,7 +24,7 @@ def save(rows):
         key=(r['exchange'],r['start_utc'])
         if key in old and old[key]['coverage']=='complete' and r['coverage']!='complete':continue
         old[key]=r
-    values=sorted(old.values(),key=lambda x:(x['start_utc'],x['exchange']))[-12000:]
+    values=sorted(old.values(),key=lambda x:(x['start_utc'],x['exchange']))
     with path.open('w',newline='') as f:
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(values)
 def entry(exchange,start,end,buy,sell,n,coverage,reason=''):
@@ -84,9 +85,11 @@ def windows_for(history,end):
     for name in ('binance','coinbase'):
         windows[name]={}
         for minutes in (15,60):
-            expected={utc(t) for t in range(end-minutes*60000,end,300000)}
-            subset=[r for r in history if r['exchange']==name and r['coverage']=='complete' and r['start_utc'] in expected]
-            ok={r['start_utc'] for r in subset}==expected and len(subset)==minutes//5 and all(int(datetime.fromisoformat(r['end_utc'].replace('Z','+00:00')).timestamp()*1000)==int(datetime.fromisoformat(r['start_utc'].replace('Z','+00:00')).timestamp()*1000)+300000 for r in subset)
+            window_start=end-minutes*60000
+            # Closed five-minute history starts belong to [window_start, end).
+            subset=[r for r in history if r['exchange']==name and r['coverage']=='complete' and window_start<=timestamp_ms(r['start_utc'])<end]
+            expected=set(range(window_start,end,300000))
+            ok={timestamp_ms(r['start_utc']) for r in subset}==expected and len(subset)==minutes//5 and all(timestamp_ms(r['end_utc'])==timestamp_ms(r['start_utc'])+300000 for r in subset)
             buy=sum(float(r['buy_usd']) for r in subset) if ok else None
             sell=sum(float(r['sell_usd']) for r in subset) if ok else None
             windows[name][str(minutes)+'m']={'coverage':'complete' if ok else 'incomplete','intervals':len(subset),'expected':minutes//5,'buy_usd':round(buy,2) if ok else None,'sell_usd':round(sell,2) if ok else None,'cvd_usd':round(buy-sell,2) if ok else None,'taker_ratio':round(buy/sell,5) if ok and sell else None}

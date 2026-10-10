@@ -1,3 +1,6 @@
+import csv
+from pathlib import Path
+import tempfile
 import unittest
 from unittest.mock import patch
 import collector
@@ -38,6 +41,57 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(windows['coinbase']['60m']['coverage'], 'incomplete')
         self.assertIsNone(windows['coinbase']['60m']['cvd_usd'])
         self.assertEqual(windows['binance']['60m']['cvd_usd'], 600)
+
+    def test_windows_include_start_and_exclude_end_and_older_rows(self):
+        end=7200000
+        for minutes in (15,60):
+            with self.subTest(minutes=minutes):
+                start=end-minutes*60000
+                rows=[collector.entry('binance',t,t+300000,100,50,1,'complete') for t in range(start,end,300000)]
+                rows.extend(collector.entry('binance',t,t+300000,1000000,1,1,'complete') for t in (start-300000,end,end+300000))
+                window=collector.windows_for(rows,end)['binance'][str(minutes)+'m']
+                self.assertEqual(window['coverage'],'complete')
+                self.assertEqual(window['intervals'],minutes//5)
+                self.assertEqual(window['buy_usd'],100*(minutes//5))
+                self.assertEqual(window['cvd_usd'],50*(minutes//5))
+
+    def test_windows_recognize_equivalent_utc_timestamp_formats(self):
+        rows=[collector.entry('coinbase',t,t+300000,100,50,1,'complete') for t in range(0,3600000,300000)]
+        for row in rows:
+            row['start_utc']=row['start_utc'].replace('Z','+00:00')
+            row['end_utc']=row['end_utc'].replace('Z','+00:00')
+        windows=collector.windows_for(rows,3600000)['coinbase']
+        self.assertEqual(windows['15m']['coverage'],'complete')
+        self.assertEqual(windows['60m']['coverage'],'complete')
+
+    def test_windows_reject_interval_with_wrong_duration(self):
+        rows=[collector.entry('binance',t,t+300000,100,50,1,'complete') for t in range(0,900000,300000)]
+        rows[-1]['end_utc']=collector.utc(1200000)
+        window=collector.windows_for(rows,900000)['binance']['15m']
+        self.assertEqual(window['coverage'],'incomplete')
+        self.assertIsNone(window['cvd_usd'])
+
+    def test_save_retains_history_beyond_12000_rows(self):
+        rows=[collector.entry('binance',t,t+300000,100,50,1,'complete') for t in range(0,12001*300000,300000)]
+        with tempfile.TemporaryDirectory() as directory, patch('collector.DATA',Path(directory)):
+            collector.save(rows)
+            collector.save([collector.entry('binance',12001*300000,12002*300000,100,50,1,'complete')])
+            with (Path(directory)/'history.csv').open(newline='') as handle:
+                saved=list(csv.DictReader(handle))
+        self.assertEqual(len(saved),12002)
+        self.assertEqual(saved[0]['start_utc'],rows[0]['start_utc'])
+        self.assertTrue({r['start_utc'] for r in rows}<={r['start_utc'] for r in saved})
+
+    def test_save_keeps_complete_history_when_backfill_fails(self):
+        good=collector.entry('binance',0,300000,100,50,1,'complete')
+        failed=collector.entry('binance',0,300000,0,0,0,'unavailable','API error')
+        with tempfile.TemporaryDirectory() as directory, patch('collector.DATA',Path(directory)):
+            collector.save([good])
+            collector.save([failed])
+            with (Path(directory)/'history.csv').open(newline='') as handle:
+                saved=list(csv.DictReader(handle))
+        self.assertEqual(saved[0]['coverage'],'complete')
+        self.assertEqual(float(saved[0]['cvd_usd']),50)
 
 
 if __name__ == '__main__':
