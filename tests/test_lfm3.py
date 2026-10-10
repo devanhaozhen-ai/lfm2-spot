@@ -108,7 +108,7 @@ class LFM3Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             d=Path(root);self.fixture(d)
             rows=lfm3.read_csv(d/'history.csv')
-            rows[0]['cvd_usd']='-19.99'
+            next(r for r in rows if r['exchange']=='coinbase')['cvd_usd']='-19.99'
             with (d/'history.csv').open('w',newline='') as h:
                 w=csv.DictWriter(h,fieldnames=collector.FIELDS);w.writeheader();w.writerows(rows)
             before=(d/'history.csv').read_bytes()
@@ -117,6 +117,7 @@ class LFM3Tests(unittest.TestCase):
             self.assertEqual(before,(d/'history.csv').read_bytes())
             rows=lfm3.read_csv(d/'cvd_history.csv')
             legacy=next(r for r in rows if r['exchange']=='coinbase' and r['coverage']=='complete')
+            self.assertEqual(legacy['cvd_usd'],'-19.99')
             legacy['cvd_usd']='-19.97'
             with (d/'cvd_history.csv').open('w',newline='') as h:
                 w=csv.DictWriter(h,fieldnames=lfm3.CVD_FIELDS);w.writeheader();w.writerows(rows)
