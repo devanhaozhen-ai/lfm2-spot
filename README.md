@@ -8,7 +8,7 @@ Free GitHub Actions 5-minute REST-based BTC spot taker-flow collector. Python st
 
 手机查看运行状态：https://github.com/devanhaozhen-ai/lfm2-spot/actions
 
-自动任务配置在 `.github/workflows/collect.yml`，每 5 分钟触发一次。GitHub 调度可能延迟；以 JSON 的 `generated_utc`、`latest_closed_5m_end_utc` 和 `coverage` 为准。
+自动任务配置在 `.github/workflows/collect.yml`，UTC cron 为 `2-59/5 * * * *`，请求每 5 分钟运行。GitHub 调度可能延迟或漏跑；以 JSON 的 `generated_utc`、`latest_closed_5m_end_utc` 和 `coverage` 为准，不能把手动成功当成定时成功。
 
 ## Deployment
 1. Create a **public** GitHub repository, e.g. `lfm2-spot`.
@@ -44,7 +44,7 @@ Existing `markets.binance`, `markets.coinbase`, `15m`, `60m`, `coverage`, `cvd_u
 
 The collector uses Decimal notionals, validates closed candle boundaries, checks Coinbase cursor progress, duplicate conflicts and trade-ID continuity, and requires the initial trade snapshot to cover the interval end. Gaps, truncation or stale snapshots are incomplete; partial metrics are null. The Coinbase trade-ID continuity check is conservative: a gap means coverage is unverified, rather than proving a particular trade was lost.
 
-Successful historical intervals are immutable. CSV and JSON writes replace their prior files atomically, and there is no history row-count cutoff. Missing runs are backfilled from the last successful timestamp for up to six hours; Coinbase retains the bounded 80-page scan and reports incomplete if it cannot cover the required range. Network calls use 20-second timeouts, four attempts, Retry-After handling, structured exception logs, and a total seven-minute network deadline inside the ten-minute Actions job limit.
+Successful historical intervals are immutable. CSV and JSON writes replace their prior files atomically, and there is no history row-count cutoff. Missing runs and internal gaps are scanned within the most recent six hours, rather than trusting only the last successful row. Interval keys use numeric timestamps to avoid duplicate rows from equivalent UTC formats. `history_quality` reports all known missing slots since each exchange's first saved interval, including gaps outside the six-hour automatic backfill horizon; unresolved gaps block monitoring. Coinbase retains the bounded 80-page scan and reports incomplete if it cannot cover the required range. Network calls use 20-second timeouts, four attempts, Retry-After handling, structured exception logs, and a total seven-minute network deadline inside the ten-minute Actions job limit.
 
 ### Freshness must be evaluated when reading
 
@@ -53,3 +53,13 @@ Successful historical intervals are immutable. CSV and JSON writes replace their
 **A static raw JSON cannot change after a stopped workflow.** Its quality fields are valid as of `quality_evaluated_utc`, not indefinitely. Consumers, including ChatGPT monitoring tasks, must recalculate age against the current UTC time on every read and reject stale observations. Use `python check_latest.py --require-usable` to fetch the public JSON and return refreshed quality fields, or import `quality.refresh_quality(data)`. This preserves the raw URL and existing fields without pretending that a stopped scheduler can update its own status.
 
 GitHub's schedule is enabled every five minutes but is best-effort; queued runs can be delayed or dropped. The configured equivalent cron is `2-59/5 * * * *`. No minute-exact delivery is promised. If required freshness is not met, block directional monitoring, backfill on the next run, and inspect the Actions page. This repository collects spot flow only and does not itself establish derivatives short squeezes or submit orders.
+
+## Independent health check
+
+`.github/workflows/health.yml` runs separately with UTC `4-59/5 * * * *`, its own concurrency group, and a three-minute timeout. It also checks immediately after a collector workflow completes. A stopped or hung collector does not block this job. `healthcheck.py` reads the public endpoint, re-evaluates both timestamps against current UTC, checks source errors, missing data and the latest completed collector result, and writes only `data/health.json`. Failed checks publish their report and fail the workflow so GitHub's configured Actions notifications can signal the problem. Notification delivery depends on account settings and has not been independently verified.
+
+Public health report: https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/health.json
+
+The health report is also static: consumers must check its `checked_utc` age and recalculate market ages. Both workflows share GitHub's scheduler, so this does not detect a total GitHub scheduling outage by itself. A truly external scheduler/monitor is needed for that failure mode. `python healthcheck.py --skip-actions-check --output /tmp/lfm2-health.json` can run on another free platform without a GitHub token; its nonzero exit status and `monitoring_eligible: false` are the alarm contract.
+
+Free alternatives to evaluate if actual `schedule` events do not appear: Cloudflare Workers Free Cron can host an external freshness check; cron-job.org offers free periodic HTTP requests. An external trigger for the private-permission Actions dispatch API requires secure account authorization and a server-side credential; never put credentials in this repository or in public URLs. External account connection and alert delivery must be verified before claiming an independent unattended service is operational.

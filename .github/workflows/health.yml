@@ -1,0 +1,45 @@
+name: LFM2 independent health
+on:
+  schedule:
+    - cron: '4-59/5 * * * *'
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['LFM2 spot collection']
+    types: [completed]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: spot-health
+  cancel-in-progress: false
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check public data and collector independently
+        id: check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python healthcheck.py
+      - name: Publish health report even on failed checks
+        if: always()
+        run: |
+          test -f data/health.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/health.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update independent LFM2 health report'
+            for attempt in 1 2 3; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then exit 0; fi
+            done
+            exit 1
+          fi

@@ -30,8 +30,11 @@ jobs:
           git add data/history.csv data/latest.json
           if ! git diff --cached --quiet; then
             git commit -m 'Update LFM2 spot market data'
-            git pull --rebase origin "$GITHUB_REF_NAME"
-            git push origin HEAD:"$GITHUB_REF_NAME"
+            for attempt in 1 2 3; do
+              git pull --rebase origin "$GITHUB_REF_NAME"
+              if git push origin HEAD:"$GITHUB_REF_NAME"; then exit 0; fi
+            done
+            exit 1
           fi
       - name: Verify API coverage and metrics
         run: python validate.py --require-complete

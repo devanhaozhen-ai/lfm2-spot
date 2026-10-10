@@ -97,9 +97,9 @@ def save(rows):
     if path.exists():
         with path.open(newline='') as handle:
             for row in csv.DictReader(handle):
-                old[(row['exchange'], row['start_utc'])] = row
+                old[(row['exchange'], timestamp_ms(row['start_utc']))] = row
     for row in rows:
-        key = (row['exchange'], row['start_utc'])
+        key = (row['exchange'], timestamp_ms(row['start_utc']))
         # Keep successful source observations immutable, including on failed refetches.
         if key in old and old[key]['coverage'] == 'complete':
             continue
@@ -240,15 +240,41 @@ def windows_for(history, end):
 
 
 def backfill_start(end):
-    latest = {}
+    starts = {exchange: set() for exchange in ('binance', 'coinbase')}
+    first = {}
     if (DATA / 'history.csv').exists():
         with (DATA / 'history.csv').open(newline='') as handle:
             for row in csv.DictReader(handle):
+                exchange = row['exchange']
+                moment = timestamp_ms(row['start_utc'])
+                first[exchange] = min(first.get(exchange, moment), moment)
                 if row['coverage'] == 'complete':
-                    latest[row['exchange']] = max(latest.get(row['exchange'], 0), timestamp_ms(row['end_utc']))
-    last_good = min(latest.get(exchange, end - 3600000) for exchange in ('binance', 'coinbase'))
-    # Catch up missed runs for up to six hours without deleting older records.
-    return max(end - 6 * 3600000, min(end - 3600000, last_good))
+                    starts[exchange].add(moment)
+    lower = end - 6 * 3600000
+    requested = end - 3600000
+    # Look for holes as well as a missing tail. A later good row must not hide a gap.
+    for exchange in starts:
+        known_start = max(lower, first.get(exchange, requested))
+        for moment in range(known_start, end, FIVE_MINUTES):
+            if moment not in starts[exchange]:
+                requested = min(requested, moment)
+                break
+    return max(lower, requested)
+
+
+def history_quality(history, end):
+    result = {}
+    for exchange in ('binance', 'coinbase'):
+        rows = [row for row in history if row['exchange'] == exchange]
+        starts = {timestamp_ms(row['start_utc']) for row in rows if row['coverage'] == 'complete'}
+        first = min((timestamp_ms(row['start_utc']) for row in rows), default=end)
+        missing = [slot for slot in range(first, end, FIVE_MINUTES) if slot not in starts]
+        result[exchange] = {'coverage': 'incomplete' if missing else 'complete',
+                            'missing_count': len(missing),
+                            'missing_intervals': [utc(slot) for slot in missing[:100]],
+                            'missing_list_truncated': len(missing) > 100,
+                            'outside_backfill_horizon': sum(slot < end - 6 * 3600000 for slot in missing)}
+    return result
 
 
 def main():
@@ -278,6 +304,7 @@ def main():
     generated = int(time.time() * 1000)
     out = {'schema_version': '1.0', 'generated_utc': utc(generated), 'latest_closed_5m_end_utc': utc(end), 'markets': windows_for(history, end), 'last_intervals': latest_rows, 'warnings': ['Coinbase side is maker side and must be inverted for taker direction.', 'Incomplete or stale data must not be used for directional signals.', 'Binance legacy *_usd fields are USDT amounts, not converted USD. Do not add Binance and Coinbase notionals without an exchange rate.'], 'errors': errors, 'market_units': {'binance': {'symbol': 'BTCUSDT', 'quote_currency': 'USDT', 'legacy_usd_fields_are_approximate': True, 'conversion_to_usd_applied': False}, 'coinbase': {'symbol': 'BTC-USD', 'quote_currency': 'USD', 'legacy_usd_fields_are_approximate': False, 'conversion_to_usd_applied': False}}, 'cross_exchange_notional_aggregation': 'disabled', 'collection_started_utc': utc(started), 'backfill_start_utc': utc(start), 'source_audit': FETCH_STATS}
     from quality import refresh_quality
+    out['history_quality'] = history_quality(history, end)
     out = refresh_quality(out, datetime.fromtimestamp(generated / 1000, timezone.utc))
     atomic_write(DATA / 'latest.json', lambda handle: handle.write(json.dumps(out, ensure_ascii=False, indent=2, allow_nan=False) + '\n'))
     log('collection_complete', end=utc(end), quality_status=out['quality_status'], missing_intervals=out['missing_intervals'], source_audit=FETCH_STATS, errors=errors)
