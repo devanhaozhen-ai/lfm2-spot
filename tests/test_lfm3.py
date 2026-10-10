@@ -104,6 +104,24 @@ class LFM3Tests(unittest.TestCase):
             (d/'lfm3_latest.json').write_text(json.dumps(tampered))
             with self.assertRaisesRegex(ValueError,'RSI14'): validate(d)
 
+    def test_legacy_cent_rounding_is_preserved_and_larger_errors_rejected(self):
+        with tempfile.TemporaryDirectory() as root:
+            d=Path(root);self.fixture(d)
+            rows=lfm3.read_csv(d/'history.csv')
+            rows[0]['cvd_usd']='-19.99'
+            with (d/'history.csv').open('w',newline='') as h:
+                w=csv.DictWriter(h,fieldnames=collector.FIELDS);w.writeheader();w.writerows(rows)
+            before=(d/'history.csv').read_bytes()
+            with patch('lfm3.fetch_prices',side_effect=self.prices): lfm3.collect(d)
+            self.assertEqual(validate(d)['status'],'PASS')
+            self.assertEqual(before,(d/'history.csv').read_bytes())
+            rows=lfm3.read_csv(d/'cvd_history.csv')
+            legacy=next(r for r in rows if r['exchange']=='coinbase' and r['coverage']=='complete')
+            legacy['cvd_usd']='-19.97'
+            with (d/'cvd_history.csv').open('w',newline='') as h:
+                w=csv.DictWriter(h,fieldnames=lfm3.CVD_FIELDS);w.writeheader();w.writerows(rows)
+            with self.assertRaisesRegex(ValueError,'CVD arithmetic'): validate(d)
+
     def test_partial_exchange_failure_retains_other_valid_data(self):
         with tempfile.TemporaryDirectory() as root:
             d=Path(root);self.fixture(d)

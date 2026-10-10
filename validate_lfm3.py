@@ -124,7 +124,8 @@ def validate(directory, require_usable=True, clock=None):
         cvd_index[key] = row
         if row['coverage'] == 'complete':
             buy, sell = Decimal(row['buy_usd']), Decimal(row['sell_usd'])
-            if not buy.is_finite() or not sell.is_finite() or min(buy, sell) < 0 or abs(Decimal(row['cvd_usd']) - (buy-sell)) > Decimal('.001') or not row['source']:
+            tolerance = Decimal('.011') if row.get('rounding_policy') == 'legacy_observation_retained_max_0.01_quote_rounding' else Decimal('.001')
+            if not buy.is_finite() or not sell.is_finite() or min(buy, sell) < 0 or abs(Decimal(row['cvd_usd']) - (buy-sell)) > tolerance or not row['source']:
                 raise ValueError('CVD arithmetic/source invalid')
             if sell:
                 close(row['taker_ratio'], buy/sell, 'CVD ratio', tolerance=.00004)

@@ -15,7 +15,7 @@ FRAMES = {'5m': 300000, '1h': 3600000}
 PRICE_FIELDS = ['exchange', 'symbol', 'quote_currency', 'timeframe', 'start_utc', 'end_utc',
                 'open', 'high', 'low', 'close', 'volume_btc', 'quote_volume',
                 'taker_buy_quote', 'trades', 'coverage', 'source']
-CVD_FIELDS = collector.FIELDS + ['symbol', 'quote_currency', 'source']
+CVD_FIELDS = collector.FIELDS + ['symbol', 'quote_currency', 'source', 'rounding_policy']
 SOURCES = {'binance': 'https://data-api.binance.vision/api/v3/klines',
            'coinbase': 'https://api.exchange.coinbase.com/products/BTC-USD/candles'}
 UNITS = {'binance': ('BTCUSDT', 'USDT'), 'coinbase': ('BTC-USD', 'USD')}
@@ -200,7 +200,7 @@ def build_cvd(prices, old_flow, end):
         total, buy = Decimal(str(p['quote_volume'])), Decimal(str(p['taker_buy_quote']))
         row = collector.entry('binance', start, start + FRAMES['5m'], buy, total - buy,
                               int(p['trades']), 'complete', '5m closed candle taker quote volumes')
-        row.update(symbol='BTCUSDT', quote_currency='USDT', source=SOURCES['binance'] + '#fields-7-and-10')
+        row.update(symbol='BTCUSDT', quote_currency='USDT', source=SOURCES['binance'] + '#fields-7-and-10', rounding_policy='rounded_buy_minus_rounded_sell')
         rows.append(row)
     for start in range(end - 7 * DAY, end, FRAMES['5m']):
         old = measured.get(('coinbase', start))
@@ -209,6 +209,7 @@ def build_cvd(prices, old_flow, end):
         if not old:
             row['trades'] = None
         row.update(symbol='BTC-USD', quote_currency='USD', source='https://api.exchange.coinbase.com/products/BTC-USD/trades' if old else '')
+        row['rounding_policy'] = 'legacy_observation_retained_max_0.01_quote_rounding' if old else ''
         rows.append(row)
     # Preserve measured LFM2 observations, including those older than seven days.
     for old in old_flow:
@@ -217,7 +218,8 @@ def build_cvd(prices, old_flow, end):
         row = dict(old)
         symbol, currency = UNITS[old['exchange']]
         row.update(symbol=symbol, quote_currency=currency,
-                   source='https://api.exchange.coinbase.com/products/BTC-USD/trades' if old['exchange'] == 'coinbase' else SOURCES['binance'] + '#1m-fields-7-and-10')
+                   source='https://api.exchange.coinbase.com/products/BTC-USD/trades' if old['exchange'] == 'coinbase' else SOURCES['binance'] + '#1m-fields-7-and-10',
+                   rounding_policy='legacy_observation_retained_max_0.01_quote_rounding')
         rows.append(row)
     return rows
 
@@ -310,6 +312,7 @@ def collect(data_dir=None):
                warnings=['USDT and USD are separate quote currencies; no conversion or cross-exchange addition.',
                          'Coinbase candles do not identify taker direction. Unretrieved historical CVD is unavailable, never inferred.',
                          'Static quality must be recalculated using current UTC; backfill is not proof of freshness.',
+                         'Legacy historical observations remain unchanged; independently rounded amounts may differ by 0.01 quote unit, annotated per CVD row.',
                          '1h candle freshness uses lag from the most recent expected hourly closure, not raw hourly candle age.'],
                history_files={'price': 'data/price_history.csv', 'cvd': 'data/cvd_history.csv', 'lfm2': 'data/history.csv'},
                source_audit=copy.deepcopy(collector.FETCH_STATS), cross_exchange_notional_aggregation='disabled')

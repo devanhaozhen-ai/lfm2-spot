@@ -11,6 +11,8 @@
 
 Binance BTCUSDT 的金额为 USDT；Coinbase BTC-USD 为 USD。没有汇率换算，禁止直接相加。旧 `*_usd` 字段原名保留，实际币种通过 quote_currency 说明。
 
+部分旧历史以原始买入、卖出、CVD分别四舍五入到分，三列算术可能相差0.01计价单位。保留这些原观察值，在新CSV逐行注明 rounding_policy；仅这类明确的旧记录允许一分舍入差，新建K线CVD必须由已舍入买入减卖出。超过容差仍失败，既不改旧历史也不扩大源数据复算容差。
+
 ## 时间、指标与历史
 
 所有区间为 `[start_utc, end_utc)`，输出 ISO 8601 UTC。latest_closed_candle_utc 是五分钟闭合边界；每个周期各有 start/end 和最新 K线。七天分别为2016根5m、168根1h，小时边界向下取整。
