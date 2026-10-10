@@ -30,7 +30,7 @@ class CollectorTests(unittest.TestCase):
         candles = [[t, 0, 0, 0, 0, 0, t+59999, '100', 4, 0, '60', 0] for t in range(0, 600000, 60000) if t != 60000]
         with patch('collector.get', return_value=(candles, {})):
             rows = collector.binance(0, 600000)
-        self.assertEqual([r['coverage'] for r in rows], ['unavailable', 'complete'])
+        self.assertEqual([r['coverage'] for r in rows], ['incomplete', 'complete'])
         self.assertEqual(rows[1]['cvd_usd'], 100)
 
     def test_one_gap_keeps_hour_incomplete_and_preserves_recent_15m(self):

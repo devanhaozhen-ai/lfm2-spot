@@ -1,7 +1,7 @@
 name: LFM2 spot collection
 on:
   schedule:
-    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+    - cron: '2-59/5 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -35,3 +35,6 @@ jobs:
           fi
       - name: Verify API coverage and metrics
         run: python validate.py --require-complete
+      - name: Evaluate freshness at read time
+        if: always()
+        run: python check_latest.py --path data/latest.json --require-usable

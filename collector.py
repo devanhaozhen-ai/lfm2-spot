@@ -1,116 +1,287 @@
-import csv,json,math,time,urllib.request,urllib.parse
-from datetime import datetime,timezone
+"""Collect public BTC spot taker flow; retain every previously valid interval."""
+import csv
+import json
+import os
+import sys
+import tempfile
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from datetime import datetime, timezone
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
-ROOT=Path(__file__).parent; DATA=ROOT/'data';DATA.mkdir(exist_ok=True)
-HEAD={'User-Agent':'LFM2-Spot-Monitor/1.0','Accept':'application/json'}
-def get(url,params=None):
-    if params:url+='?'+urllib.parse.urlencode(params)
+ROOT = Path(__file__).parent
+DATA = ROOT / 'data'
+DATA.mkdir(exist_ok=True)
+HEAD = {'User-Agent': 'LFM2-Spot-Monitor/2.0', 'Accept': 'application/json'}
+FETCH_DEADLINE = None
+FETCH_STATS = {}
+FIVE_MINUTES = 300000
+FIELDS = ['exchange', 'start_utc', 'end_utc', 'buy_usd', 'sell_usd', 'cvd_usd', 'taker_ratio', 'trades', 'coverage', 'reason']
+
+
+def utc(ms):
+    return datetime.fromtimestamp(ms / 1000, timezone.utc).isoformat().replace('+00:00', 'Z')
+
+
+def timestamp_ms(value):
+    parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+    if parsed.tzinfo is None:
+        raise ValueError('timestamp must include a UTC offset')
+    return int(parsed.timestamp() * 1000)
+
+
+def log(event, **values):
+    print(json.dumps({'utc': utc(int(time.time() * 1000)), 'event': event, **values}, allow_nan=False), file=sys.stderr, flush=True)
+
+
+def remaining_seconds():
+    if FETCH_DEADLINE is None:
+        return 20
+    remaining = FETCH_DEADLINE - time.monotonic()
+    if remaining <= 0:
+        raise TimeoutError('collector network deadline reached')
+    return min(20, remaining)
+
+
+def get(url, params=None):
+    if params:
+        url += '?' + urllib.parse.urlencode(params)
+    host = urllib.parse.urlsplit(url).hostname
+    stats = FETCH_STATS.setdefault(host, {'requests': 0, 'retries': 0})
     for attempt in range(4):
+        stats['requests'] += 1
         try:
-            with urllib.request.urlopen(urllib.request.Request(url,headers=HEAD),timeout=20) as r:return json.load(r),{k.lower():v for k,v in r.headers.items()}
-        except Exception:
-            if attempt==3:raise
-            time.sleep(2**attempt)
-def utc(ms):return datetime.fromtimestamp(ms/1000,timezone.utc).isoformat().replace('+00:00','Z')
-def timestamp_ms(value):return int(datetime.fromisoformat(value.replace('Z','+00:00')).timestamp()*1000)
+            with urllib.request.urlopen(urllib.request.Request(url, headers=HEAD), timeout=remaining_seconds()) as response:
+                return json.load(response), {k.lower(): v for k, v in response.headers.items()}
+        except (urllib.error.URLError, TimeoutError, OSError, json.JSONDecodeError) as error:
+            status = error.code if isinstance(error, urllib.error.HTTPError) else None
+            retryable = status is None or status in (408, 418, 429, 500, 502, 503, 504)
+            log('api_error', host=host, attempt=attempt + 1, status=status, error_type=type(error).__name__, will_retry=retryable and attempt < 3)
+            if not retryable or attempt == 3:
+                raise
+            delay = 2 ** attempt
+            if isinstance(error, urllib.error.HTTPError):
+                try:
+                    delay = max(delay, float((error.headers or {}).get('Retry-After', 0)))
+                except (TypeError, ValueError):
+                    pass
+            delay = min(delay, 30)
+            if FETCH_DEADLINE is not None and time.monotonic() + delay >= FETCH_DEADLINE:
+                raise TimeoutError('retry would exceed collector deadline') from error
+            stats['retries'] += 1
+            time.sleep(delay)
+
+
+def atomic_write(path, writer):
+    """A failed write leaves the previous published file intact."""
+    path.parent.mkdir(exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode='w', dir=path.parent, prefix=path.name + '.', suffix='.tmp', newline='', encoding='utf-8', delete=False) as handle:
+            temporary = Path(handle.name)
+            writer(handle)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
+
+
 def save(rows):
-    path=DATA/'history.csv'; fields=['exchange','start_utc','end_utc','buy_usd','sell_usd','cvd_usd','taker_ratio','trades','coverage','reason']
-    old={}
+    path = DATA / 'history.csv'
+    old = {}
     if path.exists():
-        with path.open(newline='') as f:
-            for r in csv.DictReader(f):old[(r['exchange'],r['start_utc'])]=r
-    for r in rows:
-        key=(r['exchange'],r['start_utc'])
-        if key in old and old[key]['coverage']=='complete' and r['coverage']!='complete':continue
-        old[key]=r
-    values=sorted(old.values(),key=lambda x:(x['start_utc'],x['exchange']))
-    with path.open('w',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(values)
-def entry(exchange,start,end,buy,sell,n,coverage,reason=''):
-    return dict(exchange=exchange,start_utc=utc(start),end_utc=utc(end),buy_usd=round(buy,2),sell_usd=round(sell,2),cvd_usd=round(buy-sell,2),taker_ratio=round(buy/sell,5) if sell else None,trades=n,coverage=coverage,reason=reason)
-def binance(start,end):
-    # Fetch the last hour once, then verify each closed five-minute interval.
-    arr,_=get('https://data-api.binance.vision/api/v3/klines',{'symbol':'BTCUSDT','interval':'1m','startTime':start,'endTime':end-1,'limit':1000})
-    candles={int(x[0]):x for x in arr};rows=[]
-    for slot in range(start,end,300000):
-        expected=list(range(slot,slot+300000,60000))
-        if any(t not in candles or int(candles[t][6])!=t+59999 for t in expected):
-            rows.append(entry('binance',slot,slot+300000,0,0,0,'unavailable','missing or unclosed 1-minute candles'))
+        with path.open(newline='') as handle:
+            for row in csv.DictReader(handle):
+                old[(row['exchange'], row['start_utc'])] = row
+    for row in rows:
+        key = (row['exchange'], row['start_utc'])
+        # Keep successful source observations immutable, including on failed refetches.
+        if key in old and old[key]['coverage'] == 'complete':
             continue
-        subset=[candles[t] for t in expected]
-        for candle in subset:
-            total=float(candle[7]);buy=float(candle[10])
-            if not math.isfinite(total) or not math.isfinite(buy) or not 0<=buy<=total:
-                raise ValueError('invalid candle taker volume')
-        buy=sum(float(x[10]) for x in subset);total=sum(float(x[7]) for x in subset)
-        rows.append(entry('binance',slot,slot+300000,buy,total-buy,sum(int(x[8]) for x in subset),'complete','1m closed candle taker quote volumes'))
+        old[key] = row
+    values = sorted(old.values(), key=lambda row: (timestamp_ms(row['start_utc']), row['exchange']))
+    def write(handle):
+        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer.writeheader()
+        writer.writerows(values)
+    atomic_write(path, write)
+
+
+def entry(exchange, start, end, buy, sell, trades, coverage, reason=''):
+    if coverage == 'complete':
+        raw_buy, raw_sell = Decimal(str(buy)), Decimal(str(sell))
+        buy = raw_buy.quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
+        sell = raw_sell.quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
+        if not buy.is_finite() or not sell.is_finite() or buy < 0 or sell < 0:
+            raise ValueError('invalid taker notional')
+        cvd = float(buy - sell)
+        ratio = round(float(raw_buy / raw_sell), 5) if sell and raw_sell else None
+        buy, sell = float(buy), float(sell)
+    else:
+        buy = sell = cvd = ratio = None
+    return dict(exchange=exchange, start_utc=utc(start), end_utc=utc(end), buy_usd=buy, sell_usd=sell, cvd_usd=cvd, taker_ratio=ratio, trades=trades, coverage=coverage, reason=reason)
+
+
+def binance(start, end):
+    candles, _ = get('https://data-api.binance.vision/api/v3/klines', {'symbol': 'BTCUSDT', 'interval': '1m', 'startTime': start, 'endTime': end - 1, 'limit': 1000})
+    if not isinstance(candles, list):
+        raise ValueError('Binance response is not a candle list')
+    by_start = {}
+    for candle in candles:
+        opened = int(candle[0])
+        if opened in by_start or not start <= opened < end:
+            raise ValueError('duplicate or out-of-range Binance candle')
+        by_start[opened] = candle
+    rows = []
+    for slot in range(start, end, FIVE_MINUTES):
+        expected = list(range(slot, slot + FIVE_MINUTES, 60000))
+        if any(t not in by_start or int(by_start[t][6]) != t + 59999 or int(by_start[t][6]) >= end for t in expected):
+            rows.append(entry('binance', slot, slot + FIVE_MINUTES, 0, 0, 0, 'incomplete', 'missing or unclosed 1-minute candles'))
+            continue
+        selected = [by_start[t] for t in expected]
+        buy = total = Decimal(0)
+        for candle in selected:
+            quote, taker = Decimal(candle[7]), Decimal(candle[10])
+            if not quote.is_finite() or not taker.is_finite() or not 0 <= taker <= quote or int(candle[8]) < 0:
+                raise ValueError('invalid Binance quote volume or trade count')
+            buy += taker
+            total += quote
+        rows.append(entry('binance', slot, slot + FIVE_MINUTES, buy, total - buy, sum(int(c[8]) for c in selected), 'complete', '1m closed candle taker quote volumes'))
+    FETCH_STATS['binance'] = {'candles': len(candles), 'expected_candles': (end - start) // 60000, 'quote_currency': 'USDT'}
     return rows
-def coinbase(start,end):
-    # One paginated scan covers the hour; only fully traversed intervals are complete.
-    url='https://api.exchange.coinbase.com/products/BTC-USD/trades';cursor=None;seen=set();cursors=set();oldest=None
-    buckets={slot:[0.,0.,0] for slot in range(start,end,300000)}
+
+
+def coinbase(start, end):
+    buckets = {slot: [Decimal(0), Decimal(0), 0] for slot in range(start, end, FIVE_MINUTES)}
+    seen, cursors = {}, set()
+    cursor = None
+    oldest = newest = None
+    duplicates = pages = 0
+    stopped = 'pagination limit reached'
     for page in range(80):
-        params={'limit':1000}
-        if cursor is not None:params['after']=cursor
-        arr,headers=get(url,params)
-        if not arr:break
-        for t in arr:
-            ident=t['trade_id']
-            if ident in seen:continue
-            seen.add(ident)
-            ms=int(datetime.fromisoformat(t['time'].replace('Z','+00:00')).timestamp()*1000)
-            oldest=ms if oldest is None else min(oldest,ms)
-            if ms<start:continue
-            if ms>=end:continue
-            value=float(t['price'])*float(t['size'])
-            if not math.isfinite(value) or value<0 or t['side'] not in ('sell','buy'):
-                raise ValueError('invalid trade side or notional')
-            # Coinbase side is MAKER side; sell maker means taker BUY.
-            bucket=buckets[(ms//300000)*300000]
-            bucket[0 if t['side']=='sell' else 1]+=value
-            bucket[2]+=1
-        if oldest is not None and oldest<start:break
-        cursor=next((v for k,v in headers.items() if k.lower()=='cb-after'),None)
-        if not cursor or cursor in cursors:break
-        cursors.add(cursor)
-        time.sleep(.18)
-    rows=[]
-    for slot,(buy,sell,n) in buckets.items():
-        complete=oldest is not None and oldest<slot
-        rows.append(entry('coinbase',slot,slot+300000,buy,sell,n,'complete' if complete else 'incomplete', '' if complete else 'pagination cap or missing cursor; do not use as complete CVD'))
+        params = {'limit': 1000}
+        if cursor is not None:
+            params['after'] = cursor
+        trades, headers = get('https://api.exchange.coinbase.com/products/BTC-USD/trades', params)
+        if not isinstance(trades, list):
+            raise ValueError('Coinbase response is not a trade list')
+        if not trades:
+            stopped = 'empty page before full window coverage'
+            break
+        pages += 1
+        ids = [int(t['trade_id']) for t in trades]
+        if ids != sorted(ids, reverse=True):
+            raise ValueError('Coinbase page trade IDs are not descending')
+        for trade in trades:
+            ident = int(trade['trade_id'])
+            if ident in seen:
+                if seen[ident] != trade:
+                    raise ValueError('conflicting Coinbase duplicate trade')
+                duplicates += 1
+                continue
+            seen[ident] = trade
+            moment = timestamp_ms(trade['time'])
+            oldest = moment if oldest is None else min(oldest, moment)
+            newest = moment if newest is None else max(newest, moment)
+            if not start <= moment < end:
+                continue
+            price, size = Decimal(trade['price']), Decimal(trade['size'])
+            if not price.is_finite() or not size.is_finite() or price <= 0 or size < 0 or trade['side'] not in ('sell', 'buy'):
+                raise ValueError('invalid Coinbase trade side, price, or size')
+            bucket = buckets[(moment // FIVE_MINUTES) * FIVE_MINUTES]
+            # Coinbase REST side is MAKER side: maker sell => taker buy.
+            bucket[0 if trade['side'] == 'sell' else 1] += price * size
+            bucket[2] += 1
+        if oldest is not None and oldest < start:
+            stopped = 'reached before requested start'
+            break
+        next_cursor = next((v for k, v in headers.items() if k.lower() == 'cb-after'), None)
+        if not next_cursor or next_cursor in cursors:
+            stopped = 'missing or repeated pagination cursor'
+            break
+        if str(next_cursor) != str(ids[-1]):
+            stopped = 'cursor does not match page oldest trade ID'
+            break
+        cursors.add(next_cursor)
+        cursor = next_cursor
+        time.sleep(.22)
+    ordered_ids = sorted(seen, reverse=True)
+    gaps = sum(a - b > 1 for a, b in zip(ordered_ids, ordered_ids[1:]))
+    snapshot_covers_end = newest is not None and newest >= end
+    FETCH_STATS['coinbase'] = {'pages': pages, 'unique_trades': len(seen), 'duplicate_trades': duplicates, 'trade_id_gaps': gaps, 'newest_trade_utc': utc(newest) if newest is not None else None, 'oldest_trade_utc': utc(oldest) if oldest is not None else None, 'snapshot_covers_end': snapshot_covers_end, 'stop_reason': stopped, 'quote_currency': 'USD'}
+    rows = []
+    for slot, (buy, sell, trades) in buckets.items():
+        complete = oldest is not None and oldest < slot and snapshot_covers_end and not gaps
+        reason = '' if complete else ('trade ID continuity unverified' if gaps else 'snapshot does not cover interval end' if not snapshot_covers_end else stopped)
+        rows.append(entry('coinbase', slot, slot + FIVE_MINUTES, buy, sell, trades, 'complete' if complete else 'incomplete', reason))
     return rows
-def windows_for(history,end):
-    windows={}
-    for name in ('binance','coinbase'):
-        windows[name]={}
-        for minutes in (15,60):
-            window_start=end-minutes*60000
-            # Closed five-minute history starts belong to [window_start, end).
-            subset=[r for r in history if r['exchange']==name and r['coverage']=='complete' and window_start<=timestamp_ms(r['start_utc'])<end]
-            expected=set(range(window_start,end,300000))
-            ok={timestamp_ms(r['start_utc']) for r in subset}==expected and len(subset)==minutes//5 and all(timestamp_ms(r['end_utc'])==timestamp_ms(r['start_utc'])+300000 for r in subset)
-            buy=sum(float(r['buy_usd']) for r in subset) if ok else None
-            sell=sum(float(r['sell_usd']) for r in subset) if ok else None
-            windows[name][str(minutes)+'m']={'coverage':'complete' if ok else 'incomplete','intervals':len(subset),'expected':minutes//5,'buy_usd':round(buy,2) if ok else None,'sell_usd':round(sell,2) if ok else None,'cvd_usd':round(buy-sell,2) if ok else None,'taker_ratio':round(buy/sell,5) if ok and sell else None}
+
+
+def windows_for(history, end):
+    windows = {}
+    for exchange in ('binance', 'coinbase'):
+        windows[exchange] = {}
+        for minutes in (15, 60):
+            lower = end - minutes * 60000
+            expected = set(range(lower, end, FIVE_MINUTES))
+            selected = [row for row in history if row['exchange'] == exchange and row['coverage'] == 'complete' and lower <= timestamp_ms(row['start_utc']) < end]
+            valid = {timestamp_ms(row['start_utc']) for row in selected if timestamp_ms(row['end_utc']) == timestamp_ms(row['start_utc']) + FIVE_MINUTES}
+            missing = sorted(expected - valid)
+            complete = not missing and valid == expected and len(selected) == minutes // 5 and all(timestamp_ms(row['end_utc']) == timestamp_ms(row['start_utc']) + FIVE_MINUTES for row in selected)
+            buy = sum((Decimal(str(r['buy_usd'])) for r in selected), Decimal(0)) if complete else None
+            sell = sum((Decimal(str(r['sell_usd'])) for r in selected), Decimal(0)) if complete else None
+            windows[exchange][str(minutes) + 'm'] = {'coverage': 'complete' if complete else 'incomplete', 'intervals': len(valid & expected), 'expected': minutes // 5, 'buy_usd': float(buy) if complete else None, 'sell_usd': float(sell) if complete else None, 'cvd_usd': float(buy - sell) if complete else None, 'taker_ratio': round(float(buy / sell), 5) if complete and sell else None, 'missing_intervals': [utc(t) for t in missing]}
     return windows
+
+
+def backfill_start(end):
+    latest = {}
+    if (DATA / 'history.csv').exists():
+        with (DATA / 'history.csv').open(newline='') as handle:
+            for row in csv.DictReader(handle):
+                if row['coverage'] == 'complete':
+                    latest[row['exchange']] = max(latest.get(row['exchange'], 0), timestamp_ms(row['end_utc']))
+    last_good = min(latest.get(exchange, end - 3600000) for exchange in ('binance', 'coinbase'))
+    # Catch up missed runs for up to six hours without deleting older records.
+    return max(end - 6 * 3600000, min(end - 3600000, last_good))
+
+
 def main():
-    now=int(time.time()*1000);end=(now//300000)*300000;start=end-3600000
-    rows=[];all_rows=[];errors={}
-    for name,fn in [('binance',binance),('coinbase',coinbase)]:
+    global FETCH_DEADLINE
+    started = int(time.time() * 1000)
+    end = (started // FIVE_MINUTES) * FIVE_MINUTES
+    start = backfill_start(end)
+    FETCH_DEADLINE = time.monotonic() + 420
+    FETCH_STATS.clear()
+    latest_rows, all_rows, errors = [], [], {}
+    for exchange, fetch in (('binance', binance), ('coinbase', coinbase)):
         try:
-            fetched=fn(start,end)
-            if len(fetched)!=12:raise ValueError('missing five-minute interval results')
-        except Exception as e:
-            fetched=[entry(name,t,t+300000,0,0,0,'unavailable',str(e)) for t in range(start,end,300000)]
-        failures=[r['reason'] for r in fetched if r['coverage']!='complete']
-        if failures:errors[name]='; '.join(sorted(set(failures)))
-        all_rows.extend(fetched);rows.append(fetched[-1])
+            fetched = fetch(start, end)
+            if len(fetched) != (end - start) // FIVE_MINUTES:
+                raise ValueError('missing five-minute interval results')
+        except Exception as error:
+            log('exchange_failed', exchange=exchange, error_type=type(error).__name__, reason=str(error))
+            fetched = [entry(exchange, t, t + FIVE_MINUTES, 0, 0, 0, 'unavailable', str(error)) for t in range(start, end, FIVE_MINUTES)]
+        failures = [row['reason'] for row in fetched if row['coverage'] != 'complete']
+        if failures:
+            errors[exchange] = '; '.join(sorted(set(failures)))
+        all_rows.extend(fetched)
+        latest_rows.append(fetched[-1])
     save(all_rows)
-    history=[]
-    with (DATA/'history.csv').open(newline='') as f:history=list(csv.DictReader(f))
-    windows=windows_for(history,end)
-    out={'schema_version':'1.0','generated_utc':utc(now),'latest_closed_5m_end_utc':utc(end),'markets':windows,'last_intervals':rows,'warnings':['Coinbase side is maker side and must be inverted for taker direction.','Incomplete windows must not be used for directional signals.','Binance BTCUSDT quote is USDT, approximated as USD for comparison.'],'errors':errors}
-    (DATA/'latest.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps({'end':utc(end),'coverage':{k:v['15m']['coverage'] for k,v in windows.items()},'errors':errors}))
-if __name__=='__main__':main()
+    with (DATA / 'history.csv').open(newline='') as handle:
+        history = list(csv.DictReader(handle))
+    generated = int(time.time() * 1000)
+    out = {'schema_version': '1.0', 'generated_utc': utc(generated), 'latest_closed_5m_end_utc': utc(end), 'markets': windows_for(history, end), 'last_intervals': latest_rows, 'warnings': ['Coinbase side is maker side and must be inverted for taker direction.', 'Incomplete or stale data must not be used for directional signals.', 'Binance legacy *_usd fields are USDT amounts, not converted USD. Do not add Binance and Coinbase notionals without an exchange rate.'], 'errors': errors, 'market_units': {'binance': {'symbol': 'BTCUSDT', 'quote_currency': 'USDT', 'legacy_usd_fields_are_approximate': True, 'conversion_to_usd_applied': False}, 'coinbase': {'symbol': 'BTC-USD', 'quote_currency': 'USD', 'legacy_usd_fields_are_approximate': False, 'conversion_to_usd_applied': False}}, 'cross_exchange_notional_aggregation': 'disabled', 'collection_started_utc': utc(started), 'backfill_start_utc': utc(start), 'source_audit': FETCH_STATS}
+    from quality import refresh_quality
+    out = refresh_quality(out, datetime.fromtimestamp(generated / 1000, timezone.utc))
+    atomic_write(DATA / 'latest.json', lambda handle: handle.write(json.dumps(out, ensure_ascii=False, indent=2, allow_nan=False) + '\n'))
+    log('collection_complete', end=utc(end), quality_status=out['quality_status'], missing_intervals=out['missing_intervals'], source_audit=FETCH_STATS, errors=errors)
+
+
+if __name__ == '__main__':
+    main()

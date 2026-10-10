@@ -37,3 +37,19 @@ Run locally with `python collector.py`, then `python validate.py --require-compl
 公式：`cvd_usd = buy_usd - sell_usd`；`taker_ratio = buy_usd / sell_usd`（主动卖出金额为零时为 null）。Coinbase 的 maker sell 记为主动买入，maker buy 记为主动卖出。15m 需要 3 个连续的完整 5m 区间，60m 需要 12 个；缺失时聚合指标为 null。
 
 历史窗口按毫秒时间筛选：`end - minutes * 60000 <= start_ms < end`，包含起点、排除终点。筛选只决定聚合使用的记录；窗口外的历史仍保存在 `history.csv` 中。
+
+## Data quality and currency compatibility
+
+Existing `markets.binance`, `markets.coinbase`, `15m`, `60m`, `coverage`, `cvd_usd`, `taker_ratio`, and the CSV columns remain available. Binance `*_usd` names are legacy compatibility fields: their native quote unit is **USDT**, not converted USD. Coinbase uses **USD**. `market_units` declares this explicitly; cross-exchange notional aggregation is disabled until a dated FX conversion is supplied. Taker ratios are dimensionless.
+
+The collector uses Decimal notionals, validates closed candle boundaries, checks Coinbase cursor progress, duplicate conflicts and trade-ID continuity, and requires the initial trade snapshot to cover the interval end. Gaps, truncation or stale snapshots are incomplete; partial metrics are null. The Coinbase trade-ID continuity check is conservative: a gap means coverage is unverified, rather than proving a particular trade was lost.
+
+Successful historical intervals are immutable. CSV and JSON writes replace their prior files atomically, and there is no history row-count cutoff. Missing runs are backfilled from the last successful timestamp for up to six hours; Coinbase retains the bounded 80-page scan and reports incomplete if it cannot cover the required range. Network calls use 20-second timeouts, four attempts, Retry-After handling, structured exception logs, and a total seven-minute network deadline inside the ten-minute Actions job limit.
+
+### Freshness must be evaluated when reading
+
+`data_age_seconds` means seconds since `generated_utc`. `market_data_age_seconds` means seconds since `latest_closed_5m_end_utc`. `quality_status` is `ok`, `incomplete`, or `stale`; either age over 900 seconds is stale. `missing_intervals` lists missing five-minute starts for each exchange/window. `monitoring_eligible` is false for stale, incomplete, or failed-source observations.
+
+**A static raw JSON cannot change after a stopped workflow.** Its quality fields are valid as of `quality_evaluated_utc`, not indefinitely. Consumers, including ChatGPT monitoring tasks, must recalculate age against the current UTC time on every read and reject stale observations. Use `python check_latest.py --require-usable` to fetch the public JSON and return refreshed quality fields, or import `quality.refresh_quality(data)`. This preserves the raw URL and existing fields without pretending that a stopped scheduler can update its own status.
+
+GitHub's schedule is enabled every five minutes but is best-effort; queued runs can be delayed or dropped. The configured equivalent cron is `2-59/5 * * * *`. No minute-exact delivery is promised. If required freshness is not met, block directional monitoring, backfill on the next run, and inspect the Actions page. This repository collects spot flow only and does not itself establish derivatives short squeezes or submit orders.
