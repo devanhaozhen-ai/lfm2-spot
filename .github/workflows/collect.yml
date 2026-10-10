@@ -15,7 +15,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,13 +29,17 @@ jobs:
         env:
           LFM2_REQUEST_ID: ${{ inputs.request_id }}
         run: python collector.py
+      - name: Collect seven-day LFM3 price history and measured CVD
+        run: python lfm3.py
+      - name: Check LFM3 integrity before publication, preserving partial source results
+        run: python validate_lfm3.py --allow-partial
       - name: Commit public output
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/history.csv data/latest.json
+          git add data/history.csv data/latest.json data/price_history.csv data/cvd_history.csv data/lfm3_latest.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Update LFM2 spot market data'
+            git commit -m 'Update LFM2 and LFM3 manual spot market data'
             for attempt in 1 2 3; do
               git pull --rebase origin "$GITHUB_REF_NAME"
               if git push origin HEAD:"$GITHUB_REF_NAME"; then exit 0; fi
@@ -44,6 +48,8 @@ jobs:
           fi
       - name: Verify API coverage and metrics
         run: python validate.py --require-complete
+      - name: Verify LFM3 candles, indicators and read-time quality
+        run: python validate_lfm3.py
       - name: Evaluate freshness at read time
         if: always()
         run: python check_latest.py --path data/latest.json --require-usable

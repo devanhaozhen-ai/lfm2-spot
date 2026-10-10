@@ -1,8 +1,20 @@
-# BTC LFM 2.0 — Work 手动采集
+# BTC LFM 3.0 — Work 手动采集（兼容 LFM 2.0）
 
 仓库：https://github.com/devanhaozhen-ai/lfm2-spot
 
 公开数据：https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/latest.json
+
+LFM 3.0 接口：https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/lfm3_latest.json
+
+输入 **“采集 BTC 数据”**，同一次手动运行同时更新 LFM 2.0 和 LFM 3.0。LFM 3.0 包含两所七天闭合 K 线、EMA20/60、Wilder RSI14、成交量变化、高低点参考位及真实 CVD 覆盖信息。没有 GitHub cron；未采集期间不会自动更新。
+
+七天 K 线持久化于 `data/price_history.csv`；5m 每所 2016 根，1h 每所 168 根，均使用 UTC 半开区间。完整旧记录不可覆盖，历史不会因滚动窗口删除；每次重新获取七天数据、去重并补缺。JSON 的 `markets.<exchange>.5m/1h.candles` 包含整个七天窗口，长期历史保存在 CSV。
+
+`data/cvd_history.csv` 是每个五分钟区间的净主动买卖额，不是跨缺口累加的 CVD。Binance 使用真实 K 线 quote volume（字段7）和 taker buy quote volume（字段10），卖出=总额−买入。Coinbase 只用已完整分页的真实成交重建；七天中没有可靠成交记录的区间为 `unavailable`，金额和比值为 null/空。不会以价格涨跌猜测方向；七天 CVD 不完整时总净额为 null。历史 CVD 的 PARTIAL 与当前七天价格、当前15m/60m完整性分别报告。
+
+EMA 以首次连续序列前 N 个收盘价均值为种子，alpha=2/(N+1)；RSI 使用 Wilder 14 期，平盘序列=50。每项指标注明实际计算起点、终点、根数、币种和来源；缺口前后的数据不混合计算。高低点取最近20根 K 线，仅为价格参考。
+
+读取时执行 `refresh_lfm3_quality` 或重新按当前 UTC 计算年龄。generated_utc 与最新五分钟数据年龄不得超过900秒；1h K线按相对于最近整点闭合边界的落后时间判断，不把正常的小时内年龄误判为超时。七天补采成功不能代替实时新鲜度。详见 [LFM 3.0 数据契约](docs/LFM3_DATA.md)。
 
 在当前 ChatGPT Work 任务中输入 **“采集 BTC 数据”**。Work 会复用已有 GitHub 授权，手动触发采集，等待 Actions 成功及公开 JSON 更新，完成验收后返回两所的 15m/60m CVD、主动买卖比和完整性。随后回普通聊天输入 **“运行 LFM 2.0”**，使用此接口作为最新现货数据输入。
 

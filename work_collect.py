@@ -14,6 +14,9 @@ from pathlib import Path
 from quality import parse_time, refresh_quality
 from validate import validate
 from verify_sources import verify
+from lfm3 import refresh_lfm3_quality
+from validate_lfm3 import validate as validate_lfm3
+from verify_lfm3_sources import verify as verify_lfm3
 
 REPOSITORY = 'devanhaozhen-ai/lfm2-spot'
 UTC = timezone.utc
@@ -103,8 +106,8 @@ def wait_run(run, deadline):
     raise TimeoutError('GitHub Actions did not complete before the Work deadline')
 
 
-def public_latest(request_id, deadline):
-    url = 'https://raw.githubusercontent.com/' + REPOSITORY + '/main/data/latest.json'
+def public_latest(request_id, deadline, filename='latest.json'):
+    url = 'https://raw.githubusercontent.com/' + REPOSITORY + '/main/data/' + filename
     publication_deadline = min(deadline, time.monotonic() + 180)
     last_error = None
     while time.monotonic() < publication_deadline:
@@ -113,12 +116,12 @@ def public_latest(request_id, deadline):
                 data = json.load(handle)
             if data.get('request_id') == request_id:
                 return data
-            last_error = 'public latest.json still belongs to an earlier request'
+            last_error = 'public ' + filename + ' still belongs to an earlier request'
         except (OSError, ValueError) as error:
             last_error = type(error).__name__
         log('Waiting for the public JSON to update', reason=last_error)
         time.sleep(10)
-    raise RuntimeError('Public latest.json publication verification failed: ' + str(last_error))
+    raise RuntimeError('Public ' + filename + ' publication verification failed: ' + str(last_error))
 
 
 def require_new_data(data, before, request_id, run_id, triggered, clock):
@@ -156,13 +159,27 @@ def preserve_history(before_csv, after_csv):
     return {'before_rows': len(before), 'after_rows': len(after), 'previous_complete_rows_unchanged': True, 'previous_keys_retained': True, 'duplicate_rows': 0}
 
 
+def preserve_extended_history(before_csv, after_csv, price=False):
+    before = list(csv.DictReader(before_csv.decode().splitlines())) if before_csv else []
+    after = list(csv.DictReader(after_csv.decode().splitlines()))
+    def key(row):
+        return (row['exchange'], row['timeframe'] if price else '5m', parse_time(row['start_utc']).timestamp())
+    index = {key(row): row for row in after}
+    if len(index) != len(after) or any(key(row) not in index or (row['coverage'] == 'complete' and index[key(row)] != row) for row in before):
+        raise ValueError('LFM3 historical data changed, lost or duplicated')
+    return {'before_rows':len(before), 'after_rows':len(after), 'previous_complete_rows_unchanged':True, 'duplicate_rows':0}
+
+
 def collect(directory, deadline):
     identity = gh_json('api', 'user')
     repository = api('')
     if repository['default_branch'] != 'main' or not repository.get('permissions', {}).get('push'):
         raise RuntimeError('the existing GitHub authorization cannot write to main')
     log('Using existing GitHub authorization', account=identity['login'])
-    _, before, before_csv = snapshot()
+    before_commit, before, before_csv = snapshot()
+    tree = api('git/trees/' + before_commit + '?recursive=1')['tree']
+    existing = {entry['path'] for entry in tree}
+    before_extended = {filename: read_contents('data/' + filename, before_commit) if 'data/' + filename in existing else b'' for filename in ('price_history.csv', 'cvd_history.csv')}
     (directory / 'before.json').write_text(json.dumps(before, indent=2) + '\n')
     (directory / 'before-history.csv').write_bytes(before_csv)
     current_baseline = before
@@ -176,6 +193,10 @@ def collect(directory, deadline):
         commit, data, history_csv = snapshot()
         (directory / 'latest.json').write_text(json.dumps(data, indent=2) + '\n')
         (directory / 'history.csv').write_bytes(history_csv)
+        extended = {filename: read_contents('data/' + filename, commit) for filename in ('lfm3_latest.json', 'price_history.csv', 'cvd_history.csv')}
+        for filename, content in extended.items():
+            (directory / filename).write_bytes(content)
+        lfm3 = json.loads(extended['lfm3_latest.json'])
         try:
             require_new_data(data, before, request_id, run['id'], triggered, now())
             with contextlib.redirect_stdout(sys.stderr):
@@ -185,6 +206,15 @@ def collect(directory, deadline):
             if published != data:
                 raise ValueError('public latest.json differs from the verified committed snapshot')
             sources = verify(data, directory / 'history.csv')
+            lfm3_validation = validate_lfm3(directory)
+            extended_history = {filename: preserve_extended_history(before_extended[filename], extended[filename], price=filename == 'price_history.csv') for filename in before_extended}
+            published_lfm3 = public_latest(request_id, deadline, 'lfm3_latest.json')
+            if published_lfm3 != lfm3:
+                raise ValueError('public LFM3 JSON differs from verified committed data')
+            lfm3_sources = verify_lfm3(lfm3, directory / 'cvd_history.csv')
+            lfm3_checked = refresh_lfm3_quality(published_lfm3, now())
+            if not lfm3_checked['monitoring_eligible']:
+                raise ValueError('LFM3 data became stale or incomplete during verification')
             checked = require_new_data(published, before, request_id, run['id'], triggered, now())
         except WindowNotCurrent:
             if attempt == 2:
@@ -199,8 +229,15 @@ def collect(directory, deadline):
                   'generated_beijing': parse_time(checked['generated_utc']).astimezone(ZoneInfo('Asia/Shanghai')).isoformat(),
                   'data_delay_minutes': round(checked['market_data_age_seconds'] / 60, 3),
                   'generation_delay_minutes': round(checked['data_age_seconds'] / 60, 3),
-                  'history': history, 'source_verification': sources, 'latest': checked}
+                  'history': history, 'source_verification': sources, 'latest': checked,
+                  'lfm3': {'acceptance': 'PASS' if lfm3_checked['historical_cvd_quality'] == 'complete' else 'PARTIAL',
+                           'monitoring_eligible': lfm3_checked['monitoring_eligible'],
+                           'validation': lfm3_validation, 'history_preservation': extended_history,
+                           'source_verification': lfm3_sources,
+                           'historical_cvd': {e: {k:v for k,v in lfm3_checked['markets'][e]['historical_cvd'].items() if k != 'unavailable_intervals'} for e in ('binance', 'coinbase')},
+                           'public_url': 'https://raw.githubusercontent.com/' + REPOSITORY + '/main/data/lfm3_latest.json'}}
         (directory / 'latest.json').write_text(json.dumps(checked, ensure_ascii=False, indent=2) + '\n')
+        (directory / 'lfm3_checked.json').write_text(json.dumps(lfm3_checked, ensure_ascii=False, indent=2) + '\n')
         return report
     raise RuntimeError('no newly closed verified observation could be collected')
 
