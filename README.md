@@ -1,67 +1,43 @@
-# LFM 2.0 — Spot Confirmation Collector
+# BTC LFM 2.0 — Work 手动采集
 
-Free GitHub Actions 5-minute REST-based BTC spot taker-flow collector. Python standard library only, no API keys, no local machine required.
+仓库：https://github.com/devanhaozhen-ai/lfm2-spot
 
-公开仓库：https://github.com/devanhaozhen-ai/lfm2-spot
+公开数据：https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/latest.json
 
-公开 JSON：https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/latest.json
+在当前 ChatGPT Work 任务中输入 **“采集 BTC 数据”**。Work 会复用已有 GitHub 授权，手动触发采集，等待 Actions 成功及公开 JSON 更新，完成验收后返回两所的 15m/60m CVD、主动买卖比和完整性。随后回普通聊天输入 **“运行 LFM 2.0”**，使用此接口作为最新现货数据输入。
 
-手机查看运行状态：https://github.com/devanhaozhen-ai/lfm2-spot/actions
+采集工作流仅保留 workflow_dispatch，已移除定时采集。健康工作流保留手动入口和采集完成后的 workflow_run 检查，也没有定时计划。两次手动请求之间数据不会自动刷新；超过 15 分钟的数据不能用于实时信号。
 
-自动任务配置在 `.github/workflows/collect.yml`，UTC cron 为 `2-59/5 * * * *`，请求每 5 分钟运行。GitHub 调度可能延迟或漏跑；以 JSON 的 `generated_utc`、`latest_closed_5m_end_utc` 和 `coverage` 为准，不能把手动成功当成定时成功。
+同一个五分钟区间内重复请求时，Work 会等待下一根区间真正闭合，确保窗口推进。已有授权有效时无需每次登录；授权失效时由用户完成 GitHub 官方授权，不要求密码或访问令牌。
 
-## Deployment
-1. Create a **public** GitHub repository, e.g. `lfm2-spot`.
-2. Upload the contents of this folder to the repository root, including `.github/workflows/collect.yml`.
-3. In Settings → Actions → General → Workflow permissions select **Read and write permissions** (if available), and save.
-4. In Actions → LFM2 spot collection → Run workflow, start the first run.
-5. Check `data/latest.json` and Actions logs. Each run fetches the latest closed hour from the public APIs and reconstructs twelve five-minute intervals. The 15m and 60m windows can be complete on the first run. Missing data is explicitly marked incomplete.
-6. Public machine-readable endpoint: `https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/data/latest.json` (replace placeholders; branch may differ).
+## 每次验收
 
-## Important limitations
-- GitHub schedule runs can be delayed or skipped; this collector backfills the most recent hour on each run and explicitly marks 15m/60m windows incomplete when any five-minute interval is still missing. The collection is periodic, not a continuously connected trade feed.
-- Binance closed 1-minute candlesticks expose **taker buy quote volume** and total quote volume, giving exact interval net taker flow without paginating trades. USDT is treated as USD approximation.
-- Coinbase REST trades are paginated backward; capped at 80 pages per run. The window is `complete` only if pagination reaches a trade before its start. Coinbase `side` is the maker side, so it is inverted.
-- `history.csv` retains all existing interval keys without a row-count cutoff, and repeated interval keys are deduplicated. Failed backfills never overwrite a previously complete interval.
-- This is **5-minute aggregate CVD**, not tick-by-tick cumulative order flow. Missing windows are never silently filled.
-- GitHub repository must be public if you want ChatGPT to read `raw.githubusercontent.com` without authentication. Public data only; never commit API secrets.
-- No guaranteed minute-exact timing or uninterrupted collection. If collection fails, the JSON records `unavailable` and no false signal should be produced.
-- If GitHub Actions' schedule becomes inactive after long repository inactivity, re-enable the workflow manually.
+- 本次独有请求编号必须匹配 GitHub 运行及 JSON，Actions 结果必须为 success。
+- generated_utc 必须晚于触发前和本次触发时间；原公开地址必须已更新为本次请求。
+- latest_closed_5m_end_utc 必须推进，并等于验收时最近闭合的五分钟边界。
+- 用读取时实际 UTC 重新计算两个年龄，任一超过 900 秒即 stale；不能只信任静态 quality_status。
+- 两所 15m 为 3/3、60m 为 12/12，全部 coverage=complete、errors 为空；金额、CVD、买卖比及历史聚合有效。
+- 从原始交易所 REST API 独立复算最近一小时，核对 Coinbase maker/taker 方向、分页、重复成交及成交 ID 连续性。
+- 任一步失败返回明确错误，关闭监测资格，不使用旧 JSON 宣称本次采集成功。
 
-## Validation
+执行器为 work_collect.py；详细契约见 [Work 手动模式](docs/WORK_MANUAL_MODE.md)。GitHub 原有 Run workflow 按钮仍可使用，当前 Work 指令会自动完成触发和验收。
 
-The workflow checks maker/taker direction, missing-candle handling, and missing-interval behavior before collection. It commits the current output, then validates CVD, taker buy/sell ratios, timestamps, source-history sums, and the 3/3 and 12/12 interval coverage. An unavailable API or incomplete window makes the validation step fail while keeping the JSON status visible.
+## 金额、窗口及历史
 
-Run locally with `python collector.py`, then `python validate.py --require-complete`. No exchange account, API key, or trading permissions are used. This program only collects public BTC spot market data.
+cvd_usd = buy_usd - sell_usd；taker_ratio = buy_usd / sell_usd，卖出金额为零时比值为 null。Coinbase REST side 是 maker 方向：maker sell 计为主动买入，maker buy 计为主动卖出。
 
-公式：`cvd_usd = buy_usd - sell_usd`；`taker_ratio = buy_usd / sell_usd`（主动卖出金额为零时为 null）。Coinbase 的 maker sell 记为主动买入，maker buy 记为主动卖出。15m 需要 3 个连续的完整 5m 区间，60m 需要 12 个；缺失时聚合指标为 null。
+Binance BTCUSDT 的旧 *_usd 字段实际单位为 **USDT**；Coinbase BTC-USD 为 **USD**。market_units 明确单位，未做币种换算，两所金额不能直接相加。CVD 为对应窗口的净主动成交额。
 
-历史窗口按毫秒时间筛选：`end - minutes * 60000 <= start_ms < end`，包含起点、排除终点。筛选只决定聚合使用的记录；窗口外的历史仍保存在 `history.csv` 中。
+15m/60m 只使用 [end - minutes × 60000, end) 内完整的五分钟记录，分别要求 3 和 12 个区间。原有 markets.binance、markets.coinbase、15m、60m、coverage、cvd_usd、taker_ratio 和 CSV 列保持兼容。新增 collection_mode、request_id、collection_run_id 便于核对手动请求，不修改旧字段名称。
 
-## Data quality and currency compatibility
+history.csv 保留全部旧键；完整记录重采后不覆盖，数值时间戳去重，失败写入保持原有效文件，缺失记录可升级为完整。每轮最多补采六小时，Coinbase 上限 80 页，当前窗口无法完整覆盖时必须 incomplete。
 
-Existing `markets.binance`, `markets.coinbase`, `15m`, `60m`, `coverage`, `cvd_usd`, `taker_ratio`, and the CSV columns remain available. Binance `*_usd` names are legacy compatibility fields: their native quote unit is **USDT**, not converted USD. Coinbase uses **USD**. `market_units` declares this explicitly; cross-exchange notional aggregation is disabled until a dated FX conversion is supplied. Taker ratios are dimensionless.
+手动模式不承诺两次请求之间的全天连续历史。history_quality 如实报告历史缺口；当前窗口之外的停采缺口不阻止完整、新鲜的最近一小时观察用于分析。当前 15m/60m 内的缺口仍关闭监测资格。已有历史不会因改造或重新部署丢失。
 
-The collector uses Decimal notionals, validates closed candle boundaries, checks Coinbase cursor progress, duplicate conflicts and trade-ID continuity, and requires the initial trade snapshot to cover the interval end. Gaps, truncation or stale snapshots are incomplete; partial metrics are null. The Coinbase trade-ID continuity check is conservative: a gap means coverage is unverified, rather than proving a particular trade was lost.
+## 读取与测试
 
-Successful historical intervals are immutable. CSV and JSON writes replace their prior files atomically, and there is no history row-count cutoff. Missing runs and internal gaps are scanned within the most recent six hours, rather than trusting only the last successful row. Interval keys use numeric timestamps to avoid duplicate rows from equivalent UTC formats. `history_quality` reports all known missing slots since each exchange's first saved interval, including gaps outside the six-hour automatic backfill horizon; unresolved gaps block monitoring. Coinbase retains the bounded 80-page scan and reports incomplete if it cannot cover the required range. Network calls use 20-second timeouts, four attempts, Retry-After handling, structured exception logs, and a total seven-minute network deadline inside the ten-minute Actions job limit.
+普通聊天分析前必须重新读取公开 JSON，并按实际 UTC 计算 generated_utc 和 latest_closed_5m_end_utc 的年龄。过期或不完整时，回 Work 输入“采集 BTC 数据”。现货数据可作为 LFM 2.0 输入，判断轧空还需其他相关证据。
 
-### Freshness must be evaluated when reading
+只采集公开行情，不需要交易所密钥，不下单，不创建付费资源。网络超时、有限重试、异常日志和原子写入机制保留。data/health.json 是采集后的静态健康记录，也需检查其时间。
 
-`data_age_seconds` means seconds since `generated_utc`. `market_data_age_seconds` means seconds since `latest_closed_5m_end_utc`. `quality_status` is `ok`, `incomplete`, or `stale`; either age over 900 seconds is stale. `missing_intervals` lists missing five-minute starts for each exchange/window. `monitoring_eligible` is false for stale, incomplete, or failed-source observations.
-
-**A static raw JSON cannot change after a stopped workflow.** Its quality fields are valid as of `quality_evaluated_utc`, not indefinitely. Consumers, including ChatGPT monitoring tasks, must recalculate age against the current UTC time on every read and reject stale observations. Use `python check_latest.py --require-usable` to fetch the public JSON and return refreshed quality fields, or import `quality.refresh_quality(data)`. This preserves the raw URL and existing fields without pretending that a stopped scheduler can update its own status.
-
-GitHub's schedule is enabled every five minutes but is best-effort; queued runs can be delayed or dropped. The configured equivalent cron is `2-59/5 * * * *`. No minute-exact delivery is promised. If required freshness is not met, block directional monitoring, backfill on the next run, and inspect the Actions page. This repository collects spot flow only and does not itself establish derivatives short squeezes or submit orders.
-
-## Independent health check
-
-`.github/workflows/health.yml` runs separately with UTC `4-59/5 * * * *`, its own concurrency group, and a three-minute timeout. It also checks immediately after a collector workflow completes. A stopped or hung collector does not block this job. `healthcheck.py` reads the public endpoint, re-evaluates both timestamps against current UTC, checks source errors, missing data and the latest completed collector result, and writes only `data/health.json`. Failed checks publish their report and fail the workflow so GitHub's configured Actions notifications can signal the problem. Notification delivery depends on account settings and has not been independently verified.
-
-Public health report: https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/health.json
-
-The health report is also static: consumers must check its `checked_utc` age and recalculate market ages. Both workflows share GitHub's scheduler, so this does not detect a total GitHub scheduling outage by itself. A truly external scheduler/monitor is needed for that failure mode. `python healthcheck.py --skip-actions-check --output /tmp/lfm2-health.json` can run on another free platform without a GitHub token; its nonzero exit status and `monitoring_eligible: false` are the alarm contract.
-
-Free alternatives to evaluate if actual `schedule` events do not appear: Cloudflare Workers Free Cron can host an external freshness check; cron-job.org offers free periodic HTTP requests. An external trigger for the private-permission Actions dispatch API requires secure account authorization and a server-side credential; never put credentials in this repository or in public URLs. External account connection and alert delivery must be verified before claiming an independent unattended service is operational.
-
-The ready-to-deploy, read-only Cloudflare fallback is in `external-health/worker.mjs`; it refreshes the compatible JSON at `/latest.json` and returns HTTP 503 from `/health` for stale, incomplete or unavailable data. It is tested with `node --test tests/external_health.test.mjs`. These files do not mean an external service has been deployed or an alert delivered.
+测试：python -m unittest discover -s tests；备用读取器测试：node --test tests/external_health.test.mjs。external-health 中以前准备的外部读取器未部署，不是当前手动采集入口。

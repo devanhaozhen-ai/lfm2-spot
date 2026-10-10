@@ -305,6 +305,9 @@ def main():
     out = {'schema_version': '1.0', 'generated_utc': utc(generated), 'latest_closed_5m_end_utc': utc(end), 'markets': windows_for(history, end), 'last_intervals': latest_rows, 'warnings': ['Coinbase side is maker side and must be inverted for taker direction.', 'Incomplete or stale data must not be used for directional signals.', 'Binance legacy *_usd fields are USDT amounts, not converted USD. Do not add Binance and Coinbase notionals without an exchange rate.'], 'errors': errors, 'market_units': {'binance': {'symbol': 'BTCUSDT', 'quote_currency': 'USDT', 'legacy_usd_fields_are_approximate': True, 'conversion_to_usd_applied': False}, 'coinbase': {'symbol': 'BTC-USD', 'quote_currency': 'USD', 'legacy_usd_fields_are_approximate': False, 'conversion_to_usd_applied': False}}, 'cross_exchange_notional_aggregation': 'disabled', 'collection_started_utc': utc(started), 'backfill_start_utc': utc(start), 'source_audit': FETCH_STATS}
     from quality import refresh_quality
     out['history_quality'] = history_quality(history, end)
+    out['collection_mode'] = 'manual_workflow_dispatch'
+    out['request_id'] = os.environ.get('LFM2_REQUEST_ID', '')
+    out['collection_run_id'] = os.environ.get('GITHUB_RUN_ID')
     out = refresh_quality(out, datetime.fromtimestamp(generated / 1000, timezone.utc))
     atomic_write(DATA / 'latest.json', lambda handle: handle.write(json.dumps(out, ensure_ascii=False, indent=2, allow_nan=False) + '\n'))
     log('collection_complete', end=utc(end), quality_status=out['quality_status'], missing_intervals=out['missing_intervals'], source_audit=FETCH_STATS, errors=errors)

@@ -23,8 +23,10 @@ export function refreshQuality(source, nowMs = Date.now()) {
       data.missing_intervals[exchange][frame] = missing;
     }
   }
-  for (const history of Object.values(data.history_quality || {})) {
-    complete = complete && history.coverage === 'complete' && history.missing_count === 0;
+  if (data.collection_mode !== 'manual_workflow_dispatch') {
+    for (const history of Object.values(data.history_quality || {})) {
+      complete = complete && history.coverage === 'complete' && history.missing_count === 0;
+    }
   }
   data.data_age_seconds = Math.round(Math.max(0, generatedAge) * 1000) / 1000;
   data.market_data_age_seconds = Math.round(Math.max(0, marketAge) * 1000) / 1000;

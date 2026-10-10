@@ -1,8 +1,12 @@
 name: LFM2 spot collection
+run-name: BTC manual collection ${{ inputs.request_id || github.run_id }}
 on:
-  schedule:
-    - cron: '2-59/5 * * * *'
   workflow_dispatch:
+    inputs:
+      request_id:
+        description: 'Optional request identifier used by the Work collector'
+        required: false
+        type: string
 permissions:
   contents: write
 concurrency:
@@ -22,6 +26,8 @@ jobs:
       - name: Check collector data handling
         run: python -m unittest discover -s tests
       - name: Collect market data
+        env:
+          LFM2_REQUEST_ID: ${{ inputs.request_id }}
         run: python collector.py
       - name: Commit public output
         run: |
