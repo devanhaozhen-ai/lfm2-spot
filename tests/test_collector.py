@@ -21,6 +21,24 @@ class CollectorTests(unittest.TestCase):
         with patch('collector.get', return_value=(trades, {})):
             self.assertEqual(collector.coinbase(0, 300000)[0]['coverage'], 'incomplete')
 
+    def test_coinbase_busy_window_paginates_past_80_pages_without_inventing_coverage(self):
+        pages = []
+        for page in range(84):
+            ident = 200 - page
+            trade = {'trade_id': ident, 'time': collector.utc((82 - page) * 5000),
+                     'side': 'sell' if page % 2 else 'buy', 'price': '10', 'size': '2'}
+            pages.append(([trade], {'cb-after': str(ident)}))
+        with patch('collector.get', side_effect=pages), patch('collector.time.sleep'):
+            row = collector.coinbase(0, 300000)[0]
+        self.assertEqual(row['coverage'], 'complete')
+        self.assertEqual((row['buy_usd'], row['sell_usd'], row['cvd_usd'], row['trades']), (600, 600, 0, 60))
+        self.assertEqual(collector.FETCH_STATS['coinbase']['pages'], 84)
+        with patch('collector.get', side_effect=pages), patch('collector.time.sleep'), patch('collector.COINBASE_MAX_PAGES', 80):
+            row = collector.coinbase(0, 300000)[0]
+        self.assertEqual(row['coverage'], 'incomplete')
+        self.assertEqual(row['reason'], 'pagination limit reached')
+        self.assertIsNone(row['cvd_usd'])
+
     def test_coinbase_rejects_unknown_side(self):
         trades = [{'trade_id': 1, 'time': collector.utc(200000), 'side': 'unknown', 'price': '10', 'size': '2'}]
         with patch('collector.get', return_value=(trades, {})), self.assertRaises(ValueError):

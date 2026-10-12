@@ -19,6 +19,7 @@ HEAD = {'User-Agent': 'LFM2-Spot-Monitor/2.0', 'Accept': 'application/json'}
 FETCH_DEADLINE = None
 FETCH_STATS = {}
 FIVE_MINUTES = 300000
+COINBASE_MAX_PAGES = 200
 FIELDS = ['exchange', 'start_utc', 'end_utc', 'buy_usd', 'sell_usd', 'cvd_usd', 'taker_ratio', 'trades', 'coverage', 'reason']
 
 
@@ -163,7 +164,7 @@ def coinbase(start, end):
     oldest = newest = None
     duplicates = pages = 0
     stopped = 'pagination limit reached'
-    for page in range(80):
+    for page in range(COINBASE_MAX_PAGES):
         params = {'limit': 1000}
         if cursor is not None:
             params['after'] = cursor
@@ -213,7 +214,7 @@ def coinbase(start, end):
     ordered_ids = sorted(seen, reverse=True)
     gaps = sum(a - b > 1 for a, b in zip(ordered_ids, ordered_ids[1:]))
     snapshot_covers_end = newest is not None and newest >= end
-    FETCH_STATS['coinbase'] = {'pages': pages, 'unique_trades': len(seen), 'duplicate_trades': duplicates, 'trade_id_gaps': gaps, 'newest_trade_utc': utc(newest) if newest is not None else None, 'oldest_trade_utc': utc(oldest) if oldest is not None else None, 'snapshot_covers_end': snapshot_covers_end, 'stop_reason': stopped, 'quote_currency': 'USD'}
+    FETCH_STATS['coinbase'] = {'pages': pages, 'page_limit': COINBASE_MAX_PAGES, 'unique_trades': len(seen), 'duplicate_trades': duplicates, 'trade_id_gaps': gaps, 'newest_trade_utc': utc(newest) if newest is not None else None, 'oldest_trade_utc': utc(oldest) if oldest is not None else None, 'snapshot_covers_end': snapshot_covers_end, 'stop_reason': stopped, 'quote_currency': 'USD'}
     rows = []
     for slot, (buy, sell, trades) in buckets.items():
         complete = oldest is not None and oldest < slot and snapshot_covers_end and not gaps

@@ -59,7 +59,7 @@ def verify(data, history_path):
     cursor = None
     oldest = newest = None
     duplicates = pages = 0
-    for _ in range(80):
+    for _ in range(200):
         params = {'limit': 1000}
         if cursor is not None:
             params['after'] = cursor

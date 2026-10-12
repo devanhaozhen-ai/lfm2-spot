@@ -42,7 +42,7 @@ Binance BTCUSDT 的旧 *_usd 字段实际单位为 **USDT**；Coinbase BTC-USD �
 
 15m/60m 只使用 [end - minutes × 60000, end) 内完整的五分钟记录，分别要求 3 和 12 个区间。原有 markets.binance、markets.coinbase、15m、60m、coverage、cvd_usd、taker_ratio 和 CSV 列保持兼容。新增 collection_mode、request_id、collection_run_id 便于核对手动请求，不修改旧字段名称。
 
-history.csv 保留全部旧键；完整记录重采后不覆盖，数值时间戳去重，失败写入保持原有效文件，缺失记录可升级为完整。每轮最多补采六小时，Coinbase 上限 80 页，当前窗口无法完整覆盖时必须 incomplete。
+history.csv 保留全部旧键；完整记录重采后不覆盖，数值时间戳去重，失败写入保持原有效文件，缺失记录可升级为完整。每轮最多补采六小时，Coinbase 上限 200 页，并保留全局网络超时、重试、分页连续性检查。仍达到上限或无法覆盖完整区间时必须 incomplete；不会清除采集错误来冒充成功。
 
 手动模式不承诺两次请求之间的全天连续历史。history_quality 如实报告历史缺口；当前窗口之外的停采缺口不阻止完整、新鲜的最近一小时观察用于分析。当前 15m/60m 内的缺口仍关闭监测资格。已有历史不会因改造或重新部署丢失。
 
