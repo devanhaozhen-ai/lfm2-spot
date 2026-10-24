@@ -23,8 +23,9 @@ def refresh_quality(data, now=None):
     data['quality_evaluated_utc'] = now.isoformat().replace('+00:00', 'Z')
     data['missing_intervals'] = {exchange: {frame: data['markets'][exchange][frame].get('missing_intervals', []) for frame in ('15m', '60m')} for exchange in ('binance', 'coinbase')}
     complete = all(data['markets'][exchange][frame]['coverage'] == 'complete' and not data['markets'][exchange][frame].get('missing_intervals') for exchange in ('binance', 'coinbase') for frame in ('15m', '60m')) and len(data['last_intervals']) == 2 and all(row['coverage'] == 'complete' for row in data['last_intervals']) and not data['errors']
-    if data.get('collection_mode') != 'manual_workflow_dispatch':
-        complete = complete and all(row['coverage'] == 'complete' and not row['missing_count'] for row in data.get('history_quality', {}).values())
+    # Historical backfill gaps are reported separately in history_quality. They must
+    # not invalidate otherwise complete live 15m/60m windows for scheduled runs.
+    # This matches manual collection and keeps missing history explicitly visible.
     stale = age > STALE_AFTER_SECONDS or market_age > STALE_AFTER_SECONDS
     data['quality_status'] = 'stale' if stale else 'ok' if complete and age >= -60 and market_age >= -60 else 'incomplete'
     data['monitoring_eligible'] = data['quality_status'] == 'ok'
