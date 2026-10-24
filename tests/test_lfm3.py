@@ -104,6 +104,25 @@ class LFM3Tests(unittest.TestCase):
             (d/'lfm3_latest.json').write_text(json.dumps(tampered))
             with self.assertRaisesRegex(ValueError,'RSI14'): validate(d)
 
+    def test_legacy_long_outage_is_reported_without_poisoning_live_lfm3(self):
+        with tempfile.TemporaryDirectory() as root:
+            d = Path(root)
+            self.fixture(d)
+            baseline = json.loads((d / 'latest.json').read_text())
+            baseline['history_quality'] = {
+                'binance': {'missing_count': 2931, 'outside_backfill_horizon': 2931},
+                'coinbase': {'missing_count': 2932, 'outside_backfill_horizon': 2932},
+            }
+            (d / 'latest.json').write_text(json.dumps(baseline))
+            with patch('lfm3.fetch_prices', side_effect=self.prices):
+                output = lfm3.collect(d)
+            self.assertTrue(output['monitoring_eligible'])
+            self.assertEqual(output['quality_status'], 'ok')
+            self.assertFalse(output['legacy_history_quality']['monitoring_eligible_at_collection'])
+            self.assertEqual(output['legacy_history_quality']['history_quality']['binance']['missing_count'], 2931)
+            self.assertNotIn('lfm2', output['errors'])
+            self.assertEqual(validate(d)['status'], 'PASS')
+
     def test_legacy_cent_rounding_is_preserved_and_larger_errors_rejected(self):
         with tempfile.TemporaryDirectory() as root:
             d=Path(root);self.fixture(d)
