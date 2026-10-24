@@ -306,7 +306,7 @@ def collect(data_dir=None):
         markets[exchange] = market
     generated = collector.utc(int(time.time() * 1000))
     out = dict(schema_version='3.0', generated_utc=generated, latest_closed_candle_utc=collector.utc(end),
-               collection_mode='manual_workflow_dispatch', request_id=baseline['request_id'],
+               collection_mode=baseline.get('collection_mode', 'manual_workflow_dispatch'), request_id=baseline['request_id'],
                collection_run_id=baseline['collection_run_id'], lfm2_generated_utc=baseline['generated_utc'],
                markets=markets, errors=errors,
                warnings=['USDT and USD are separate quote currencies; no conversion or cross-exchange addition.',
