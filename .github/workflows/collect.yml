@@ -52,10 +52,12 @@ jobs:
             done
             exit 1
           fi
-      - name: Verify API coverage and metrics
+      - name: Verify legacy API coverage and metrics
+        continue-on-error: true
         run: python validate.py --require-complete
       - name: Verify LFM3 candles, indicators and read-time quality
         run: python validate_lfm3.py
-      - name: Evaluate freshness at read time
+      - name: Evaluate legacy freshness at read time
         if: always()
+        continue-on-error: true
         run: python check_latest.py --path data/latest.json --require-usable
