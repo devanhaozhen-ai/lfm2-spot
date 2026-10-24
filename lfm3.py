@@ -317,12 +317,18 @@ def collect(data_dir=None):
                history_files={'price': 'data/price_history.csv', 'cvd': 'data/cvd_history.csv', 'lfm2': 'data/history.csv'},
                source_audit=copy.deepcopy(collector.FETCH_STATS), cross_exchange_notional_aggregation='disabled')
     out = refresh_lfm3_quality(out)
-    # The legacy source must also still be fresh after a slower seven-day fetch.
+    # Legacy long-range continuity is independent from LFM3's verified live
+    # candles and CVD windows. Expose it, never silently erase its warning.
+    # LFM3 live eligibility is still gated by its own freshness, source errors,
+    # price coverage, indicators, and measured 15m/60m CVD coverage.
     old_quality = refresh_quality(baseline)
+    out['legacy_history_quality'] = {
+        'quality_status_at_collection': old_quality['quality_status'],
+        'monitoring_eligible_at_collection': old_quality['monitoring_eligible'],
+        'history_quality': baseline.get('history_quality', {}),
+    }
     if not old_quality['monitoring_eligible']:
-        out['errors']['lfm2'] = 'Legacy spot input is stale or incomplete'
-        out['monitoring_eligible'] = False
-        out['quality_status'] = 'incomplete'
+        out['warnings'].append('Legacy LFM2 history is incomplete or stale; LFM3 live quality is evaluated independently.')
     collector.atomic_write(data_dir / 'lfm3_latest.json', lambda h: h.write(json.dumps(out, ensure_ascii=False, indent=2, allow_nan=False) + '\n'))
     collector.log('lfm3_complete', quality_status=out['quality_status'], errors=errors,
                   price_rows=len(prices), cvd_rows=len(cvd))
