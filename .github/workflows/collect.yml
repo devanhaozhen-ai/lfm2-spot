@@ -29,7 +29,8 @@ jobs:
         run: python -m unittest discover -s tests
       - name: Collect market data
         env:
-          LFM2_REQUEST_ID: ${{ inputs.request_id }}
+          LFM2_REQUEST_ID: ${{ inputs.request_id || github.run_id }}
+          LFM2_COLLECTION_MODE: ${{ github.event_name == 'schedule' && 'scheduled' || 'manual_workflow_dispatch' }}
         run: python collector.py
       - name: Collect seven-day LFM3 price history and measured CVD
         run: python lfm3.py
