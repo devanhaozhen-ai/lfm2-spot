@@ -25,6 +25,8 @@ def summarize(source, checked_at=None):
         "quality_status_at_build": data["quality_status"],
         "monitoring_eligible_at_build": data["monitoring_eligible"],
         "historical_cvd_quality": data["historical_cvd_quality"],
+        "legacy_history_quality": {k: v for k, v in source.get("legacy_history_quality", {}).items() if k != "history_quality"},
+        "legacy_historical_gaps": {exchange: {"missing_count": row.get("missing_count"), "outside_backfill_horizon": row.get("outside_backfill_horizon")} for exchange, row in source.get("legacy_history_quality", {}).get("history_quality", {}).items()},
         "stale_after_seconds": 900,
         "errors": data.get("errors", {}),
         "markets": {},
