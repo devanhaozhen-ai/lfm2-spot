@@ -45,8 +45,8 @@ def validate(directory, require_usable=True, clock=None):
     data = json.loads((directory / 'lfm3_latest.json').read_text())
     legacy = json.loads((directory / 'latest.json').read_text())
     clock = clock or datetime.now(timezone.utc)
-    if data['schema_version'] != '3.0' or data['collection_mode'] != 'manual_workflow_dispatch':
-        raise ValueError('LFM3 schema or manual mode invalid')
+    if data['schema_version'] != '3.0' or data['collection_mode'] not in ('manual_workflow_dispatch', 'scheduled'):
+        raise ValueError('LFM3 schema or collection mode invalid')
     if data['request_id'] != legacy['request_id'] or data['collection_run_id'] != legacy['collection_run_id']:
         raise ValueError('LFM3 and legacy output belong to different requests')
     if data['latest_closed_candle_utc'] != legacy['latest_closed_5m_end_utc'] or data['lfm2_generated_utc'] != legacy['generated_utc']:
