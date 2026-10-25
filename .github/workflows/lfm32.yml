@@ -1,0 +1,67 @@
+name: LFM3.2 independent collector
+run-name: LFM3.2 collection ${{ inputs.request_id || github.run_id }}
+on:
+  schedule:
+    - cron: '1-59/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: 'Optional request identifier'
+        required: false
+        type: string
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: spot-collector
+  cancel-in-progress: false
+jobs:
+  lfm32:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect bounded LFM3.2 REST evidence independently of legacy job
+        env:
+          LFM2_REQUEST_ID: ${{ inputs.request_id || github.run_id }}
+          LFM2_COLLECTION_MODE: ${{ github.event_name == 'schedule' && 'scheduled' || 'manual_workflow_dispatch' }}
+        run: python lfm32.py
+      - name: Independently validate LFM3.2 archive and arithmetic, allowing explicit source gaps
+        run: python validate_lfm32.py
+      - name: Audit actual scheduled events and data age
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python lfm32_schedule.py
+      - name: Retain verifiable source archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: lfm32-source-${{ github.run_id }}
+          path: data/lfm32_raw.json.gz
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish LFM3.2 without changing legacy outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/lfm32_latest.json data/lfm32_summary.json data/lfm32_history.jsonl data/lfm32_schedule.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update LFM3.2 verified REST evidence'
+            for attempt in 1 2 3; do
+              git pull --rebase origin "$GITHUB_REF_NAME"
+              if git push origin HEAD:"$GITHUB_REF_NAME"; then exit 0; fi
+            done
+            exit 1
+          fi
+      - name: Report live eligibility separately from collection success
+        run: |
+          python - <<'PYCODE'
+          import json, os
+          from lfm32 import refresh_quality
+          d = refresh_quality(json.load(open('data/lfm32_latest.json')))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('LFM3.2 REST collection completed. Live eligibility: ' + str(d['monitoring_eligible']) + '\n\n')
+              f.write('Source errors: `' + json.dumps(d['errors']) + '`\n')
+          PYCODE
