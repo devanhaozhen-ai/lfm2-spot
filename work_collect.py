@@ -83,7 +83,7 @@ def find_run(request_id, deadline):
     title = 'BTC manual collection ' + request_id
     while time.monotonic() < deadline:
         runs = api('actions/workflows/collect.yml/runs?event=workflow_dispatch&per_page=30')['workflow_runs']
-        matches = [run for run in runs if run['display_title'] == title and run['head_branch'] == 'main']
+        matches = [run for run in runs if run['display_title'] in (title, 'BTC collection ' + request_id) and run['head_branch'] == 'main']
         if len(matches) > 1:
             raise ValueError('more than one workflow matched this request')
         if matches:
