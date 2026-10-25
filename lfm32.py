@@ -11,6 +11,8 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from pathlib import Path
 from collector import atomic_write, utc, timestamp_ms
+from lfm32_spot_score import score_spot
+import lfm32_alternatives as alternatives
 from lfm32_sources import (Client, UNITS, fetch_trades, book_snapshot, fetch_oi,
                            fetch_funding, fetch_futures_flow)
 
@@ -48,7 +50,7 @@ def covered(stream, start, end):
 def aggregate(stream, start, end, config, threshold=None):
     result = {'start_utc': utc(start), 'end_utc': utc(end), 'coverage': 'complete' if covered(stream, start, end) else 'unavailable',
               'count_unit': 'feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders',
-              **dict.fromkeys(METRICS), 'tiers': None, 'consecutive_events': None, 'large_cvd_series': None}
+              **dict.fromkeys(METRICS), 'tiers': None, 'consecutive_events': None, 'large_cvd_series': None, 'record_count':None, 'underlying_match_count':None, 'large_record_count':None, 'large_individual_match_count':None, 'unique_taker_order_count':None}
     if result['coverage'] != 'complete':
         result['reason'] = stream.get('error', stream.get('reason', 'no verified source coverage'))
         return result
@@ -90,6 +92,12 @@ def aggregate(stream, start, end, config, threshold=None):
     for t, net in buckets.items():
         running += net
         series.append({'end_utc': utc(min(t+300000, end)), 'net_quote': float(net), 'cumulative_quote': float(running)})
+    result['record_count'] = len(rows)
+    result['underlying_match_count'] = sum(r['last_fill_id']-r['first_fill_id']+1 for r in rows)
+    result['large_record_count'] = bc+sc
+    result['large_individual_match_count'] = bc+sc if stream['trades'][0]['exchange']=='coinbase' else None
+    result['large_amount_basis'] = 'aggregate_group_notional' if stream['trades'][0]['exchange']=='binance' else 'individual_match_notional'
+    result['unique_taker_order_count'] = None
     result.update(buy_quote=float(buy), sell_quote=float(sell), large_buy_quote=float(lb), large_sell_quote=float(ls),
                   large_net_quote=float(lb-ls), cvd_quote=float(buy-sell), large_share=float((lb+ls)/(buy+sell)) if buy+sell else None,
                   trade_count=len(rows), large_count=bc+sc, large_buy_count=bc, large_sell_count=sc, tiers=tiers,
@@ -114,6 +122,9 @@ def build_market(exchange, stream, start, end, config):
             'amount_conversion': 'none; thresholds are native quote units, USDT is not assumed USD',
             'latest_price': latest['price'] if latest else None, 'latest_trade_utc': latest['time_utc'] if latest else None,
             'trade_kind': latest['trade_kind'] if latest else None,
+            'statistical_contract': {'large_record_basis':'aggregate_group' if exchange=='binance' else 'individual_match',
+                                     'large_records_comparable_across_exchanges':False, 'unique_taker_order_count':None,
+                                     'institutional_identity_known':False},
             'windows': {str(m)+'m': aggregate(stream, end-m*60000, end, config) for m in (5,15,60)},
             'dynamic': {'quantile': q, 'threshold_quote': float(threshold) if threshold is not None else None,
                         'sample_count': len(sample), 'calibration_start_utc': utc(start), 'calibration_end_utc': utc(end),
@@ -158,7 +169,9 @@ def refresh_quality(source, now=None):
             item['fresh_at_read'] &= bool(a is not None and -60 <= a <= 900)
         if name == 'funding' and item.get('actual_funding_utc'):
             item['fresh_at_read'] &= age(item['actual_funding_utc']) >= -60
+    d['alternative_derivatives'] = alternatives.refresh_context(d.get('alternative_derivatives',{}), now_ms)
     d['analysis'] = analyze(d)
+    d['spot_only_evidence'] = score_spot(d)
     return d
 
 
@@ -170,14 +183,13 @@ def analyze(data):
     signals, explanations = [], []
     if usable:
         b, c = (markets[e]['windows']['15m'] for e in ('binance','coinbase'))
-        ratios = [w['large_net_quote']/(w['large_buy_quote']+w['large_sell_quote']) for w in (b,c) if w['large_buy_quote']+w['large_sell_quote']]
-        if ratios:
-            dimensions['spot_large_flow'].update(value=sum((r+1)/2 for r in ratios)/len(ratios), reason='mean per-venue large flow imbalance mapped [-1,1] to [0,1]; no currency addition')
+        dimensions['spot_large_flow']['reason'] = 'Binance aggregate groups and Coinbase matches are not a comparable large-single-fill basis; per-venue observations retained, pooled dimension unavailable'
+        agreement['large_record_comparison_eligible'] = False
         sb, sc = sign(b['large_net_quote']), sign(c['large_net_quote'])
         agreement['spot_cvd_direction'] = 'buy' if b['cvd_quote'] > 0 and c['cvd_quote'] > 0 else 'sell' if b['cvd_quote'] < 0 and c['cvd_quote'] < 0 else 'conflict' if b['cvd_quote']*c['cvd_quote'] < 0 else 'neutral_or_one_sided'
         agreement['per_venue'] = {e: {'large_flow_sign': sign(markets[e]['windows']['15m']['large_net_quote']), 'all_flow_sign': sign(markets[e]['windows']['15m']['cvd_quote'])} for e in ('binance','coinbase')}
         agreement['direction'] = 'buy' if sb == sc == 1 else 'sell' if sb == sc == -1 else 'conflict' if sb*sc < 0 else 'neutral_or_one_sided'
-        dimensions['exchange_agreement'].update(value=1 if sb==sc==1 else 0 if sb==sc==-1 else .5, reason='15m per-venue native-quote large flow signs; neutral/conflict=0.5')
+        dimensions['exchange_agreement'].update(value=1 if agreement['spot_cvd_direction']=='buy' else 0 if agreement['spot_cvd_direction']=='sell' else .5, reason='15m ALL taker-flow signs by venue; not a comparison of large individual orders')
         pv = []
         for e in ('binance','coinbase'):
             w5, w15 = markets[e]['windows']['5m'], markets[e]['windows']['15m']
@@ -261,6 +273,17 @@ def collect(data_dir=ROOT/'data', config=None):
         except Exception as error:
             errors['futures_'+name] = str(error); derivatives[name] = {'status':'unavailable', 'error':str(error)}
         audit['futures_'+name] = client.audit
+    alternative_context = {'okx': {'exchange':'okx', 'instrument':alternatives.INSTRUMENT,
+                                  'usage':'separate context; never replaces Binance observations or completes its score dimension', 'components':{}}}
+    for name, fn in [('oi',lambda c: alternatives.fetch_oi(c,end)),('funding',alternatives.fetch_funding),('flow',lambda c: alternatives.fetch_flow(c,start,end))]:
+        client = Client(20)
+        try:
+            item = fn(client); raw['okx_'+name] = item.pop('raw')
+            alternative_context['okx']['components'][name] = {'status':'available','observed_utc':utc(int(time.time()*1000)),**item}
+        except Exception as error:
+            errors['okx_'+name] = str(error)
+            alternative_context['okx']['components'][name] = {'status':'unavailable','error':str(error)}
+        audit['okx_'+name] = client.audit
     # Reproducible normalized source archive retained as an Actions artifact, not bloating git history.
     raw.update(config=config, requested_start_utc=utc(start), requested_end_utc=utc(end), source_audit=audit)
     raw_bytes = json.dumps(raw, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
@@ -271,7 +294,7 @@ def collect(data_dir=ROOT/'data', config=None):
            'window_start_utc':utc(start), 'window_end_utc':utc(end),
            'collection_mode':os.environ.get('LFM2_COLLECTION_MODE','manual_workflow_dispatch'),
            'collection_run_id':os.environ.get('GITHUB_RUN_ID'), 'request_id':os.environ.get('LFM2_REQUEST_ID',''),
-           'markets':markets, 'order_books':books, 'derivatives':derivatives, 'errors':errors, 'source_audit':audit,
+           'markets':markets, 'order_books':books, 'derivatives':derivatives, 'alternative_derivatives':alternative_context, 'errors':errors, 'source_audit':audit,
            'config':config, 'config_hash':digest(config), 'cross_exchange_notional_aggregation':'disabled',
            'raw_archive':{'file':'lfm32_raw.json.gz', 'sha256':hashlib.sha256(archive).hexdigest(),
                           'storage':'Actions artifact lfm32-source-<run_id>, 30 days retention; local file when run locally',
@@ -293,7 +316,8 @@ def collect(data_dir=ROOT/'data', config=None):
     summary.pop('source_audit')
     for m in summary['markets'].values():
         for w in m['windows'].values(): w.pop('consecutive_events',None)
-        m['dynamic'].pop('windows',None)
+        if m['dynamic'].get('windows'):
+            m['dynamic']['windows'] = {'15m':m['dynamic']['windows']['15m']}
     for b in summary['order_books'].values():
         b.pop('bids',None); b.pop('asks',None)
     atomic_write(data_dir/'lfm32_summary.json',lambda h:h.write(json.dumps(summary,ensure_ascii=False,separators=(',', ':'),allow_nan=False)+'\n'))

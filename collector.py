@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 DATA = ROOT / 'data'
 DATA.mkdir(exist_ok=True)
-HEAD = {'User-Agent': 'LFM2-Spot-Monitor/2.0', 'Accept': 'application/json'}
+HEAD = {'User-Agent': 'LFM2-Spot-Monitor/2.0', 'Accept': 'application/json', 'Cache-Control': 'no-cache'}
 FETCH_DEADLINE = None
 FETCH_STATS = {}
 FIVE_MINUTES = 300000

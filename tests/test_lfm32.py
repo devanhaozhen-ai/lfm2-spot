@@ -156,7 +156,7 @@ class LFM32Tests(unittest.TestCase):
     def test_missing_dimensions_not_zero_or_renormalized(self):
         d=lfm32.refresh_quality(self.observation(),datetime.fromtimestamp(END/1000,tz=timezone.utc))
         a=d['analysis'];self.assertIsNone(a['buy_evidence_score_0_100'])
-        self.assertIn('book_absorption',a['missing_dimensions']);self.assertEqual(a['available_weight'],55)
+        self.assertIn('book_absorption',a['missing_dimensions']);self.assertEqual(a['available_weight'],25)
         self.assertFalse(a['predictive_use_eligible'])
 
     def test_single_venue_failure_does_not_pollute_other_venue(self):
@@ -196,7 +196,8 @@ class LFM32Tests(unittest.TestCase):
         for mode in ('scheduled','manual_workflow_dispatch'):
             with tempfile.TemporaryDirectory() as tmp, patch.dict(os.environ,{'LFM2_COLLECTION_MODE':mode,'LFM2_REQUEST_ID':'test'}), \
                  patch('lfm32.fetch_trades',side_effect=fetch),patch('lfm32.book_snapshot',side_effect=OSError('test unavailable')), \
-                 patch('lfm32.fetch_oi',side_effect=OSError('451')),patch('lfm32.fetch_funding',side_effect=OSError('451')),patch('lfm32.fetch_futures_flow',side_effect=OSError('451')):
+                 patch('lfm32.fetch_oi',side_effect=OSError('451')),patch('lfm32.fetch_funding',side_effect=OSError('451')),patch('lfm32.fetch_futures_flow',side_effect=OSError('451')), \
+                 patch('lfm32.alternatives.fetch_oi',side_effect=OSError('test unavailable')),patch('lfm32.alternatives.fetch_funding',side_effect=OSError('test unavailable')),patch('lfm32.alternatives.fetch_flow',side_effect=OSError('test unavailable')):
                 legacy=Path(tmp)/'latest.json';legacy.write_text('legacy retained')
                 d=lfm32.collect(tmp,self.config)
                 self.assertEqual(d['collection_mode'],mode);self.assertEqual(d['request_id'],'test')
