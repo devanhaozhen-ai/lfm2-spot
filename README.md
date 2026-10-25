@@ -1,4 +1,13 @@
-# BTC LFM 3.0 — Work 手动采集（兼容 LFM 2.0）
+# LFM3.2 快速入口
+
+输入 **“运行 LFM3.2”**：在有仓库与GitHub授权的Work环境执行 `python run_lfm32.py`，过期或不完整时 `python run_lfm32.py --refresh`。如实报告缺项，再结合带来源/时间的用户清算热力图分析；不保证普通新聊天自动记住本仓库。
+
+- [最新 LFM3.2 JSON](https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/lfm32_latest.json) / [紧凑摘要](https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/lfm32_summary.json)
+- [第一期模块、来源、限制与测试](docs/LFM32.md) · [系统审计与风险](docs/LFM32_AUDIT.md) · [第二期WebSocket方案与费用预算](docs/LFM32_WEBSOCKET_PLAN.md)
+
+第一期为有覆盖证明的REST窗口，**不是完整实时逐笔监控**。缺失数据为null；金额保留USDT/USD及交易所来源。订单簿仅快照，吸收/撤单不可用；完整0–100分在缺项时为null，评分未经回测不得用于预测。下方保留原系统的数据契约与使用说明。
+
+# BTC LFM 3.2 — 官方 REST 资金行为证据（兼容 LFM2 / LFM3.1）
 
 仓库：https://github.com/devanhaozhen-ai/lfm2-spot
 
@@ -6,7 +15,7 @@
 
 LFM 3.0 接口：https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/lfm3_latest.json
 
-输入 **“采集 BTC 数据”**，同一次手动运行同时更新 LFM 2.0 和 LFM 3.0。LFM 3.0 包含两所七天闭合 K 线、EMA20/60、Wilder RSI14、成交量变化、高低点参考位及真实 CVD 覆盖信息。没有 GitHub cron；未采集期间不会自动更新。
+输入 **“采集 BTC 数据”**，同一次手动运行同时更新 LFM 2.0 和 LFM 3.0。LFM 3.0 包含两所七天闭合 K 线、EMA20/60、Wilder RSI14、成交量变化、高低点参考位及真实 CVD 覆盖信息。同时保留 GitHub 五分钟 cron（best effort，可能显著延迟），和手动采集入口。
 
 七天 K 线持久化于 `data/price_history.csv`；5m 每所 2016 根，1h 每所 168 根，均使用 UTC 半开区间。完整旧记录不可覆盖，历史不会因滚动窗口删除；每次重新获取七天数据、去重并补缺。JSON 的 `markets.<exchange>.5m/1h.candles` 包含整个七天窗口，长期历史保存在 CSV。
 
@@ -18,7 +27,7 @@ EMA 以首次连续序列前 N 个收盘价均值为种子，alpha=2/(N+1)；RSI
 
 在当前 ChatGPT Work 任务中输入 **“采集 BTC 数据”**。Work 会复用已有 GitHub 授权，手动触发采集，等待 Actions 成功及公开 JSON 更新，完成验收后返回两所的 15m/60m CVD、主动买卖比和完整性。随后回普通聊天输入 **“运行 LFM 2.0”**，使用此接口作为最新现货数据输入。
 
-采集工作流仅保留 workflow_dispatch，已移除定时采集。健康工作流保留手动入口和采集完成后的 workflow_run 检查，也没有定时计划。两次手动请求之间数据不会自动刷新；超过 15 分钟的数据不能用于实时信号。
+采集工作流同时支持 schedule 和 workflow_dispatch，明确记录触发类型；健康工作流保留手动入口和采集完成后的 workflow_run 检查。GitHub调度不保证准时或连续，超过15分钟的数据不能用于实时信号。
 
 同一个五分钟区间内重复请求时，Work 会等待下一根区间真正闭合，确保窗口推进。已有授权有效时无需每次登录；授权失效时由用户完成 GitHub 官方授权，不要求密码或访问令牌。
 

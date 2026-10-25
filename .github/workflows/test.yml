@@ -1,0 +1,21 @@
+name: LFM compatibility and LFM3.2 tests
+on:
+  pull_request:
+  push:
+    paths:
+      - '**.py'
+      - 'lfm32_config.json'
+      - '.github/workflows/**'
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests
+      - run: python -m compileall -q .
+      - run: node --test tests/external_health.test.mjs
