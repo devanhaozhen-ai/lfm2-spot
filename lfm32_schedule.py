@@ -41,7 +41,7 @@ def evaluate(latest, runs, publication_run=None, latest_jobs=None, now=None):
 
 
 def inspect(latest, fetch=api, now=None):
-    runs=fetch('actions/workflows/collect.yml/runs?branch=main&per_page=100')['workflow_runs']
+    runs=fetch('actions/workflows/lfm32.yml/runs?branch=main&per_page=100')['workflow_runs']
     pub=fetch('actions/runs/'+str(latest['collection_run_id'])) if latest.get('collection_run_id') else None
     last=next((r for r in sorted(runs,key=lambda r:r['created_at'],reverse=True) if r['event']=='schedule' and r['head_branch']=='main'),None)
     jobs=fetch('actions/runs/'+str(last['id'])+'/jobs')['jobs'] if last else []
