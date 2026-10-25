@@ -1,5 +1,7 @@
 # LFM3.2 快速入口
 
+[首次验收后的修复、现货专项评分与调度核查](docs/LFM32_FIXES.md)：OKX永续数据独立标源；完整评分仍严格保留null；现货评分逐所输出，不比较两所分数，不称为机构概率。
+
 输入 **“运行 LFM3.2”**：在有仓库与GitHub授权的Work环境执行 `python run_lfm32.py`，过期或不完整时 `python run_lfm32.py --refresh`。如实报告缺项，再结合带来源/时间的用户清算热力图分析；不保证普通新聊天自动记住本仓库。
 
 - [最新 LFM3.2 JSON](https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/lfm32_latest.json) / [紧凑摘要](https://raw.githubusercontent.com/devanhaozhen-ai/lfm2-spot/main/data/lfm32_summary.json)

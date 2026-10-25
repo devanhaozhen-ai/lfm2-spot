@@ -11,8 +11,8 @@ from collector import timestamp_ms
 from lfm32 import refresh_quality
 
 
-def equal(actual, expected, label):
-    if actual is None or not math.isfinite(float(actual)) or not math.isclose(float(actual),float(expected),rel_tol=1e-10,abs_tol=1e-6):
+def equal(actual, expected, label, tolerance=1e-6):
+    if actual is None or not math.isfinite(float(actual)) or not math.isclose(float(actual),float(expected),rel_tol=1e-10,abs_tol=tolerance):
         raise ValueError('independent '+label+' mismatch')
 
 
@@ -60,6 +60,13 @@ def validate(directory, require_usable=False, now=None):
                 equal(w[label+'buy_quote'],buy,label+'buy'); equal(w[label+'sell_quote'],sell,label+'sell')
                 equal(w['large_net_quote' if label else 'cvd_quote'],buy-sell,label+'net')
             equal(w['trade_count'],len(selected),'trade count'); equal(w['large_count'],len(large),'large count')
+            if 'record_count' in w:
+                equal(w['record_count'],len(selected),'explicit record count')
+                equal(w['underlying_match_count'],sum(r['last_fill_id']-r['first_fill_id']+1 for r in selected),'underlying matches')
+                equal(w['large_record_count'],len(large),'large record count')
+                if w['unique_taker_order_count'] is not None: raise ValueError('unique taker orders cannot be inferred')
+                if e=='binance' and w['large_individual_match_count'] is not None: raise ValueError('aggregate group cannot prove large individual matches')
+                if e=='coinbase': equal(w['large_individual_match_count'],len(large),'large individual matches')
             cumulative = Decimal(0)
             for point in w['large_cvd_series']:
                 upper = timestamp_ms(point['end_utc'])
@@ -105,8 +112,44 @@ def validate(directory, require_usable=False, now=None):
                     total=sum((Decimal(index[t][7]) for t in range(lower,end,60000)),Decimal(0))
                     equal(w['buy_quote'],buy,'futures buy');equal(w['sell_quote'],total-buy,'futures sell');equal(w['cvd_quote'],2*buy-total,'futures CVD')
                 elif w['cvd_quote'] is not None:raise ValueError('incomplete futures flow must be null')
+    alternative=d.get('alternative_derivatives',{}).get('okx',{}).get('components',{})
+    for name,item in alternative.items():
+        if item['status']!='available':continue
+        if item['exchange']!='okx' or item['instrument']!='BTC-USDT-SWAP' or item['replaces_binance'] or item['used_in_full_buy_evidence_score']:
+            raise ValueError('alternative market attribution mismatch')
+        original=raw['okx_'+name]
+        if name=='funding':
+            r=max(original,key=lambda r:int(r['fundingTime']))
+            if timestamp_ms(item['actual_funding_utc'])!=int(r['fundingTime']) or item['source_rate_field']!='realizedRate': raise ValueError('OKX funding timestamp/type mismatch')
+            equal(item['rate'],r['realizedRate'],'OKX actual funding')
+        elif name=='oi':
+            index={int(r[0]):r for r in original}; anchor=timestamp_ms(item['as_of_utc'])
+            if anchor!=max(t for t in index if t<=end): raise ValueError('OKX OI reference mismatch')
+            equal(item['open_interest_btc'],index[anchor][2],'OKX OI BTC')
+            equal(item['reported_notional_usd'],index[anchor][3],'OKX reported USD')
+            if item['reported_notional_currency']!='USD':raise ValueError('OKX oiUsd is not USDT')
+            for m in (5,15,60):
+                w=item['changes'][str(m)+'m'];lower=anchor-m*60000
+                if timestamp_ms(w['start_utc'])!=lower or timestamp_ms(w['end_utc'])!=anchor:raise ValueError('OKX OI range mismatch')
+                if lower in index:equal(w['delta_btc'],Decimal(index[anchor][2])-Decimal(index[lower][2]),'OKX OI change')
+                elif w['delta_btc'] is not None:raise ValueError('OKX missing OI endpoint must be null')
+        else:
+            if item['api_unit']!='0' or item['volume_currency']!='BTC': raise ValueError('OKX taker volume is not in BTC')
+            index={int(r[0]):r for r in original}
+            for m in (5,15,60):
+                w=item['windows'][str(m)+'m'];lower=end-m*60000;expected=list(range(lower,end,300000))
+                if timestamp_ms(w['start_utc'])!=lower or timestamp_ms(w['end_utc'])!=end:raise ValueError('OKX flow bounds mismatch')
+                if all(t in index for t in expected):
+                    sell=sum((Decimal(index[t][1]) for t in expected),Decimal(0));buy=sum((Decimal(index[t][2]) for t in expected),Decimal(0))
+                    equal(w['sell_btc'],sell,'OKX sell BTC');equal(w['buy_btc'],buy,'OKX buy BTC');equal(w['cvd_btc'],buy-sell,'OKX CVD BTC')
+                elif any(w[k] is not None for k in ('sell_btc','buy_btc','cvd_btc')):raise ValueError('OKX missing flow is not zero')
     checked = refresh_quality(d, now or datetime.now(timezone.utc))
     a = checked['analysis']
+    for e,spot in checked['spot_only_evidence']['per_venue'].items():
+        if (spot['missing_dimensions'] or not checked['markets'][e]['monitoring_eligible']) and spot['score_0_100'] is not None:
+            raise ValueError('spot score ignored missing/stale data')
+        if spot['score_0_100'] is not None:
+            equal(spot['score_0_100'],sum(v['weight']*v['value'] for v in spot['dimensions'].values()),'spot score', tolerance=0.00051)
     if a['missing_dimensions'] and a['buy_evidence_score_0_100'] is not None: raise ValueError('missing dimensions produced full score')
     if require_usable and not checked['monitoring_eligible']: raise ValueError('stale or incomplete spot data')
     return {'status':'PASS','quality_status':checked['quality_status'], 'monitoring_eligible':checked['monitoring_eligible'],

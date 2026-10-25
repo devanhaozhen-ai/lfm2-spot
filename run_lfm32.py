@@ -10,6 +10,7 @@ import uuid
 from datetime import datetime, timezone
 from lfm32 import refresh_quality
 from work_collect import api, read_contents
+from lfm32_schedule import inspect as inspect_schedule
 
 
 def read_latest(ref='main'):
@@ -53,6 +54,10 @@ def main():
             'quality_status':data['quality_status'],'monitoring_eligible':data['monitoring_eligible'],
             'generated_utc':data['generated_utc'],'window_end_utc':data['window_end_utc'],'analysis':data['analysis'],
             'markets':data['markets'],'derivatives':data['derivatives'],'order_books':data['order_books'],'errors':data['errors']}
+    result['spot_only_evidence']=data.get('spot_only_evidence')
+    result['alternative_derivatives']=data.get('alternative_derivatives')
+    try: result['schedule_audit']=inspect_schedule(data)
+    except Exception as error: result['schedule_audit']={'status':'unavailable','continuous_5m_verified':False,'error':str(error)}
     print(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False))
     return 0 if data['monitoring_eligible'] else 2
 
