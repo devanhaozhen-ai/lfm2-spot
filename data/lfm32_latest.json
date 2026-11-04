@@ -2,21 +2,21 @@
   "schema_version": "3.2",
   "phase": 1,
   "collection_type": "bounded_rest_polling_not_realtime",
-  "generated_utc": "2026-11-04T03:16:56.854000Z",
-  "collection_started_utc": "2026-11-04T03:15:02.865000Z",
-  "window_start_utc": "2026-11-04T02:15:00Z",
-  "window_end_utc": "2026-11-04T03:15:00Z",
+  "generated_utc": "2026-11-04T11:10:34.286000Z",
+  "collection_started_utc": "2026-11-04T11:09:54.151000Z",
+  "window_start_utc": "2026-11-04T10:05:00Z",
+  "window_end_utc": "2026-11-04T11:05:00Z",
   "collection_mode": "scheduled",
-  "collection_run_id": "41765916386",
-  "request_id": "41765916386",
+  "collection_run_id": "41819025237",
+  "request_id": "41819025237",
   "markets": {
     "binance": {
       "exchange": "binance",
       "symbol": "BTCUSDT",
       "quote_currency": "USDT",
       "amount_conversion": "none; thresholds are native quote units, USDT is not assumed USD",
-      "latest_price": "75922.45000000",
-      "latest_trade_utc": "2026-11-04T03:15:25.100000Z",
+      "latest_price": "78587.83000000",
+      "latest_trade_utc": "2026-11-04T11:05:36.538000Z",
       "trade_kind": "aggregate_trade_same_taker_order_price_time",
       "statistical_contract": {
         "large_record_basis": "aggregate_group",
@@ -26,36 +26,36 @@
       },
       "windows": {
         "5m": {
-          "start_utc": "2026-11-04T03:10:00Z",
-          "end_utc": "2026-11-04T03:15:00Z",
+          "start_utc": "2026-11-04T11:00:00Z",
+          "end_utc": "2026-11-04T11:05:00Z",
           "coverage": "complete",
           "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-          "buy_quote": 6257424.7748915,
-          "sell_quote": 3742652.7867071,
-          "large_buy_quote": 1242819.4861304,
-          "large_sell_quote": 274674.86308,
-          "large_net_quote": 968144.6230504,
-          "cvd_quote": 2514771.9881844,
-          "large_share": 0.15174825793729296,
-          "trade_count": 7657,
-          "large_count": 6,
-          "large_buy_count": 4,
-          "large_sell_count": 2,
+          "buy_quote": 1030023.7122468,
+          "sell_quote": 1201578.6277703,
+          "large_buy_quote": 270699.1000078,
+          "large_sell_quote": 0.0,
+          "large_net_quote": 270699.1000078,
+          "cvd_quote": -171554.9155235,
+          "large_share": 0.12130257042378156,
+          "trade_count": 1849,
+          "large_count": 2,
+          "large_buy_count": 2,
+          "large_sell_count": 0,
           "tiers": [
             {
               "min_inclusive_quote": 100000.0,
               "max_exclusive_quote": 500000.0,
-              "buy_quote": 688005.0849572,
-              "sell_quote": 274674.86308000004,
-              "buy_count": 3,
-              "sell_count": 2
+              "buy_quote": 270699.10000780004,
+              "sell_quote": 0.0,
+              "buy_count": 2,
+              "sell_count": 0
             },
             {
               "min_inclusive_quote": 500000.0,
               "max_exclusive_quote": 1000000.0,
-              "buy_quote": 554814.4011732,
+              "buy_quote": 0.0,
               "sell_quote": 0.0,
-              "buy_count": 1,
+              "buy_count": 0,
               "sell_count": 0
             },
             {
@@ -78,65 +78,65 @@
           "consecutive_events": [],
           "large_cvd_series": [
             {
-              "end_utc": "2026-11-04T03:15:00Z",
-              "net_quote": 968144.6230504,
-              "cumulative_quote": 968144.6230504
+              "end_utc": "2026-11-04T11:05:00Z",
+              "net_quote": 270699.1000078,
+              "cumulative_quote": 270699.1000078
             }
           ],
-          "record_count": 7657,
-          "underlying_match_count": 34225,
-          "large_record_count": 6,
+          "record_count": 1849,
+          "underlying_match_count": 6296,
+          "large_record_count": 2,
           "large_individual_match_count": null,
           "unique_taker_order_count": null,
           "large_amount_basis": "aggregate_group_notional",
-          "large_cvd_anchor_utc": "2026-11-04T03:10:00Z",
+          "large_cvd_anchor_utc": "2026-11-04T11:00:00Z",
           "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
           "large_threshold_quote": 100000.0,
-          "first_trade_id": 4105958260,
-          "last_trade_id": 4105965916,
-          "price_change_pct": 0.08273140468300622,
-          "volume_btc": 131.65047
+          "first_trade_id": 4106257111,
+          "last_trade_id": 4106258959,
+          "price_change_pct": -0.061621552583258424,
+          "volume_btc": 28.39951
         },
         "15m": {
-          "start_utc": "2026-11-04T03:00:00Z",
-          "end_utc": "2026-11-04T03:15:00Z",
+          "start_utc": "2026-11-04T10:50:00Z",
+          "end_utc": "2026-11-04T11:05:00Z",
           "coverage": "complete",
           "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-          "buy_quote": 26142089.3913285,
-          "sell_quote": 44154991.6502819,
-          "large_buy_quote": 4763812.4751272,
-          "large_sell_quote": 14554681.9765594,
-          "large_net_quote": -9790869.5014322,
-          "cvd_quote": -18012902.2589534,
-          "large_share": 0.2748121851638698,
-          "trade_count": 37565,
-          "large_count": 77,
-          "large_buy_count": 24,
-          "large_sell_count": 53,
+          "buy_quote": 3246895.608882,
+          "sell_quote": 4484046.429743,
+          "large_buy_quote": 831996.3264508,
+          "large_sell_quote": 465177.4088256,
+          "large_net_quote": 366818.9176252,
+          "cvd_quote": -1237150.820861,
+          "large_share": 0.1677898668487639,
+          "trade_count": 4787,
+          "large_count": 9,
+          "large_buy_count": 6,
+          "large_sell_count": 3,
           "tiers": [
             {
               "min_inclusive_quote": 100000.0,
               "max_exclusive_quote": 500000.0,
-              "buy_quote": 4208998.073954,
-              "sell_quote": 9907795.179306798,
-              "buy_count": 23,
-              "sell_count": 48
+              "buy_quote": 831996.3264507998,
+              "sell_quote": 465177.40882559994,
+              "buy_count": 6,
+              "sell_count": 3
             },
             {
               "min_inclusive_quote": 500000.0,
               "max_exclusive_quote": 1000000.0,
-              "buy_quote": 554814.4011732,
-              "sell_quote": 2131560.2682272,
-              "buy_count": 1,
-              "sell_count": 3
+              "buy_quote": 0.0,
+              "sell_quote": 0.0,
+              "buy_count": 0,
+              "sell_count": 0
             },
             {
               "min_inclusive_quote": 1000000.0,
               "max_exclusive_quote": 5000000.0,
               "buy_quote": 0.0,
-              "sell_quote": 2515326.5290254,
+              "sell_quote": 0.0,
               "buy_count": 0,
-              "sell_count": 2
+              "sell_count": 0
             },
             {
               "min_inclusive_quote": 5000000.0,
@@ -147,97 +147,78 @@
               "sell_count": 0
             }
           ],
-          "consecutive_events": [
-            {
-              "taker_side": "sell",
-              "start_utc": "2026-11-04T03:01:13.054000Z",
-              "end_utc": "2026-11-04T03:01:13.054000Z",
-              "record_count": 3,
-              "notional_quote": 694317.0,
-              "first_id": 4105934856,
-              "last_id": 4105934858
-            },
-            {
-              "taker_side": "sell",
-              "start_utc": "2026-11-04T03:02:04.660000Z",
-              "end_utc": "2026-11-04T03:02:04.660000Z",
-              "record_count": 3,
-              "notional_quote": 1361920.0,
-              "first_id": 4105937526,
-              "last_id": 4105937528
-            }
-          ],
+          "consecutive_events": [],
           "large_cvd_series": [
             {
-              "end_utc": "2026-11-04T03:05:00Z",
-              "net_quote": -9952503.0888015,
-              "cumulative_quote": -9952503.0888015
+              "end_utc": "2026-11-04T10:55:00Z",
+              "net_quote": 106188.4199824,
+              "cumulative_quote": 106188.4199824
             },
             {
-              "end_utc": "2026-11-04T03:10:00Z",
-              "net_quote": -806511.0356811,
-              "cumulative_quote": -10759014.1244826
+              "end_utc": "2026-11-04T11:00:00Z",
+              "net_quote": -10068.602365,
+              "cumulative_quote": 96119.8176174
             },
             {
-              "end_utc": "2026-11-04T03:15:00Z",
-              "net_quote": 968144.6230504,
-              "cumulative_quote": -9790869.5014322
+              "end_utc": "2026-11-04T11:05:00Z",
+              "net_quote": 270699.1000078,
+              "cumulative_quote": 366818.9176252
             }
           ],
-          "record_count": 37565,
-          "underlying_match_count": 136410,
-          "large_record_count": 77,
+          "record_count": 4787,
+          "underlying_match_count": 15169,
+          "large_record_count": 9,
           "large_individual_match_count": null,
           "unique_taker_order_count": null,
           "large_amount_basis": "aggregate_group_notional",
-          "large_cvd_anchor_utc": "2026-11-04T03:00:00Z",
+          "large_cvd_anchor_utc": "2026-11-04T10:50:00Z",
           "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
           "large_threshold_quote": 100000.0,
-          "first_trade_id": 4105928352,
-          "last_trade_id": 4105965916,
-          "price_change_pct": -0.3416660912060071,
-          "volume_btc": 925.28044
+          "first_trade_id": 4106254173,
+          "last_trade_id": 4106258959,
+          "price_change_pct": 0.024802351487007924,
+          "volume_btc": 98.37909
         },
         "60m": {
-          "start_utc": "2026-11-04T02:15:00Z",
-          "end_utc": "2026-11-04T03:15:00Z",
+          "start_utc": "2026-11-04T10:05:00Z",
+          "end_utc": "2026-11-04T11:05:00Z",
           "coverage": "complete",
           "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-          "buy_quote": 49908875.1795667,
-          "sell_quote": 76574306.087341,
-          "large_buy_quote": 10085706.7772393,
-          "large_sell_quote": 19455538.747522,
-          "large_net_quote": -9369831.9702827,
-          "cvd_quote": -26665430.9077743,
-          "large_share": 0.23355868526442808,
-          "trade_count": 82986,
-          "large_count": 119,
-          "large_buy_count": 43,
-          "large_sell_count": 76,
+          "buy_quote": 17504583.6149273,
+          "sell_quote": 18630543.8815503,
+          "large_buy_quote": 2964040.1188591,
+          "large_sell_quote": 2398659.7778217,
+          "large_net_quote": 565380.3410374,
+          "cvd_quote": -1125960.266623,
+          "large_share": 0.1484068347954092,
+          "trade_count": 24505,
+          "large_count": 31,
+          "large_buy_count": 17,
+          "large_sell_count": 14,
           "tiers": [
             {
               "min_inclusive_quote": 100000.0,
               "max_exclusive_quote": 500000.0,
-              "buy_quote": 7572672.7826579,
-              "sell_quote": 14808651.950269397,
-              "buy_count": 39,
-              "sell_count": 71
+              "buy_quote": 2964040.1188591,
+              "sell_quote": 2398659.7778217,
+              "buy_count": 17,
+              "sell_count": 14
             },
             {
               "min_inclusive_quote": 500000.0,
               "max_exclusive_quote": 1000000.0,
-              "buy_quote": 2513033.9945814,
-              "sell_quote": 2131560.2682272,
-              "buy_count": 4,
-              "sell_count": 3
+              "buy_quote": 0.0,
+              "sell_quote": 0.0,
+              "buy_count": 0,
+              "sell_count": 0
             },
             {
               "min_inclusive_quote": 1000000.0,
               "max_exclusive_quote": 5000000.0,
               "buy_quote": 0.0,
-              "sell_quote": 2515326.5290254,
+              "sell_quote": 0.0,
               "buy_count": 0,
-              "sell_count": 2
+              "sell_count": 0
             },
             {
               "min_inclusive_quote": 5000000.0,
@@ -248,142 +229,123 @@
               "sell_count": 0
             }
           ],
-          "consecutive_events": [
-            {
-              "taker_side": "sell",
-              "start_utc": "2026-11-04T03:01:13.054000Z",
-              "end_utc": "2026-11-04T03:01:13.054000Z",
-              "record_count": 3,
-              "notional_quote": 694317.0,
-              "first_id": 4105934856,
-              "last_id": 4105934858
-            },
-            {
-              "taker_side": "sell",
-              "start_utc": "2026-11-04T03:02:04.660000Z",
-              "end_utc": "2026-11-04T03:02:04.660000Z",
-              "record_count": 3,
-              "notional_quote": 1361920.0,
-              "first_id": 4105937526,
-              "last_id": 4105937528
-            }
-          ],
+          "consecutive_events": [],
           "large_cvd_series": [
             {
-              "end_utc": "2026-11-04T02:20:00Z",
-              "net_quote": 92892.86,
-              "cumulative_quote": 92892.86
+              "end_utc": "2026-11-04T10:10:00Z",
+              "net_quote": -130834.8409115,
+              "cumulative_quote": -130834.8409115
             },
             {
-              "end_utc": "2026-11-04T02:25:00Z",
-              "net_quote": 1572260.1611467,
-              "cumulative_quote": 1665153.0211467
+              "end_utc": "2026-11-04T10:15:00Z",
+              "net_quote": -394714.3508031,
+              "cumulative_quote": -525549.1917146
             },
             {
-              "end_utc": "2026-11-04T02:30:00Z",
-              "net_quote": 1787121.8163946,
-              "cumulative_quote": 3452274.8375413
+              "end_utc": "2026-11-04T10:20:00Z",
+              "net_quote": 65979.6866166,
+              "cumulative_quote": -459569.505098
             },
             {
-              "end_utc": "2026-11-04T02:35:00Z",
-              "net_quote": 0.0,
-              "cumulative_quote": 3452274.8375413
+              "end_utc": "2026-11-04T10:25:00Z",
+              "net_quote": -392767.6,
+              "cumulative_quote": -852337.105098
             },
             {
-              "end_utc": "2026-11-04T02:40:00Z",
-              "net_quote": 0.0,
-              "cumulative_quote": 3452274.8375413
+              "end_utc": "2026-11-04T10:30:00Z",
+              "net_quote": 614482.5168775,
+              "cumulative_quote": -237854.5882205
             },
             {
-              "end_utc": "2026-11-04T02:45:00Z",
-              "net_quote": 0.0,
-              "cumulative_quote": 3452274.8375413
+              "end_utc": "2026-11-04T10:35:00Z",
+              "net_quote": 585185.9425979,
+              "cumulative_quote": 347331.3543774
             },
             {
-              "end_utc": "2026-11-04T02:50:00Z",
-              "net_quote": 667561.864625,
-              "cumulative_quote": 4119836.7021663
+              "end_utc": "2026-11-04T10:40:00Z",
+              "net_quote": -506288.9525053,
+              "cumulative_quote": -158957.5981279
             },
             {
-              "end_utc": "2026-11-04T02:55:00Z",
-              "net_quote": -782228.232074,
-              "cumulative_quote": 3337608.4700923
+              "end_utc": "2026-11-04T10:45:00Z",
+              "net_quote": 129927.2839445,
+              "cumulative_quote": -29030.3141834
             },
             {
-              "end_utc": "2026-11-04T03:00:00Z",
-              "net_quote": -2916570.9389428,
-              "cumulative_quote": 421037.5311495
+              "end_utc": "2026-11-04T10:50:00Z",
+              "net_quote": 227591.7375956,
+              "cumulative_quote": 198561.4234122
             },
             {
-              "end_utc": "2026-11-04T03:05:00Z",
-              "net_quote": -9952503.0888015,
-              "cumulative_quote": -9531465.557652
+              "end_utc": "2026-11-04T10:55:00Z",
+              "net_quote": 106188.4199824,
+              "cumulative_quote": 304749.8433946
             },
             {
-              "end_utc": "2026-11-04T03:10:00Z",
-              "net_quote": -806511.0356811,
-              "cumulative_quote": -10337976.5933331
+              "end_utc": "2026-11-04T11:00:00Z",
+              "net_quote": -10068.602365,
+              "cumulative_quote": 294681.2410296
             },
             {
-              "end_utc": "2026-11-04T03:15:00Z",
-              "net_quote": 968144.6230504,
-              "cumulative_quote": -9369831.9702827
+              "end_utc": "2026-11-04T11:05:00Z",
+              "net_quote": 270699.1000078,
+              "cumulative_quote": 565380.3410374
             }
           ],
-          "record_count": 82986,
-          "underlying_match_count": 284558,
-          "large_record_count": 119,
+          "record_count": 24505,
+          "underlying_match_count": 84025,
+          "large_record_count": 31,
           "large_individual_match_count": null,
           "unique_taker_order_count": null,
           "large_amount_basis": "aggregate_group_notional",
-          "large_cvd_anchor_utc": "2026-11-04T02:15:00Z",
+          "large_cvd_anchor_utc": "2026-11-04T10:05:00Z",
           "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
           "large_threshold_quote": 100000.0,
-          "first_trade_id": 4105882931,
-          "last_trade_id": 4105965916,
-          "price_change_pct": -1.3667949845203893,
-          "volume_btc": 1658.83515
+          "first_trade_id": 4106234455,
+          "last_trade_id": 4106258959,
+          "price_change_pct": 0.21314313347832015,
+          "volume_btc": 459.92483
         }
       },
       "dynamic": {
         "quantile": 0.99,
-        "threshold_quote": 27065.1600858,
-        "sample_count": 82986,
-        "calibration_start_utc": "2026-11-04T02:15:00Z",
-        "calibration_end_utc": "2026-11-04T03:15:00Z",
+        "threshold_quote": 28612.959,
+        "sample_count": 24505,
+        "calibration_start_utc": "2026-11-04T10:05:00Z",
+        "calibration_end_utc": "2026-11-04T11:05:00Z",
         "method": "nearest-rank empirical quantile of same-window feed records; descriptive in-sample, not predictive",
         "windows": {
           "5m": {
-            "start_utc": "2026-11-04T03:10:00Z",
-            "end_utc": "2026-11-04T03:15:00Z",
+            "start_utc": "2026-11-04T11:00:00Z",
+            "end_utc": "2026-11-04T11:05:00Z",
             "coverage": "complete",
             "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-            "buy_quote": 6257424.7748915,
-            "sell_quote": 3742652.7867071,
-            "large_buy_quote": 3044282.7954279,
-            "large_sell_quote": 1193004.759668,
-            "large_net_quote": 1851278.0357599,
-            "cvd_quote": 2514771.9881844,
-            "large_share": 0.4237254690271155,
-            "trade_count": 7657,
-            "large_count": 66,
-            "large_buy_count": 46,
-            "large_sell_count": 20,
+            "buy_quote": 1030023.7122468,
+            "sell_quote": 1201578.6277703,
+            "large_buy_quote": 519818.5073609,
+            "large_sell_quote": 560563.2142933,
+            "large_net_quote": -40744.7069324,
+            "cvd_quote": -171554.9155235,
+            "large_share": 0.4841282437649359,
+            "trade_count": 1849,
+            "large_count": 17,
+            "large_buy_count": 7,
+            "large_sell_count": 10,
             "tiers": [
               {
                 "min_inclusive_quote": 100000.0,
                 "max_exclusive_quote": 500000.0,
-                "buy_quote": 688005.0849572,
-                "sell_quote": 274674.86308000004,
-                "buy_count": 3,
-                "sell_count": 2
+                "buy_quote": 270699.10000780004,
+                "sell_quote": 0.0,
+                "buy_count": 2,
+                "sell_count": 0
               },
               {
                 "min_inclusive_quote": 500000.0,
                 "max_exclusive_quote": 1000000.0,
-                "buy_quote": 554814.4011732,
+                "buy_quote": 0.0,
                 "sell_quote": 0.0,
-                "buy_count": 1,
+                "buy_count": 0,
                 "sell_count": 0
               },
               {
@@ -406,65 +368,65 @@
             "consecutive_events": [],
             "large_cvd_series": [
               {
-                "end_utc": "2026-11-04T03:15:00Z",
-                "net_quote": 1851278.0357599,
-                "cumulative_quote": 1851278.0357599
+                "end_utc": "2026-11-04T11:05:00Z",
+                "net_quote": -40744.7069324,
+                "cumulative_quote": -40744.7069324
               }
             ],
-            "record_count": 7657,
-            "underlying_match_count": 34225,
-            "large_record_count": 66,
+            "record_count": 1849,
+            "underlying_match_count": 6296,
+            "large_record_count": 17,
             "large_individual_match_count": null,
             "unique_taker_order_count": null,
             "large_amount_basis": "aggregate_group_notional",
-            "large_cvd_anchor_utc": "2026-11-04T03:10:00Z",
+            "large_cvd_anchor_utc": "2026-11-04T11:00:00Z",
             "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
-            "large_threshold_quote": 27065.1600858,
-            "first_trade_id": 4105958260,
-            "last_trade_id": 4105965916,
-            "price_change_pct": 0.08273140468300622,
-            "volume_btc": 131.65047
+            "large_threshold_quote": 28612.959,
+            "first_trade_id": 4106257111,
+            "last_trade_id": 4106258959,
+            "price_change_pct": -0.061621552583258424,
+            "volume_btc": 28.39951
           },
           "15m": {
-            "start_utc": "2026-11-04T03:00:00Z",
-            "end_utc": "2026-11-04T03:15:00Z",
+            "start_utc": "2026-11-04T10:50:00Z",
+            "end_utc": "2026-11-04T11:05:00Z",
             "coverage": "complete",
             "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-            "buy_quote": 26142089.3913285,
-            "sell_quote": 44154991.6502819,
-            "large_buy_quote": 12206518.6666678,
-            "large_sell_quote": 25975051.9751776,
-            "large_net_quote": -13768533.3085098,
-            "cvd_quote": -18012902.2589534,
-            "large_share": 0.5431458899302645,
-            "trade_count": 37565,
-            "large_count": 489,
-            "large_buy_count": 195,
-            "large_sell_count": 294,
+            "buy_quote": 3246895.608882,
+            "sell_quote": 4484046.429743,
+            "large_buy_quote": 1385033.7132801,
+            "large_sell_quote": 2716063.3546944,
+            "large_net_quote": -1331029.6414143,
+            "cvd_quote": -1237150.820861,
+            "large_share": 0.5304783100797775,
+            "trade_count": 4787,
+            "large_count": 62,
+            "large_buy_count": 16,
+            "large_sell_count": 46,
             "tiers": [
               {
                 "min_inclusive_quote": 100000.0,
                 "max_exclusive_quote": 500000.0,
-                "buy_quote": 4208998.073954,
-                "sell_quote": 9907795.179306798,
-                "buy_count": 23,
-                "sell_count": 48
+                "buy_quote": 831996.3264507998,
+                "sell_quote": 465177.40882559994,
+                "buy_count": 6,
+                "sell_count": 3
               },
               {
                 "min_inclusive_quote": 500000.0,
                 "max_exclusive_quote": 1000000.0,
-                "buy_quote": 554814.4011732,
-                "sell_quote": 2131560.2682272,
-                "buy_count": 1,
-                "sell_count": 3
+                "buy_quote": 0.0,
+                "sell_quote": 0.0,
+                "buy_count": 0,
+                "sell_count": 0
               },
               {
                 "min_inclusive_quote": 1000000.0,
                 "max_exclusive_quote": 5000000.0,
                 "buy_quote": 0.0,
-                "sell_quote": 2515326.5290254,
+                "sell_quote": 0.0,
                 "buy_count": 0,
-                "sell_count": 2
+                "sell_count": 0
               },
               {
                 "min_inclusive_quote": 5000000.0,
@@ -475,178 +437,78 @@
                 "sell_count": 0
               }
             ],
-            "consecutive_events": [
-              {
-                "taker_side": "buy",
-                "start_utc": "2026-11-04T03:00:04.862000Z",
-                "end_utc": "2026-11-04T03:00:04.862000Z",
-                "record_count": 3,
-                "notional_quote": 116308.6712,
-                "first_id": 4105928882,
-                "last_id": 4105928884
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:01:13.054000Z",
-                "end_utc": "2026-11-04T03:01:13.054000Z",
-                "record_count": 3,
-                "notional_quote": 694317.0,
-                "first_id": 4105934856,
-                "last_id": 4105934858
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.660000Z",
-                "end_utc": "2026-11-04T03:02:04.660000Z",
-                "record_count": 5,
-                "notional_quote": 1430552.56,
-                "first_id": 4105937526,
-                "last_id": 4105937530
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.660000Z",
-                "end_utc": "2026-11-04T03:02:04.660000Z",
-                "record_count": 3,
-                "notional_quote": 163045.08,
-                "first_id": 4105937532,
-                "last_id": 4105937534
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.916000Z",
-                "end_utc": "2026-11-04T03:02:04.916000Z",
-                "record_count": 5,
-                "notional_quote": 381259.32,
-                "first_id": 4105937781,
-                "last_id": 4105937785
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.916000Z",
-                "end_utc": "2026-11-04T03:02:04.917000Z",
-                "record_count": 3,
-                "notional_quote": 164806.76,
-                "first_id": 4105937790,
-                "last_id": 4105937792
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.917000Z",
-                "end_utc": "2026-11-04T03:02:04.917000Z",
-                "record_count": 3,
-                "notional_quote": 180598.8,
-                "first_id": 4105937809,
-                "last_id": 4105937811
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:28.821000Z",
-                "end_utc": "2026-11-04T03:02:28.821000Z",
-                "record_count": 3,
-                "notional_quote": 292071.086316,
-                "first_id": 4105942772,
-                "last_id": 4105942774
-              },
-              {
-                "taker_side": "buy",
-                "start_utc": "2026-11-04T03:03:38.289000Z",
-                "end_utc": "2026-11-04T03:03:38.290000Z",
-                "record_count": 3,
-                "notional_quote": 139515.48,
-                "first_id": 4105945699,
-                "last_id": 4105945701
-              },
-              {
-                "taker_side": "buy",
-                "start_utc": "2026-11-04T03:06:23.008000Z",
-                "end_utc": "2026-11-04T03:06:23.188000Z",
-                "record_count": 3,
-                "notional_quote": 120141.561578,
-                "first_id": 4105950672,
-                "last_id": 4105950674
-              },
-              {
-                "taker_side": "buy",
-                "start_utc": "2026-11-04T03:08:24.965000Z",
-                "end_utc": "2026-11-04T03:08:24.965000Z",
-                "record_count": 3,
-                "notional_quote": 145424.8474697,
-                "first_id": 4105953883,
-                "last_id": 4105953885
-              }
-            ],
+            "consecutive_events": [],
             "large_cvd_series": [
               {
-                "end_utc": "2026-11-04T03:05:00Z",
-                "net_quote": -14619211.5954198,
-                "cumulative_quote": -14619211.5954198
+                "end_utc": "2026-11-04T10:55:00Z",
+                "net_quote": -816180.0149462,
+                "cumulative_quote": -816180.0149462
               },
               {
-                "end_utc": "2026-11-04T03:10:00Z",
-                "net_quote": -1000599.7488499,
-                "cumulative_quote": -15619811.3442697
+                "end_utc": "2026-11-04T11:00:00Z",
+                "net_quote": -474104.9195357,
+                "cumulative_quote": -1290284.9344819
               },
               {
-                "end_utc": "2026-11-04T03:15:00Z",
-                "net_quote": 1851278.0357599,
-                "cumulative_quote": -13768533.3085098
+                "end_utc": "2026-11-04T11:05:00Z",
+                "net_quote": -40744.7069324,
+                "cumulative_quote": -1331029.6414143
               }
             ],
-            "record_count": 37565,
-            "underlying_match_count": 136410,
-            "large_record_count": 489,
+            "record_count": 4787,
+            "underlying_match_count": 15169,
+            "large_record_count": 62,
             "large_individual_match_count": null,
             "unique_taker_order_count": null,
             "large_amount_basis": "aggregate_group_notional",
-            "large_cvd_anchor_utc": "2026-11-04T03:00:00Z",
+            "large_cvd_anchor_utc": "2026-11-04T10:50:00Z",
             "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
-            "large_threshold_quote": 27065.1600858,
-            "first_trade_id": 4105928352,
-            "last_trade_id": 4105965916,
-            "price_change_pct": -0.3416660912060071,
-            "volume_btc": 925.28044
+            "large_threshold_quote": 28612.959,
+            "first_trade_id": 4106254173,
+            "last_trade_id": 4106258959,
+            "price_change_pct": 0.024802351487007924,
+            "volume_btc": 98.37909
           },
           "60m": {
-            "start_utc": "2026-11-04T02:15:00Z",
-            "end_utc": "2026-11-04T03:15:00Z",
+            "start_utc": "2026-11-04T10:05:00Z",
+            "end_utc": "2026-11-04T11:05:00Z",
             "coverage": "complete",
             "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-            "buy_quote": 49908875.1795667,
-            "sell_quote": 76574306.087341,
-            "large_buy_quote": 22083434.3136858,
-            "large_sell_quote": 40150023.1205313,
-            "large_net_quote": -18066588.8068455,
-            "cvd_quote": -26665430.9077743,
-            "large_share": 0.49202950788287525,
-            "trade_count": 82986,
-            "large_count": 830,
-            "large_buy_count": 318,
-            "large_sell_count": 512,
+            "buy_quote": 17504583.6149273,
+            "sell_quote": 18630543.8815503,
+            "large_buy_quote": 6631030.1973372,
+            "large_sell_quote": 9316858.6242714,
+            "large_net_quote": -2685828.4269342,
+            "cvd_quote": -1125960.266623,
+            "large_share": 0.4413403224649803,
+            "trade_count": 24505,
+            "large_count": 246,
+            "large_buy_count": 92,
+            "large_sell_count": 154,
             "tiers": [
               {
                 "min_inclusive_quote": 100000.0,
                 "max_exclusive_quote": 500000.0,
-                "buy_quote": 7572672.7826579,
-                "sell_quote": 14808651.950269397,
-                "buy_count": 39,
-                "sell_count": 71
+                "buy_quote": 2964040.1188591,
+                "sell_quote": 2398659.7778217,
+                "buy_count": 17,
+                "sell_count": 14
               },
               {
                 "min_inclusive_quote": 500000.0,
                 "max_exclusive_quote": 1000000.0,
-                "buy_quote": 2513033.9945814,
-                "sell_quote": 2131560.2682272,
-                "buy_count": 4,
-                "sell_count": 3
+                "buy_quote": 0.0,
+                "sell_quote": 0.0,
+                "buy_count": 0,
+                "sell_count": 0
               },
               {
                 "min_inclusive_quote": 1000000.0,
                 "max_exclusive_quote": 5000000.0,
                 "buy_quote": 0.0,
-                "sell_quote": 2515326.5290254,
+                "sell_quote": 0.0,
                 "buy_count": 0,
-                "sell_count": 2
+                "sell_count": 0
               },
               {
                 "min_inclusive_quote": 5000000.0,
@@ -659,216 +521,90 @@
             ],
             "consecutive_events": [
               {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T02:52:47.162000Z",
-                "end_utc": "2026-11-04T02:52:47.162000Z",
-                "record_count": 3,
-                "notional_quote": 198869.6416752,
-                "first_id": 4105916244,
-                "last_id": 4105916246
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T02:58:29.645000Z",
-                "end_utc": "2026-11-04T02:58:29.646000Z",
-                "record_count": 4,
-                "notional_quote": 425652.12,
-                "first_id": 4105921041,
-                "last_id": 4105921044
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T02:59:10.295000Z",
-                "end_utc": "2026-11-04T02:59:10.296000Z",
-                "record_count": 3,
-                "notional_quote": 177653.27996,
-                "first_id": 4105923087,
-                "last_id": 4105923089
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T02:59:10.397000Z",
-                "end_utc": "2026-11-04T02:59:10.397000Z",
-                "record_count": 3,
-                "notional_quote": 868226.008,
-                "first_id": 4105923142,
-                "last_id": 4105923144
-              },
-              {
                 "taker_side": "buy",
-                "start_utc": "2026-11-04T03:00:04.862000Z",
-                "end_utc": "2026-11-04T03:00:04.862000Z",
+                "start_utc": "2026-11-04T10:34:28.760000Z",
+                "end_utc": "2026-11-04T10:34:28.760000Z",
                 "record_count": 3,
-                "notional_quote": 116308.6712,
-                "first_id": 4105928882,
-                "last_id": 4105928884
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:01:13.054000Z",
-                "end_utc": "2026-11-04T03:01:13.054000Z",
-                "record_count": 3,
-                "notional_quote": 694317.0,
-                "first_id": 4105934856,
-                "last_id": 4105934858
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.660000Z",
-                "end_utc": "2026-11-04T03:02:04.660000Z",
-                "record_count": 5,
-                "notional_quote": 1430552.56,
-                "first_id": 4105937526,
-                "last_id": 4105937530
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.660000Z",
-                "end_utc": "2026-11-04T03:02:04.660000Z",
-                "record_count": 3,
-                "notional_quote": 163045.08,
-                "first_id": 4105937532,
-                "last_id": 4105937534
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.916000Z",
-                "end_utc": "2026-11-04T03:02:04.916000Z",
-                "record_count": 5,
-                "notional_quote": 381259.32,
-                "first_id": 4105937781,
-                "last_id": 4105937785
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.916000Z",
-                "end_utc": "2026-11-04T03:02:04.917000Z",
-                "record_count": 3,
-                "notional_quote": 164806.76,
-                "first_id": 4105937790,
-                "last_id": 4105937792
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:04.917000Z",
-                "end_utc": "2026-11-04T03:02:04.917000Z",
-                "record_count": 3,
-                "notional_quote": 180598.8,
-                "first_id": 4105937809,
-                "last_id": 4105937811
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:02:28.821000Z",
-                "end_utc": "2026-11-04T03:02:28.821000Z",
-                "record_count": 3,
-                "notional_quote": 292071.086316,
-                "first_id": 4105942772,
-                "last_id": 4105942774
-              },
-              {
-                "taker_side": "buy",
-                "start_utc": "2026-11-04T03:03:38.289000Z",
-                "end_utc": "2026-11-04T03:03:38.290000Z",
-                "record_count": 3,
-                "notional_quote": 139515.48,
-                "first_id": 4105945699,
-                "last_id": 4105945701
-              },
-              {
-                "taker_side": "buy",
-                "start_utc": "2026-11-04T03:06:23.008000Z",
-                "end_utc": "2026-11-04T03:06:23.188000Z",
-                "record_count": 3,
-                "notional_quote": 120141.561578,
-                "first_id": 4105950672,
-                "last_id": 4105950674
-              },
-              {
-                "taker_side": "buy",
-                "start_utc": "2026-11-04T03:08:24.965000Z",
-                "end_utc": "2026-11-04T03:08:24.965000Z",
-                "record_count": 3,
-                "notional_quote": 145424.8474697,
-                "first_id": 4105953883,
-                "last_id": 4105953885
+                "notional_quote": 115589.051,
+                "first_id": 4106247919,
+                "last_id": 4106247921
               }
             ],
             "large_cvd_series": [
               {
-                "end_utc": "2026-11-04T02:20:00Z",
-                "net_quote": 173445.9180034,
-                "cumulative_quote": 173445.9180034
+                "end_utc": "2026-11-04T10:10:00Z",
+                "net_quote": -380138.6734095,
+                "cumulative_quote": -380138.6734095
               },
               {
-                "end_utc": "2026-11-04T02:25:00Z",
-                "net_quote": 1206471.6576832,
-                "cumulative_quote": 1379917.5756866
+                "end_utc": "2026-11-04T10:15:00Z",
+                "net_quote": -467684.5104935,
+                "cumulative_quote": -847823.183903
               },
               {
-                "end_utc": "2026-11-04T02:30:00Z",
-                "net_quote": 2037209.7209823,
-                "cumulative_quote": 3417127.2966689
+                "end_utc": "2026-11-04T10:20:00Z",
+                "net_quote": -331642.4898489,
+                "cumulative_quote": -1179465.6737519
               },
               {
-                "end_utc": "2026-11-04T02:35:00Z",
-                "net_quote": 225736.470644,
-                "cumulative_quote": 3642863.7673129
+                "end_utc": "2026-11-04T10:25:00Z",
+                "net_quote": -567771.3918677,
+                "cumulative_quote": -1747237.0656196
               },
               {
-                "end_utc": "2026-11-04T02:40:00Z",
-                "net_quote": -75081.6024257,
-                "cumulative_quote": 3567782.1648872
+                "end_utc": "2026-11-04T10:30:00Z",
+                "net_quote": 447532.1969926,
+                "cumulative_quote": -1299704.868627
               },
               {
-                "end_utc": "2026-11-04T02:45:00Z",
-                "net_quote": 268471.6266142,
-                "cumulative_quote": 3836253.7915014
+                "end_utc": "2026-11-04T10:35:00Z",
+                "net_quote": 1559793.0972871,
+                "cumulative_quote": 260088.2286601
               },
               {
-                "end_utc": "2026-11-04T02:50:00Z",
-                "net_quote": 798955.7200257,
-                "cumulative_quote": 4635209.5115271
+                "end_utc": "2026-11-04T10:40:00Z",
+                "net_quote": -794331.6801587,
+                "cumulative_quote": -534243.4514986
               },
               {
-                "end_utc": "2026-11-04T02:55:00Z",
-                "net_quote": -962330.2164344,
-                "cumulative_quote": 3672879.2950927
+                "end_utc": "2026-11-04T10:45:00Z",
+                "net_quote": -480418.1757424,
+                "cumulative_quote": -1014661.627241
               },
               {
-                "end_utc": "2026-11-04T03:00:00Z",
-                "net_quote": -7970934.7934284,
-                "cumulative_quote": -4298055.4983357
+                "end_utc": "2026-11-04T10:50:00Z",
+                "net_quote": -340137.1582789,
+                "cumulative_quote": -1354798.7855199
               },
               {
-                "end_utc": "2026-11-04T03:05:00Z",
-                "net_quote": -14619211.5954198,
-                "cumulative_quote": -18917267.0937555
+                "end_utc": "2026-11-04T10:55:00Z",
+                "net_quote": -816180.0149462,
+                "cumulative_quote": -2170978.8004661
               },
               {
-                "end_utc": "2026-11-04T03:10:00Z",
-                "net_quote": -1000599.7488499,
-                "cumulative_quote": -19917866.8426054
+                "end_utc": "2026-11-04T11:00:00Z",
+                "net_quote": -474104.9195357,
+                "cumulative_quote": -2645083.7200018
               },
               {
-                "end_utc": "2026-11-04T03:15:00Z",
-                "net_quote": 1851278.0357599,
-                "cumulative_quote": -18066588.8068455
+                "end_utc": "2026-11-04T11:05:00Z",
+                "net_quote": -40744.7069324,
+                "cumulative_quote": -2685828.4269342
               }
             ],
-            "record_count": 82986,
-            "underlying_match_count": 284558,
-            "large_record_count": 830,
+            "record_count": 24505,
+            "underlying_match_count": 84025,
+            "large_record_count": 246,
             "large_individual_match_count": null,
             "unique_taker_order_count": null,
             "large_amount_basis": "aggregate_group_notional",
-            "large_cvd_anchor_utc": "2026-11-04T02:15:00Z",
+            "large_cvd_anchor_utc": "2026-11-04T10:05:00Z",
             "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
-            "large_threshold_quote": 27065.1600858,
-            "first_trade_id": 4105882931,
-            "last_trade_id": 4105965916,
-            "price_change_pct": -1.3667949845203893,
-            "volume_btc": 1658.83515
+            "large_threshold_quote": 28612.959,
+            "first_trade_id": 4106234455,
+            "last_trade_id": 4106258959,
+            "price_change_pct": 0.21314313347832015,
+            "volume_btc": 459.92483
           }
         }
       },
@@ -878,13 +614,13 @@
         "id_gaps": 0,
         "fill_id_gaps": false,
         "reversed_time": false,
-        "pages": 85,
-        "oldest_ms": 1793758440004,
-        "newest_ms": 1793762125100,
-        "requested_start_utc": "2026-11-04T02:15:00Z",
-        "requested_end_utc": "2026-11-04T03:15:00Z"
+        "pages": 25,
+        "oldest_ms": 1793786640679,
+        "newest_ms": 1793790336538,
+        "requested_start_utc": "2026-11-04T10:05:00Z",
+        "requested_end_utc": "2026-11-04T11:05:00Z"
       },
-      "latest_trade_age_seconds": 91.76,
+      "latest_trade_age_seconds": 297.751,
       "monitoring_eligible": true
     },
     "coinbase": {
@@ -892,8 +628,8 @@
       "symbol": "BTC-USD",
       "quote_currency": "USD",
       "amount_conversion": "none; thresholds are native quote units, USDT is not assumed USD",
-      "latest_price": "75933.43000000",
-      "latest_trade_utc": "2026-11-04T03:16:36.004000Z",
+      "latest_price": "78510.95000000",
+      "latest_trade_utc": "2026-11-04T11:10:21.314000Z",
       "trade_kind": "individual_match",
       "statistical_contract": {
         "large_record_basis": "individual_match",
@@ -903,28 +639,182 @@
       },
       "windows": {
         "5m": {
-          "start_utc": "2026-11-04T03:10:00Z",
-          "end_utc": "2026-11-04T03:15:00Z",
+          "start_utc": "2026-11-04T11:00:00Z",
+          "end_utc": "2026-11-04T11:05:00Z",
           "coverage": "complete",
           "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-          "buy_quote": 7426287.43231623,
-          "sell_quote": 4762462.065825588,
+          "buy_quote": 339050.4134675255,
+          "sell_quote": 730984.9251805195,
           "large_buy_quote": 0.0,
-          "large_sell_quote": 367203.567470557,
-          "large_net_quote": -367203.567470557,
-          "cvd_quote": 2663825.366490641,
-          "large_share": 0.030126434834560956,
-          "trade_count": 3736,
-          "large_count": 3,
+          "large_sell_quote": 156894.9,
+          "large_net_quote": -156894.9,
+          "cvd_quote": -391934.511712994,
+          "large_share": 0.14662590508294018,
+          "trade_count": 1530,
+          "large_count": 1,
           "large_buy_count": 0,
-          "large_sell_count": 3,
+          "large_sell_count": 1,
           "tiers": [
             {
               "min_inclusive_quote": 100000.0,
               "max_exclusive_quote": 500000.0,
               "buy_quote": 0.0,
-              "sell_quote": 367203.567470557,
+              "sell_quote": 156894.9,
               "buy_count": 0,
+              "sell_count": 1
+            },
+            {
+              "min_inclusive_quote": 500000.0,
+              "max_exclusive_quote": 1000000.0,
+              "buy_quote": 0.0,
+              "sell_quote": 0.0,
+              "buy_count": 0,
+              "sell_count": 0
+            },
+            {
+              "min_inclusive_quote": 1000000.0,
+              "max_exclusive_quote": 5000000.0,
+              "buy_quote": 0.0,
+              "sell_quote": 0.0,
+              "buy_count": 0,
+              "sell_count": 0
+            },
+            {
+              "min_inclusive_quote": 5000000.0,
+              "max_exclusive_quote": null,
+              "buy_quote": 0.0,
+              "sell_quote": 0.0,
+              "buy_count": 0,
+              "sell_count": 0
+            }
+          ],
+          "consecutive_events": [],
+          "large_cvd_series": [
+            {
+              "end_utc": "2026-11-04T11:05:00Z",
+              "net_quote": -156894.9,
+              "cumulative_quote": -156894.9
+            }
+          ],
+          "record_count": 1530,
+          "underlying_match_count": 1530,
+          "large_record_count": 1,
+          "large_individual_match_count": 1,
+          "unique_taker_order_count": null,
+          "large_amount_basis": "individual_match_notional",
+          "large_cvd_anchor_utc": "2026-11-04T11:00:00Z",
+          "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
+          "large_threshold_quote": 100000.0,
+          "first_trade_id": 1114906760,
+          "last_trade_id": 1114908289,
+          "price_change_pct": -0.04515209912669419,
+          "volume_btc": 13.63720152
+        },
+        "15m": {
+          "start_utc": "2026-11-04T10:50:00Z",
+          "end_utc": "2026-11-04T11:05:00Z",
+          "coverage": "complete",
+          "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
+          "buy_quote": 1132774.4237615087,
+          "sell_quote": 1292454.100660397,
+          "large_buy_quote": 0.0,
+          "large_sell_quote": 156894.9,
+          "large_net_quote": -156894.9,
+          "cvd_quote": -159679.6768988884,
+          "large_share": 0.06469283138478613,
+          "trade_count": 3871,
+          "large_count": 1,
+          "large_buy_count": 0,
+          "large_sell_count": 1,
+          "tiers": [
+            {
+              "min_inclusive_quote": 100000.0,
+              "max_exclusive_quote": 500000.0,
+              "buy_quote": 0.0,
+              "sell_quote": 156894.9,
+              "buy_count": 0,
+              "sell_count": 1
+            },
+            {
+              "min_inclusive_quote": 500000.0,
+              "max_exclusive_quote": 1000000.0,
+              "buy_quote": 0.0,
+              "sell_quote": 0.0,
+              "buy_count": 0,
+              "sell_count": 0
+            },
+            {
+              "min_inclusive_quote": 1000000.0,
+              "max_exclusive_quote": 5000000.0,
+              "buy_quote": 0.0,
+              "sell_quote": 0.0,
+              "buy_count": 0,
+              "sell_count": 0
+            },
+            {
+              "min_inclusive_quote": 5000000.0,
+              "max_exclusive_quote": null,
+              "buy_quote": 0.0,
+              "sell_quote": 0.0,
+              "buy_count": 0,
+              "sell_count": 0
+            }
+          ],
+          "consecutive_events": [],
+          "large_cvd_series": [
+            {
+              "end_utc": "2026-11-04T10:55:00Z",
+              "net_quote": 0.0,
+              "cumulative_quote": 0.0
+            },
+            {
+              "end_utc": "2026-11-04T11:00:00Z",
+              "net_quote": 0.0,
+              "cumulative_quote": 0.0
+            },
+            {
+              "end_utc": "2026-11-04T11:05:00Z",
+              "net_quote": -156894.9,
+              "cumulative_quote": -156894.9
+            }
+          ],
+          "record_count": 3871,
+          "underlying_match_count": 3871,
+          "large_record_count": 1,
+          "large_individual_match_count": 1,
+          "unique_taker_order_count": null,
+          "large_amount_basis": "individual_match_notional",
+          "large_cvd_anchor_utc": "2026-11-04T10:50:00Z",
+          "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
+          "large_threshold_quote": 100000.0,
+          "first_trade_id": 1114904419,
+          "last_trade_id": 1114908289,
+          "price_change_pct": 0.03433727466083813,
+          "volume_btc": 30.90750004
+        },
+        "60m": {
+          "start_utc": "2026-11-04T10:05:00Z",
+          "end_utc": "2026-11-04T11:05:00Z",
+          "coverage": "complete",
+          "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
+          "buy_quote": 10699783.176521182,
+          "sell_quote": 11205901.468918927,
+          "large_buy_quote": 318919.1872962834,
+          "large_sell_quote": 495111.98829423,
+          "large_net_quote": -176192.8009979466,
+          "cvd_quote": -506118.2923977449,
+          "large_share": 0.03716072739867376,
+          "trade_count": 19067,
+          "large_count": 6,
+          "large_buy_count": 3,
+          "large_sell_count": 3,
+          "tiers": [
+            {
+              "min_inclusive_quote": 100000.0,
+              "max_exclusive_quote": 500000.0,
+              "buy_quote": 318919.1872962834,
+              "sell_quote": 495111.9882942301,
+              "buy_count": 3,
               "sell_count": 3
             },
             {
@@ -955,266 +845,266 @@
           "consecutive_events": [],
           "large_cvd_series": [
             {
-              "end_utc": "2026-11-04T03:15:00Z",
-              "net_quote": -367203.567470557,
-              "cumulative_quote": -367203.567470557
-            }
-          ],
-          "record_count": 3736,
-          "underlying_match_count": 3736,
-          "large_record_count": 3,
-          "large_individual_match_count": 3,
-          "unique_taker_order_count": null,
-          "large_amount_basis": "individual_match_notional",
-          "large_cvd_anchor_utc": "2026-11-04T03:10:00Z",
-          "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
-          "large_threshold_quote": 100000.0,
-          "first_trade_id": 1114727265,
-          "last_trade_id": 1114731000,
-          "price_change_pct": 0.07396268034098102,
-          "volume_btc": 160.69558536
-        },
-        "15m": {
-          "start_utc": "2026-11-04T03:00:00Z",
-          "end_utc": "2026-11-04T03:15:00Z",
-          "coverage": "complete",
-          "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-          "buy_quote": 24566618.740740478,
-          "sell_quote": 24762199.03949295,
-          "large_buy_quote": 336202.7118194826,
-          "large_sell_quote": 3010970.7449712087,
-          "large_net_quote": -2674768.0331517262,
-          "cvd_quote": -195580.298752473,
-          "large_share": 0.0678543214172049,
-          "trade_count": 18925,
-          "large_count": 18,
-          "large_buy_count": 1,
-          "large_sell_count": 17,
-          "tiers": [
-            {
-              "min_inclusive_quote": 100000.0,
-              "max_exclusive_quote": 500000.0,
-              "buy_quote": 336202.7118194826,
-              "sell_quote": 2496485.2307312083,
-              "buy_count": 1,
-              "sell_count": 16
-            },
-            {
-              "min_inclusive_quote": 500000.0,
-              "max_exclusive_quote": 1000000.0,
-              "buy_quote": 0.0,
-              "sell_quote": 514485.51424,
-              "buy_count": 0,
-              "sell_count": 1
-            },
-            {
-              "min_inclusive_quote": 1000000.0,
-              "max_exclusive_quote": 5000000.0,
-              "buy_quote": 0.0,
-              "sell_quote": 0.0,
-              "buy_count": 0,
-              "sell_count": 0
-            },
-            {
-              "min_inclusive_quote": 5000000.0,
-              "max_exclusive_quote": null,
-              "buy_quote": 0.0,
-              "sell_quote": 0.0,
-              "buy_count": 0,
-              "sell_count": 0
-            }
-          ],
-          "consecutive_events": [],
-          "large_cvd_series": [
-            {
-              "end_utc": "2026-11-04T03:05:00Z",
-              "net_quote": -1986183.5238045692,
-              "cumulative_quote": -1986183.5238045692
-            },
-            {
-              "end_utc": "2026-11-04T03:10:00Z",
-              "net_quote": -321380.9418766,
-              "cumulative_quote": -2307564.465681169
-            },
-            {
-              "end_utc": "2026-11-04T03:15:00Z",
-              "net_quote": -367203.567470557,
-              "cumulative_quote": -2674768.0331517262
-            }
-          ],
-          "record_count": 18925,
-          "underlying_match_count": 18925,
-          "large_record_count": 18,
-          "large_individual_match_count": 18,
-          "unique_taker_order_count": null,
-          "large_amount_basis": "individual_match_notional",
-          "large_cvd_anchor_utc": "2026-11-04T03:00:00Z",
-          "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
-          "large_threshold_quote": 100000.0,
-          "first_trade_id": 1114712076,
-          "last_trade_id": 1114731000,
-          "price_change_pct": -0.336955962819904,
-          "volume_btc": 650.33523784
-        },
-        "60m": {
-          "start_utc": "2026-11-04T02:15:00Z",
-          "end_utc": "2026-11-04T03:15:00Z",
-          "coverage": "complete",
-          "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-          "buy_quote": 40671932.561507255,
-          "sell_quote": 43348124.621403135,
-          "large_buy_quote": 336202.7118194826,
-          "large_sell_quote": 3508708.217308185,
-          "large_net_quote": -3172505.5054887026,
-          "cvd_quote": -2676192.059895881,
-          "large_share": 0.04576182233198622,
-          "trade_count": 40992,
-          "large_count": 22,
-          "large_buy_count": 1,
-          "large_sell_count": 21,
-          "tiers": [
-            {
-              "min_inclusive_quote": 100000.0,
-              "max_exclusive_quote": 500000.0,
-              "buy_quote": 336202.7118194826,
-              "sell_quote": 2994222.703068186,
-              "buy_count": 1,
-              "sell_count": 20
-            },
-            {
-              "min_inclusive_quote": 500000.0,
-              "max_exclusive_quote": 1000000.0,
-              "buy_quote": 0.0,
-              "sell_quote": 514485.51424,
-              "buy_count": 0,
-              "sell_count": 1
-            },
-            {
-              "min_inclusive_quote": 1000000.0,
-              "max_exclusive_quote": 5000000.0,
-              "buy_quote": 0.0,
-              "sell_quote": 0.0,
-              "buy_count": 0,
-              "sell_count": 0
-            },
-            {
-              "min_inclusive_quote": 5000000.0,
-              "max_exclusive_quote": null,
-              "buy_quote": 0.0,
-              "sell_quote": 0.0,
-              "buy_count": 0,
-              "sell_count": 0
-            }
-          ],
-          "consecutive_events": [],
-          "large_cvd_series": [
-            {
-              "end_utc": "2026-11-04T02:20:00Z",
+              "end_utc": "2026-11-04T10:10:00Z",
               "net_quote": 0.0,
               "cumulative_quote": 0.0
             },
             {
-              "end_utc": "2026-11-04T02:25:00Z",
+              "end_utc": "2026-11-04T10:15:00Z",
               "net_quote": 0.0,
               "cumulative_quote": 0.0
             },
             {
-              "end_utc": "2026-11-04T02:30:00Z",
+              "end_utc": "2026-11-04T10:20:00Z",
+              "net_quote": -181234.88829423,
+              "cumulative_quote": -181234.88829423
+            },
+            {
+              "end_utc": "2026-11-04T10:25:00Z",
               "net_quote": 0.0,
-              "cumulative_quote": 0.0
+              "cumulative_quote": -181234.88829423
             },
             {
-              "end_utc": "2026-11-04T02:35:00Z",
-              "net_quote": -101661.2668854552,
-              "cumulative_quote": -101661.2668854552
+              "end_utc": "2026-11-04T10:30:00Z",
+              "net_quote": -156982.2,
+              "cumulative_quote": -338217.08829423
             },
             {
-              "end_utc": "2026-11-04T02:40:00Z",
-              "net_quote": -153229.92,
-              "cumulative_quote": -254891.1868854552
-            },
-            {
-              "end_utc": "2026-11-04T02:45:00Z",
+              "end_utc": "2026-11-04T10:35:00Z",
               "net_quote": 0.0,
-              "cumulative_quote": -254891.1868854552
+              "cumulative_quote": -338217.08829423
             },
             {
-              "end_utc": "2026-11-04T02:50:00Z",
-              "net_quote": -101078.1192364612,
-              "cumulative_quote": -355969.3061219164
+              "end_utc": "2026-11-04T10:40:00Z",
+              "net_quote": 107172.7607282196,
+              "cumulative_quote": -231044.3275660104
             },
             {
-              "end_utc": "2026-11-04T02:55:00Z",
+              "end_utc": "2026-11-04T10:45:00Z",
               "net_quote": 0.0,
-              "cumulative_quote": -355969.3061219164
+              "cumulative_quote": -231044.3275660104
             },
             {
-              "end_utc": "2026-11-04T03:00:00Z",
-              "net_quote": -141768.16621506,
-              "cumulative_quote": -497737.4723369764
+              "end_utc": "2026-11-04T10:50:00Z",
+              "net_quote": 211746.4265680638,
+              "cumulative_quote": -19297.9009979466
             },
             {
-              "end_utc": "2026-11-04T03:05:00Z",
-              "net_quote": -1986183.5238045692,
-              "cumulative_quote": -2483920.9961415455
+              "end_utc": "2026-11-04T10:55:00Z",
+              "net_quote": 0.0,
+              "cumulative_quote": -19297.9009979466
             },
             {
-              "end_utc": "2026-11-04T03:10:00Z",
-              "net_quote": -321380.9418766,
-              "cumulative_quote": -2805301.9380181455
+              "end_utc": "2026-11-04T11:00:00Z",
+              "net_quote": 0.0,
+              "cumulative_quote": -19297.9009979466
             },
             {
-              "end_utc": "2026-11-04T03:15:00Z",
-              "net_quote": -367203.567470557,
-              "cumulative_quote": -3172505.5054887026
+              "end_utc": "2026-11-04T11:05:00Z",
+              "net_quote": -156894.9,
+              "cumulative_quote": -176192.8009979466
             }
           ],
-          "record_count": 40992,
-          "underlying_match_count": 40992,
-          "large_record_count": 22,
-          "large_individual_match_count": 22,
+          "record_count": 19067,
+          "underlying_match_count": 19067,
+          "large_record_count": 6,
+          "large_individual_match_count": 6,
           "unique_taker_order_count": null,
           "large_amount_basis": "individual_match_notional",
-          "large_cvd_anchor_utc": "2026-11-04T02:15:00Z",
+          "large_cvd_anchor_utc": "2026-11-04T10:05:00Z",
           "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
           "large_threshold_quote": 100000.0,
-          "first_trade_id": 1114690009,
-          "last_trade_id": 1114731000,
-          "price_change_pct": -1.3802246915537073,
-          "volume_btc": 1103.60454972
+          "first_trade_id": 1114889223,
+          "last_trade_id": 1114908289,
+          "price_change_pct": 0.23377500771669607,
+          "volume_btc": 279.25841843
         }
       },
       "dynamic": {
         "quantile": 0.99,
-        "threshold_quote": 28582.60125,
-        "sample_count": 40992,
-        "calibration_start_utc": "2026-11-04T02:15:00Z",
-        "calibration_end_utc": "2026-11-04T03:15:00Z",
+        "threshold_quote": 20000.0816120028,
+        "sample_count": 19067,
+        "calibration_start_utc": "2026-11-04T10:05:00Z",
+        "calibration_end_utc": "2026-11-04T11:05:00Z",
         "method": "nearest-rank empirical quantile of same-window feed records; descriptive in-sample, not predictive",
         "windows": {
           "5m": {
-            "start_utc": "2026-11-04T03:10:00Z",
-            "end_utc": "2026-11-04T03:15:00Z",
+            "start_utc": "2026-11-04T11:00:00Z",
+            "end_utc": "2026-11-04T11:05:00Z",
             "coverage": "complete",
             "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-            "buy_quote": 7426287.43231623,
-            "sell_quote": 4762462.065825588,
-            "large_buy_quote": 3051853.7157504703,
-            "large_sell_quote": 1917621.5428966226,
-            "large_net_quote": 1134232.1728538477,
-            "cvd_quote": 2663825.366490641,
-            "large_share": 0.4077100164709015,
-            "trade_count": 3736,
-            "large_count": 109,
-            "large_buy_count": 70,
-            "large_sell_count": 39,
+            "buy_quote": 339050.4134675255,
+            "sell_quote": 730984.9251805195,
+            "large_buy_quote": 88564.5249903967,
+            "large_sell_quote": 306173.60663048,
+            "large_net_quote": -217609.0816400833,
+            "cvd_quote": -391934.511712994,
+            "large_share": 0.3689019580602035,
+            "trade_count": 1530,
+            "large_count": 10,
+            "large_buy_count": 2,
+            "large_sell_count": 8,
             "tiers": [
               {
                 "min_inclusive_quote": 100000.0,
                 "max_exclusive_quote": 500000.0,
                 "buy_quote": 0.0,
-                "sell_quote": 367203.567470557,
+                "sell_quote": 156894.9,
                 "buy_count": 0,
+                "sell_count": 1
+              },
+              {
+                "min_inclusive_quote": 500000.0,
+                "max_exclusive_quote": 1000000.0,
+                "buy_quote": 0.0,
+                "sell_quote": 0.0,
+                "buy_count": 0,
+                "sell_count": 0
+              },
+              {
+                "min_inclusive_quote": 1000000.0,
+                "max_exclusive_quote": 5000000.0,
+                "buy_quote": 0.0,
+                "sell_quote": 0.0,
+                "buy_count": 0,
+                "sell_count": 0
+              },
+              {
+                "min_inclusive_quote": 5000000.0,
+                "max_exclusive_quote": null,
+                "buy_quote": 0.0,
+                "sell_quote": 0.0,
+                "buy_count": 0,
+                "sell_count": 0
+              }
+            ],
+            "consecutive_events": [],
+            "large_cvd_series": [
+              {
+                "end_utc": "2026-11-04T11:05:00Z",
+                "net_quote": -217609.0816400833,
+                "cumulative_quote": -217609.0816400833
+              }
+            ],
+            "record_count": 1530,
+            "underlying_match_count": 1530,
+            "large_record_count": 10,
+            "large_individual_match_count": 10,
+            "unique_taker_order_count": null,
+            "large_amount_basis": "individual_match_notional",
+            "large_cvd_anchor_utc": "2026-11-04T11:00:00Z",
+            "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
+            "large_threshold_quote": 20000.0816120028,
+            "first_trade_id": 1114906760,
+            "last_trade_id": 1114908289,
+            "price_change_pct": -0.04515209912669419,
+            "volume_btc": 13.63720152
+          },
+          "15m": {
+            "start_utc": "2026-11-04T10:50:00Z",
+            "end_utc": "2026-11-04T11:05:00Z",
+            "coverage": "complete",
+            "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
+            "buy_quote": 1132774.4237615087,
+            "sell_quote": 1292454.100660397,
+            "large_buy_quote": 413670.1296682927,
+            "large_sell_quote": 436884.2578217959,
+            "large_net_quote": -23214.1281535032,
+            "cvd_quote": -159679.6768988884,
+            "large_share": 0.3507110274042454,
+            "trade_count": 3871,
+            "large_count": 24,
+            "large_buy_count": 11,
+            "large_sell_count": 13,
+            "tiers": [
+              {
+                "min_inclusive_quote": 100000.0,
+                "max_exclusive_quote": 500000.0,
+                "buy_quote": 0.0,
+                "sell_quote": 156894.9,
+                "buy_count": 0,
+                "sell_count": 1
+              },
+              {
+                "min_inclusive_quote": 500000.0,
+                "max_exclusive_quote": 1000000.0,
+                "buy_quote": 0.0,
+                "sell_quote": 0.0,
+                "buy_count": 0,
+                "sell_count": 0
+              },
+              {
+                "min_inclusive_quote": 1000000.0,
+                "max_exclusive_quote": 5000000.0,
+                "buy_quote": 0.0,
+                "sell_quote": 0.0,
+                "buy_count": 0,
+                "sell_count": 0
+              },
+              {
+                "min_inclusive_quote": 5000000.0,
+                "max_exclusive_quote": null,
+                "buy_quote": 0.0,
+                "sell_quote": 0.0,
+                "buy_count": 0,
+                "sell_count": 0
+              }
+            ],
+            "consecutive_events": [],
+            "large_cvd_series": [
+              {
+                "end_utc": "2026-11-04T10:55:00Z",
+                "net_quote": 120775.6764371973,
+                "cumulative_quote": 120775.6764371973
+              },
+              {
+                "end_utc": "2026-11-04T11:00:00Z",
+                "net_quote": 73619.2770493828,
+                "cumulative_quote": 194394.9534865801
+              },
+              {
+                "end_utc": "2026-11-04T11:05:00Z",
+                "net_quote": -217609.0816400833,
+                "cumulative_quote": -23214.1281535032
+              }
+            ],
+            "record_count": 3871,
+            "underlying_match_count": 3871,
+            "large_record_count": 24,
+            "large_individual_match_count": 24,
+            "unique_taker_order_count": null,
+            "large_amount_basis": "individual_match_notional",
+            "large_cvd_anchor_utc": "2026-11-04T10:50:00Z",
+            "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
+            "large_threshold_quote": 20000.0816120028,
+            "first_trade_id": 1114904419,
+            "last_trade_id": 1114908289,
+            "price_change_pct": 0.03433727466083813,
+            "volume_btc": 30.90750004
+          },
+          "60m": {
+            "start_utc": "2026-11-04T10:05:00Z",
+            "end_utc": "2026-11-04T11:05:00Z",
+            "coverage": "complete",
+            "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
+            "buy_quote": 10699783.176521182,
+            "sell_quote": 11205901.468918927,
+            "large_buy_quote": 4077419.167425555,
+            "large_sell_quote": 3098618.613486881,
+            "large_net_quote": 978800.5539386746,
+            "cvd_quote": -506118.2923977449,
+            "large_share": 0.3275879251008117,
+            "trade_count": 19067,
+            "large_count": 191,
+            "large_buy_count": 104,
+            "large_sell_count": 87,
+            "tiers": [
+              {
+                "min_inclusive_quote": 100000.0,
+                "max_exclusive_quote": 500000.0,
+                "buy_quote": 318919.1872962834,
+                "sell_quote": 495111.9882942301,
+                "buy_count": 3,
                 "sell_count": 3
               },
               {
@@ -1244,291 +1134,99 @@
             ],
             "consecutive_events": [
               {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:10:55.387000Z",
-                "end_utc": "2026-11-04T03:10:55.391000Z",
-                "record_count": 3,
-                "notional_quote": 137380.4238928345,
-                "first_id": 1114727982,
-                "last_id": 1114727984
-              }
-            ],
-            "large_cvd_series": [
-              {
-                "end_utc": "2026-11-04T03:15:00Z",
-                "net_quote": 1134232.1728538477,
-                "cumulative_quote": 1134232.1728538477
-              }
-            ],
-            "record_count": 3736,
-            "underlying_match_count": 3736,
-            "large_record_count": 109,
-            "large_individual_match_count": 109,
-            "unique_taker_order_count": null,
-            "large_amount_basis": "individual_match_notional",
-            "large_cvd_anchor_utc": "2026-11-04T03:10:00Z",
-            "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
-            "large_threshold_quote": 28582.60125,
-            "first_trade_id": 1114727265,
-            "last_trade_id": 1114731000,
-            "price_change_pct": 0.07396268034098102,
-            "volume_btc": 160.69558536
-          },
-          "15m": {
-            "start_utc": "2026-11-04T03:00:00Z",
-            "end_utc": "2026-11-04T03:15:00Z",
-            "coverage": "complete",
-            "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-            "buy_quote": 24566618.740740478,
-            "sell_quote": 24762199.03949295,
-            "large_buy_quote": 7076191.136270108,
-            "large_sell_quote": 8623227.390977798,
-            "large_net_quote": -1547036.254707691,
-            "cvd_quote": -195580.298752473,
-            "large_share": 0.3182605874965612,
-            "trade_count": 18925,
-            "large_count": 302,
-            "large_buy_count": 161,
-            "large_sell_count": 141,
-            "tiers": [
-              {
-                "min_inclusive_quote": 100000.0,
-                "max_exclusive_quote": 500000.0,
-                "buy_quote": 336202.7118194826,
-                "sell_quote": 2496485.2307312083,
-                "buy_count": 1,
-                "sell_count": 16
-              },
-              {
-                "min_inclusive_quote": 500000.0,
-                "max_exclusive_quote": 1000000.0,
-                "buy_quote": 0.0,
-                "sell_quote": 514485.51424,
-                "buy_count": 0,
-                "sell_count": 1
-              },
-              {
-                "min_inclusive_quote": 1000000.0,
-                "max_exclusive_quote": 5000000.0,
-                "buy_quote": 0.0,
-                "sell_quote": 0.0,
-                "buy_count": 0,
-                "sell_count": 0
-              },
-              {
-                "min_inclusive_quote": 5000000.0,
-                "max_exclusive_quote": null,
-                "buy_quote": 0.0,
-                "sell_quote": 0.0,
-                "buy_count": 0,
-                "sell_count": 0
-              }
-            ],
-            "consecutive_events": [
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:00:48.985000Z",
-                "end_utc": "2026-11-04T03:00:49.147000Z",
-                "record_count": 3,
-                "notional_quote": 256375.1310957666,
-                "first_id": 1114713443,
-                "last_id": 1114713445
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:10:55.387000Z",
-                "end_utc": "2026-11-04T03:10:55.391000Z",
-                "record_count": 3,
-                "notional_quote": 137380.4238928345,
-                "first_id": 1114727982,
-                "last_id": 1114727984
-              }
-            ],
-            "large_cvd_series": [
-              {
-                "end_utc": "2026-11-04T03:05:00Z",
-                "net_quote": -3270473.328805662,
-                "cumulative_quote": -3270473.328805662
-              },
-              {
-                "end_utc": "2026-11-04T03:10:00Z",
-                "net_quote": 589204.9012441233,
-                "cumulative_quote": -2681268.4275615388
-              },
-              {
-                "end_utc": "2026-11-04T03:15:00Z",
-                "net_quote": 1134232.1728538477,
-                "cumulative_quote": -1547036.254707691
-              }
-            ],
-            "record_count": 18925,
-            "underlying_match_count": 18925,
-            "large_record_count": 302,
-            "large_individual_match_count": 302,
-            "unique_taker_order_count": null,
-            "large_amount_basis": "individual_match_notional",
-            "large_cvd_anchor_utc": "2026-11-04T03:00:00Z",
-            "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
-            "large_threshold_quote": 28582.60125,
-            "first_trade_id": 1114712076,
-            "last_trade_id": 1114731000,
-            "price_change_pct": -0.336955962819904,
-            "volume_btc": 650.33523784
-          },
-          "60m": {
-            "start_utc": "2026-11-04T02:15:00Z",
-            "end_utc": "2026-11-04T03:15:00Z",
-            "coverage": "complete",
-            "count_unit": "feed_records; Binance aggregate groups, Coinbase individual matches; NOT unique orders",
-            "buy_quote": 40671932.561507255,
-            "sell_quote": 43348124.621403135,
-            "large_buy_quote": 9147967.642726878,
-            "large_sell_quote": 11509477.510514002,
-            "large_net_quote": -2361509.8677871237,
-            "cvd_quote": -2676192.059895881,
-            "large_share": 0.2458632598674616,
-            "trade_count": 40992,
-            "large_count": 410,
-            "large_buy_count": 210,
-            "large_sell_count": 200,
-            "tiers": [
-              {
-                "min_inclusive_quote": 100000.0,
-                "max_exclusive_quote": 500000.0,
-                "buy_quote": 336202.7118194826,
-                "sell_quote": 2994222.703068186,
-                "buy_count": 1,
-                "sell_count": 20
-              },
-              {
-                "min_inclusive_quote": 500000.0,
-                "max_exclusive_quote": 1000000.0,
-                "buy_quote": 0.0,
-                "sell_quote": 514485.51424,
-                "buy_count": 0,
-                "sell_count": 1
-              },
-              {
-                "min_inclusive_quote": 1000000.0,
-                "max_exclusive_quote": 5000000.0,
-                "buy_quote": 0.0,
-                "sell_quote": 0.0,
-                "buy_count": 0,
-                "sell_count": 0
-              },
-              {
-                "min_inclusive_quote": 5000000.0,
-                "max_exclusive_quote": null,
-                "buy_quote": 0.0,
-                "sell_quote": 0.0,
-                "buy_count": 0,
-                "sell_count": 0
-              }
-            ],
-            "consecutive_events": [
-              {
                 "taker_side": "buy",
-                "start_utc": "2026-11-04T02:38:19.261000Z",
-                "end_utc": "2026-11-04T02:38:19.261000Z",
+                "start_utc": "2026-11-04T10:11:40.148000Z",
+                "end_utc": "2026-11-04T10:11:40.154000Z",
                 "record_count": 3,
-                "notional_quote": 119765.6243677454,
-                "first_id": 1114701392,
-                "last_id": 1114701394
+                "notional_quote": 99796.1418890208,
+                "first_id": 1114891405,
+                "last_id": 1114891407
               },
               {
                 "taker_side": "sell",
-                "start_utc": "2026-11-04T03:00:48.985000Z",
-                "end_utc": "2026-11-04T03:00:49.147000Z",
+                "start_utc": "2026-11-04T10:25:07.368000Z",
+                "end_utc": "2026-11-04T10:25:07.369000Z",
                 "record_count": 3,
-                "notional_quote": 256375.1310957666,
-                "first_id": 1114713443,
-                "last_id": 1114713445
-              },
-              {
-                "taker_side": "sell",
-                "start_utc": "2026-11-04T03:10:55.387000Z",
-                "end_utc": "2026-11-04T03:10:55.391000Z",
-                "record_count": 3,
-                "notional_quote": 137380.4238928345,
-                "first_id": 1114727982,
-                "last_id": 1114727984
+                "notional_quote": 60001.8260761128,
+                "first_id": 1114896774,
+                "last_id": 1114896776
               }
             ],
             "large_cvd_series": [
               {
-                "end_utc": "2026-11-04T02:20:00Z",
-                "net_quote": 185833.2359216998,
-                "cumulative_quote": 185833.2359216998
+                "end_utc": "2026-11-04T10:10:00Z",
+                "net_quote": -146504.6848545776,
+                "cumulative_quote": -146504.6848545776
               },
               {
-                "end_utc": "2026-11-04T02:25:00Z",
-                "net_quote": -104315.9643591864,
-                "cumulative_quote": 81517.2715625134
+                "end_utc": "2026-11-04T10:15:00Z",
+                "net_quote": 305572.1833732399,
+                "cumulative_quote": 159067.4985186623
               },
               {
-                "end_utc": "2026-11-04T02:30:00Z",
-                "net_quote": -29921.9954125719,
-                "cumulative_quote": 51595.2761499415
+                "end_utc": "2026-11-04T10:20:00Z",
+                "net_quote": -609866.9991292115,
+                "cumulative_quote": -450799.5006105492
               },
               {
-                "end_utc": "2026-11-04T02:35:00Z",
-                "net_quote": -108638.9982185039,
-                "cumulative_quote": -57043.7220685624
+                "end_utc": "2026-11-04T10:25:00Z",
+                "net_quote": 463962.6976412331,
+                "cumulative_quote": 13163.1970306839
               },
               {
-                "end_utc": "2026-11-04T02:40:00Z",
-                "net_quote": 251856.4490488136,
-                "cumulative_quote": 194812.7269802512
+                "end_utc": "2026-11-04T10:30:00Z",
+                "net_quote": -120633.5605496171,
+                "cumulative_quote": -107470.3635189332
               },
               {
-                "end_utc": "2026-11-04T02:45:00Z",
-                "net_quote": -263541.7645145204,
-                "cumulative_quote": -68729.0375342692
+                "end_utc": "2026-11-04T10:35:00Z",
+                "net_quote": 377051.0523631339,
+                "cumulative_quote": 269580.6888442007
               },
               {
-                "end_utc": "2026-11-04T02:50:00Z",
-                "net_quote": -171836.5106269572,
-                "cumulative_quote": -240565.5481612264
+                "end_utc": "2026-11-04T10:40:00Z",
+                "net_quote": 432573.6117046556,
+                "cumulative_quote": 702154.3005488563
               },
               {
-                "end_utc": "2026-11-04T02:55:00Z",
-                "net_quote": 430758.6494942629,
-                "cumulative_quote": 190193.1013330365
+                "end_utc": "2026-11-04T10:45:00Z",
+                "net_quote": 280744.3931155721,
+                "cumulative_quote": 982898.6936644284
               },
               {
-                "end_utc": "2026-11-04T03:00:00Z",
-                "net_quote": -1004666.7144124693,
-                "cumulative_quote": -814473.6130794327
+                "end_utc": "2026-11-04T10:50:00Z",
+                "net_quote": 19115.9884277494,
+                "cumulative_quote": 1002014.6820921778
               },
               {
-                "end_utc": "2026-11-04T03:05:00Z",
-                "net_quote": -3270473.328805662,
-                "cumulative_quote": -4084946.9418850946
+                "end_utc": "2026-11-04T10:55:00Z",
+                "net_quote": 120775.6764371973,
+                "cumulative_quote": 1122790.3585293752
               },
               {
-                "end_utc": "2026-11-04T03:10:00Z",
-                "net_quote": 589204.9012441233,
-                "cumulative_quote": -3495742.0406409716
+                "end_utc": "2026-11-04T11:00:00Z",
+                "net_quote": 73619.2770493828,
+                "cumulative_quote": 1196409.6355787579
               },
               {
-                "end_utc": "2026-11-04T03:15:00Z",
-                "net_quote": 1134232.1728538477,
-                "cumulative_quote": -2361509.8677871237
+                "end_utc": "2026-11-04T11:05:00Z",
+                "net_quote": -217609.0816400833,
+                "cumulative_quote": 978800.5539386746
               }
             ],
-            "record_count": 40992,
-            "underlying_match_count": 40992,
-            "large_record_count": 410,
-            "large_individual_match_count": 410,
+            "record_count": 19067,
+            "underlying_match_count": 19067,
+            "large_record_count": 191,
+            "large_individual_match_count": 191,
             "unique_taker_order_count": null,
             "large_amount_basis": "individual_match_notional",
-            "large_cvd_anchor_utc": "2026-11-04T02:15:00Z",
+            "large_cvd_anchor_utc": "2026-11-04T10:05:00Z",
             "large_cvd_definition": "sum of large taker-buy minus large taker-sell since explicit window anchor; no cross-gap continuation",
-            "large_threshold_quote": 28582.60125,
-            "first_trade_id": 1114690009,
-            "last_trade_id": 1114731000,
-            "price_change_pct": -1.3802246915537073,
-            "volume_btc": 1103.60454972
+            "large_threshold_quote": 20000.0816120028,
+            "first_trade_id": 1114889223,
+            "last_trade_id": 1114908289,
+            "price_change_pct": 0.23377500771669607,
+            "volume_btc": 279.25841843
           }
         }
       },
@@ -1538,13 +1236,13 @@
         "id_gaps": 0,
         "fill_id_gaps": false,
         "reversed_time": false,
-        "pages": 42,
-        "oldest_ms": 1793758483097,
-        "newest_ms": 1793762196004,
-        "requested_start_utc": "2026-11-04T02:15:00Z",
-        "requested_end_utc": "2026-11-04T03:15:00Z"
+        "pages": 21,
+        "oldest_ms": 1793786613939,
+        "newest_ms": 1793790621314,
+        "requested_start_utc": "2026-11-04T10:05:00Z",
+        "requested_end_utc": "2026-11-04T11:05:00Z"
       },
-      "latest_trade_age_seconds": 20.856,
+      "latest_trade_age_seconds": 12.975,
       "monitoring_eligible": true
     }
   },
@@ -1554,114 +1252,114 @@
       "source": "https://data-api.binance.vision/api/v3/depth",
       "exchange": "binance",
       "quote_currency": "USDT",
-      "observed_utc": "2026-11-04T03:16:37.841000Z",
+      "observed_utc": "2026-11-04T11:10:26.185000Z",
       "exchange_event_utc": null,
-      "sequence": 102266301155,
+      "sequence": 102284118693,
       "bids": [
         {
-          "price": "76049.99000000",
-          "quantity_btc": "4.91300000",
-          "notional_quote": "373633.6008700000000000"
+          "price": "78626.00000000",
+          "quantity_btc": "1.04790000",
+          "notional_quote": "82392.1854000000000000"
         },
         {
-          "price": "76049.98000000",
-          "quantity_btc": "0.00021000",
-          "notional_quote": "15.9704958000000000"
+          "price": "78625.99000000",
+          "quantity_btc": "0.00084000",
+          "notional_quote": "66.0458316000000000"
         },
         {
-          "price": "76049.50000000",
+          "price": "78625.00000000",
+          "quantity_btc": "0.00100000",
+          "notional_quote": "78.6250000000000000"
+        },
+        {
+          "price": "78624.77000000",
           "quantity_btc": "0.00007000",
-          "notional_quote": "5.3234650000000000"
+          "notional_quote": "5.5037339000000000"
         },
         {
-          "price": "76049.46000000",
+          "price": "78624.75000000",
           "quantity_btc": "0.00014000",
-          "notional_quote": "10.6469244000000000"
+          "notional_quote": "11.0074650000000000"
         },
         {
-          "price": "76049.45000000",
-          "quantity_btc": "0.51938000",
-          "notional_quote": "39498.5633410000000000"
+          "price": "78624.74000000",
+          "quantity_btc": "0.01469000",
+          "notional_quote": "1154.9974306000000000"
         },
         {
-          "price": "76049.06000000",
+          "price": "78624.68000000",
+          "quantity_btc": "0.00007000",
+          "notional_quote": "5.5037276000000000"
+        },
+        {
+          "price": "78624.67000000",
+          "quantity_btc": "0.00175000",
+          "notional_quote": "137.5931725000000000"
+        },
+        {
+          "price": "78624.37000000",
+          "quantity_btc": "0.00007000",
+          "notional_quote": "5.5037059000000000"
+        },
+        {
+          "price": "78624.01000000",
           "quantity_btc": "0.00014000",
-          "notional_quote": "10.6468684000000000"
-        },
-        {
-          "price": "76049.05000000",
-          "quantity_btc": "1.25585000",
-          "notional_quote": "95506.1994425000000000"
-        },
-        {
-          "price": "76049.04000000",
-          "quantity_btc": "2.46675000",
-          "notional_quote": "187593.9694200000000000"
-        },
-        {
-          "price": "76048.77000000",
-          "quantity_btc": "0.01793000",
-          "notional_quote": "1363.5544461000000000"
-        },
-        {
-          "price": "76048.76000000",
-          "quantity_btc": "0.03944000",
-          "notional_quote": "2999.3630944000000000"
+          "notional_quote": "11.0073614000000000"
         }
       ],
       "asks": [
         {
-          "price": "76050.00000000",
-          "quantity_btc": "1.13465000",
-          "notional_quote": "86290.1325000000000000"
+          "price": "78626.01000000",
+          "quantity_btc": "10.92481000",
+          "notional_quote": "858974.2203081000000000"
         },
         {
-          "price": "76050.01000000",
-          "quantity_btc": "0.00084000",
-          "notional_quote": "63.8820084000000000"
-        },
-        {
-          "price": "76050.19000000",
-          "quantity_btc": "0.00008000",
-          "notional_quote": "6.0840152000000000"
-        },
-        {
-          "price": "76050.25000000",
-          "quantity_btc": "0.00007000",
-          "notional_quote": "5.3235175000000000"
-        },
-        {
-          "price": "76051.81000000",
-          "quantity_btc": "0.00021000",
-          "notional_quote": "15.9708801000000000"
-        },
-        {
-          "price": "76051.92000000",
-          "quantity_btc": "0.00065000",
-          "notional_quote": "49.4337480000000000"
-        },
-        {
-          "price": "76052.38000000",
-          "quantity_btc": "0.00029000",
-          "notional_quote": "22.0551902000000000"
-        },
-        {
-          "price": "76052.52000000",
-          "quantity_btc": "0.00007000",
-          "notional_quote": "5.3236764000000000"
-        },
-        {
-          "price": "76052.72000000",
+          "price": "78626.20000000",
           "quantity_btc": "0.00014000",
-          "notional_quote": "10.6473808000000000"
+          "notional_quote": "11.0076680000000000"
         },
         {
-          "price": "76052.73000000",
-          "quantity_btc": "0.32934000",
-          "notional_quote": "25047.2060982000000000"
+          "price": "78626.21000000",
+          "quantity_btc": "1.52495000",
+          "notional_quote": "119901.0389395000000000"
+        },
+        {
+          "price": "78626.22000000",
+          "quantity_btc": "1.09730000",
+          "notional_quote": "86276.5512060000000000"
+        },
+        {
+          "price": "78626.23000000",
+          "quantity_btc": "0.04004000",
+          "notional_quote": "3148.1942492000000000"
+        },
+        {
+          "price": "78626.35000000",
+          "quantity_btc": "0.00014000",
+          "notional_quote": "11.0076890000000000"
+        },
+        {
+          "price": "78626.36000000",
+          "quantity_btc": "0.22109000",
+          "notional_quote": "17383.5019324000000000"
+        },
+        {
+          "price": "78626.64000000",
+          "quantity_btc": "0.00400000",
+          "notional_quote": "314.5065600000000000"
+        },
+        {
+          "price": "78627.89000000",
+          "quantity_btc": "0.00636000",
+          "notional_quote": "500.0733804000000000"
+        },
+        {
+          "price": "78627.90000000",
+          "quantity_btc": "0.00007000",
+          "notional_quote": "5.5039530000000000"
         }
       ],
-      "imbalance_btc": 0.7253852096355081,
+      "imbalance_btc": -0.8566840235207654,
       "walls": {
         "bids": [],
         "asks": []
@@ -1681,114 +1379,114 @@
       "source": "https://api.exchange.coinbase.com/products/BTC-USD/book",
       "exchange": "coinbase",
       "quote_currency": "USD",
-      "observed_utc": "2026-11-04T03:16:52.236000Z",
+      "observed_utc": "2026-11-04T11:10:31.977000Z",
       "exchange_event_utc": null,
-      "sequence": 138748365982,
+      "sequence": 138767499632,
       "bids": [
         {
-          "price": "75945.1",
-          "quantity_btc": "0.00005437",
-          "notional_quote": "4.129135087"
+          "price": "78510.93",
+          "quantity_btc": "0.55943888",
+          "notional_quote": "43922.0667469584"
         },
         {
-          "price": "75943.98",
-          "quantity_btc": "0.26353061",
-          "notional_quote": "20013.5633752278"
+          "price": "78509.75",
+          "quantity_btc": "0.06899815",
+          "notional_quote": "5417.0275069625"
         },
         {
-          "price": "75943.8",
-          "quantity_btc": "0.10534104",
-          "notional_quote": "7999.998873552"
+          "price": "78509.38",
+          "quantity_btc": "0.00000895",
+          "notional_quote": "0.7026589510"
         },
         {
-          "price": "75943.09",
-          "quantity_btc": "0.4749466",
-          "notional_quote": "36068.912388994"
+          "price": "78509.35",
+          "quantity_btc": "0.02547468",
+          "notional_quote": "2000.0005682580"
         },
         {
-          "price": "75943.08",
-          "quantity_btc": "0.04219253",
-          "notional_quote": "3204.2306811924"
+          "price": "78508.96",
+          "quantity_btc": "0.00509483",
+          "notional_quote": "399.9898046768"
         },
         {
-          "price": "75942.84",
-          "quantity_btc": "0.26329963",
-          "notional_quote": "19995.7216731492"
+          "price": "78507.87",
+          "quantity_btc": "0.01273857",
+          "notional_quote": "1000.0779975459"
         },
         {
-          "price": "75942.52",
-          "quantity_btc": "0.03",
-          "notional_quote": "2278.2756"
+          "price": "78506.1",
+          "quantity_btc": "0.15292742",
+          "notional_quote": "12005.735327262"
         },
         {
-          "price": "75942.5",
-          "quantity_btc": "0.03",
-          "notional_quote": "2278.275"
+          "price": "78505.16",
+          "quantity_btc": "0.00904276",
+          "notional_quote": "709.9033206416"
         },
         {
-          "price": "75940.77",
-          "quantity_btc": "0.4749466",
-          "notional_quote": "36067.810512882"
+          "price": "78505.15",
+          "quantity_btc": "0.00636858",
+          "notional_quote": "499.9663281870"
         },
         {
-          "price": "75938.26",
-          "quantity_btc": "0.00701997",
-          "notional_quote": "533.0843070522"
+          "price": "78504.72",
+          "quantity_btc": "0.04200064",
+          "notional_quote": "3297.2484830208"
         }
       ],
       "asks": [
         {
-          "price": "75945.11",
-          "quantity_btc": "0.36867502",
-          "notional_quote": "27999.0649481522"
+          "price": "78510.94",
+          "quantity_btc": "0.72462701",
+          "notional_quote": "56891.1477044894"
         },
         {
-          "price": "75947.01",
-          "quantity_btc": "0.00526696",
-          "notional_quote": "400.0098637896"
+          "price": "78510.95",
+          "quantity_btc": "0.0028478",
+          "notional_quote": "223.583483410"
         },
         {
-          "price": "75949.57",
-          "quantity_btc": "0.01359646",
-          "notional_quote": "1032.6452905222"
+          "price": "78512.53",
+          "quantity_btc": "0.02547364",
+          "notional_quote": "1999.9999247092"
         },
         {
-          "price": "75951.76",
-          "quantity_btc": "0.6299675",
-          "notional_quote": "47847.140367800"
+          "price": "78512.92",
+          "quantity_btc": "0.00509483",
+          "notional_quote": "400.0099802036"
         },
         {
-          "price": "75951.77",
-          "quantity_btc": "0.4749466",
-          "notional_quote": "36073.034925482"
+          "price": "78515.57",
+          "quantity_btc": "0.00636853",
+          "notional_quote": "500.0287630121"
         },
         {
-          "price": "75954.04",
-          "quantity_btc": "0.10532686",
-          "notional_quote": "8000.0005375144"
+          "price": "78516.73",
+          "quantity_btc": "0.13601768",
+          "notional_quote": "10679.6634557864"
         },
         {
-          "price": "75954.38",
-          "quantity_btc": "0.4749466",
-          "notional_quote": "36074.274536108"
+          "price": "78516.74",
+          "quantity_btc": "0.08588857",
+          "notional_quote": "6743.6905196618"
         },
         {
-          "price": "75956.87",
-          "quantity_btc": "0.00701997",
-          "notional_quote": "533.2149486939"
+          "price": "78516.91",
+          "quantity_btc": "0.15292742",
+          "notional_quote": "12007.3884726722"
         },
         {
-          "price": "75956.88",
-          "quantity_btc": "0.4749466",
-          "notional_quote": "36075.461902608"
+          "price": "78519.08",
+          "quantity_btc": "0.07817969",
+          "notional_quote": "6138.5973334852"
         },
         {
-          "price": "75956.9",
-          "quantity_btc": "1.14273308",
-          "notional_quote": "86798.462284252"
+          "price": "78519.09",
+          "quantity_btc": "0.11212466",
+          "notional_quote": "8803.9262697594"
         }
       ],
-      "imbalance_btc": -0.3722740327685958,
+      "imbalance_btc": -0.20231850770112209,
       "walls": {
         "bids": [],
         "asks": []
@@ -1829,7 +1527,7 @@
       "components": {
         "oi": {
           "status": "available",
-          "observed_utc": "2026-11-04T03:16:52.885000Z",
+          "observed_utc": "2026-11-04T11:10:32.461000Z",
           "exchange": "okx",
           "instrument": "BTC-USDT-SWAP",
           "market_type": "linear_perpetual_swap",
@@ -1837,41 +1535,41 @@
           "quote_currency": "USDT",
           "replaces_binance": false,
           "used_in_full_buy_evidence_score": false,
-          "as_of_utc": "2026-11-04T03:15:00Z",
+          "as_of_utc": "2026-11-04T11:05:00Z",
           "unit": "BTC",
-          "open_interest_btc": "32782.7323000002097",
-          "open_interest_contracts": "3278273.23000002097",
-          "reported_notional_usd": "2487819267.05564591373457",
+          "open_interest_btc": "35495.1540000002",
+          "open_interest_contracts": "3549515.40000002",
+          "reported_notional_usd": "2787462839.74321570616",
           "reported_notional_currency": "USD",
           "amount_conversion": "none; oiUsd is OKX-reported USD, not added to USDT",
           "changes": {
             "5m": {
-              "start_utc": "2026-11-04T03:10:00Z",
-              "end_utc": "2026-11-04T03:15:00Z",
+              "start_utc": "2026-11-04T11:00:00Z",
+              "end_utc": "2026-11-04T11:05:00Z",
               "coverage": "complete",
-              "delta_btc": 15.0069000000015,
-              "pct": 0.045797808107856657
+              "delta_btc": 14.2721000000038,
+              "pct": 0.04022476115511582
             },
             "15m": {
-              "start_utc": "2026-11-04T03:00:00Z",
-              "end_utc": "2026-11-04T03:15:00Z",
+              "start_utc": "2026-11-04T10:50:00Z",
+              "end_utc": "2026-11-04T11:05:00Z",
               "coverage": "complete",
-              "delta_btc": 114.1560000000095,
-              "pct": 0.3494367154286084
+              "delta_btc": 59.4808000000096,
+              "pct": 0.16785570762067328
             },
             "60m": {
-              "start_utc": "2026-11-04T02:15:00Z",
-              "end_utc": "2026-11-04T03:15:00Z",
+              "start_utc": "2026-11-04T10:05:00Z",
+              "end_utc": "2026-11-04T11:05:00Z",
               "coverage": "complete",
-              "delta_btc": 246.481400000001,
-              "pct": 0.7575593167066443
+              "delta_btc": 237.2192999999923,
+              "pct": 0.6728111048432763
             }
           },
           "fresh_at_read": true
         },
         "funding": {
           "status": "available",
-          "observed_utc": "2026-11-04T03:16:53.091000Z",
+          "observed_utc": "2026-11-04T11:10:32.644000Z",
           "exchange": "okx",
           "instrument": "BTC-USDT-SWAP",
           "market_type": "linear_perpetual_swap",
@@ -1879,15 +1577,15 @@
           "quote_currency": "USDT",
           "replaces_binance": false,
           "used_in_full_buy_evidence_score": false,
-          "rate": "0.0001",
-          "actual_funding_utc": "2026-11-04T00:00:00Z",
+          "rate": "0.0000875528996391",
+          "actual_funding_utc": "2026-11-04T08:00:00Z",
           "rate_kind": "last_settled",
           "source_rate_field": "realizedRate",
           "fresh_at_read": true
         },
         "flow": {
           "status": "available",
-          "observed_utc": "2026-11-04T03:16:53.340000Z",
+          "observed_utc": "2026-11-04T11:10:32.853000Z",
           "exchange": "okx",
           "instrument": "BTC-USDT-SWAP",
           "market_type": "linear_perpetual_swap",
@@ -1901,31 +1599,31 @@
           "timestamp_basis": "bar opening timestamp; exclude current/unclosed bar",
           "windows": {
             "5m": {
-              "start_utc": "2026-11-04T03:10:00Z",
-              "end_utc": "2026-11-04T03:15:00Z",
+              "start_utc": "2026-11-04T11:00:00Z",
+              "end_utc": "2026-11-04T11:05:00Z",
               "coverage": "complete",
               "missing_intervals": [],
-              "buy_btc": 491.67249999999996,
-              "sell_btc": 400.78819999999996,
-              "cvd_btc": 90.8843
+              "buy_btc": 52.3576,
+              "sell_btc": 66.8956,
+              "cvd_btc": -14.538000000000004
             },
             "15m": {
-              "start_utc": "2026-11-04T03:00:00Z",
-              "end_utc": "2026-11-04T03:15:00Z",
+              "start_utc": "2026-11-04T10:50:00Z",
+              "end_utc": "2026-11-04T11:05:00Z",
               "coverage": "complete",
               "missing_intervals": [],
-              "buy_btc": 3141.7311,
-              "sell_btc": 3751.7387,
-              "cvd_btc": -610.0076
+              "buy_btc": 202.4015,
+              "sell_btc": 142.2598,
+              "cvd_btc": 60.14169999999999
             },
             "60m": {
-              "start_utc": "2026-11-04T02:15:00Z",
-              "end_utc": "2026-11-04T03:15:00Z",
+              "start_utc": "2026-11-04T10:05:00Z",
+              "end_utc": "2026-11-04T11:05:00Z",
               "coverage": "complete",
               "missing_intervals": [],
-              "buy_btc": 5296.9946,
-              "sell_btc": 6565.7749,
-              "cvd_btc": -1268.7803000000004
+              "buy_btc": 1447.2516,
+              "sell_btc": 1119.6345999999999,
+              "cvd_btc": 327.617
             }
           },
           "cvd_definition": "window taker buy BTC minus taker sell BTC; no conversion to quote notional",
@@ -1942,1023 +1640,303 @@
   "source_audit": {
     "binance_trades": [
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&startTime=1793758440000",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&startTime=1793786640000",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:02.865000Z",
+        "requested_utc": "2026-11-04T11:09:54.151000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:15:03.626000Z",
+        "received_utc": "2026-11-04T11:09:55.012000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:03 GMT",
+          "date": "Wed, 04 Nov 2026 11:09:54 GMT",
           "x-mbx-used-weight": "4",
           "x-mbx-used-weight-1m": "4"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105882400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106235153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:04.018000Z",
+        "requested_utc": "2026-11-04T11:09:55.452000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:15:04.707000Z",
+        "received_utc": "2026-11-04T11:09:56.159000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:04 GMT",
+          "date": "Wed, 04 Nov 2026 11:09:56 GMT",
           "x-mbx-used-weight": "8",
           "x-mbx-used-weight-1m": "8"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105883400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106236153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:05.101000Z",
+        "requested_utc": "2026-11-04T11:09:56.757000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:15:05.912000Z",
+        "received_utc": "2026-11-04T11:09:57.567000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:05 GMT",
+          "date": "Wed, 04 Nov 2026 11:09:57 GMT",
           "x-mbx-used-weight": "12",
           "x-mbx-used-weight-1m": "12"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105884400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106237153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:06.305000Z",
+        "requested_utc": "2026-11-04T11:09:58.006000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:15:06.988000Z",
+        "received_utc": "2026-11-04T11:09:58.821000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:06 GMT",
+          "date": "Wed, 04 Nov 2026 11:09:58 GMT",
           "x-mbx-used-weight": "16",
           "x-mbx-used-weight-1m": "16"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105885400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106238153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:07.381000Z",
+        "requested_utc": "2026-11-04T11:09:59.262000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:15:08.076000Z",
+        "received_utc": "2026-11-04T11:10:00.059000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:07 GMT",
+          "date": "Wed, 04 Nov 2026 11:09:59 GMT",
           "x-mbx-used-weight": "20",
           "x-mbx-used-weight-1m": "20"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105886400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106239153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:08.470000Z",
+        "requested_utc": "2026-11-04T11:10:00.501000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:15:09.404000Z",
+        "received_utc": "2026-11-04T11:10:01.391000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:09 GMT",
-          "x-mbx-used-weight": "24",
-          "x-mbx-used-weight-1m": "24"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105887400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:09.799000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:10.679000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:10 GMT",
-          "x-mbx-used-weight": "28",
-          "x-mbx-used-weight-1m": "28"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105888400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:11.073000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:11.760000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:11 GMT",
-          "x-mbx-used-weight": "32",
-          "x-mbx-used-weight-1m": "32"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105889400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:12.154000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:12.836000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:12 GMT",
-          "x-mbx-used-weight": "36",
-          "x-mbx-used-weight-1m": "36"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105890400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:13.229000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:13.909000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:13 GMT",
-          "x-mbx-used-weight": "40",
-          "x-mbx-used-weight-1m": "40"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105891400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:14.302000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:14.994000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:14 GMT",
-          "x-mbx-used-weight": "44",
-          "x-mbx-used-weight-1m": "44"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105892400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:15.390000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:16.077000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:15 GMT",
-          "x-mbx-used-weight": "48",
-          "x-mbx-used-weight-1m": "48"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105893400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:16.472000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:17.160000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:16 GMT",
-          "x-mbx-used-weight": "52",
-          "x-mbx-used-weight-1m": "52"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105894400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:17.555000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:18.107000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:18 GMT",
-          "x-mbx-used-weight": "56",
-          "x-mbx-used-weight-1m": "56"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105895400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:18.634000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:19.328000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:19 GMT",
-          "x-mbx-used-weight": "60",
-          "x-mbx-used-weight-1m": "60"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105896400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:19.722000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:20.446000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:20 GMT",
-          "x-mbx-used-weight": "64",
-          "x-mbx-used-weight-1m": "64"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105897400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:20.841000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:21.560000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:21 GMT",
-          "x-mbx-used-weight": "68",
-          "x-mbx-used-weight-1m": "68"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105898400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:21.955000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:22.681000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:22 GMT",
-          "x-mbx-used-weight": "72",
-          "x-mbx-used-weight-1m": "72"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105899400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:23.076000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:23.784000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:23 GMT",
-          "x-mbx-used-weight": "76",
-          "x-mbx-used-weight-1m": "76"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105900400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:24.180000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:24.911000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:24 GMT",
-          "x-mbx-used-weight": "80",
-          "x-mbx-used-weight-1m": "80"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105901400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:25.307000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:26.007000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:25 GMT",
-          "x-mbx-used-weight": "84",
-          "x-mbx-used-weight-1m": "84"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105902400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:26.401000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:27.094000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:26 GMT",
-          "x-mbx-used-weight": "88",
-          "x-mbx-used-weight-1m": "88"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105903400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:27.489000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:28.047000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:27 GMT",
-          "x-mbx-used-weight": "92",
-          "x-mbx-used-weight-1m": "92"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105904400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:28.578000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:29.274000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:29 GMT",
-          "x-mbx-used-weight": "96",
-          "x-mbx-used-weight-1m": "96"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105905400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:29.670000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:30.357000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:30 GMT",
-          "x-mbx-used-weight": "100",
-          "x-mbx-used-weight-1m": "100"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105906400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:30.752000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:31.440000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:31 GMT",
-          "x-mbx-used-weight": "104",
-          "x-mbx-used-weight-1m": "104"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105907400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:31.835000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:32.390000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:32 GMT",
-          "x-mbx-used-weight": "108",
-          "x-mbx-used-weight-1m": "108"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105908400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:32.919000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:33.618000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:33 GMT",
-          "x-mbx-used-weight": "112",
-          "x-mbx-used-weight-1m": "112"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105909400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:34.015000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:34.713000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:34 GMT",
-          "x-mbx-used-weight": "116",
-          "x-mbx-used-weight-1m": "116"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105910400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:35.110000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:36.059000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:35 GMT",
-          "x-mbx-used-weight": "120",
-          "x-mbx-used-weight-1m": "120"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105911400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:36.455000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:37.143000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:36 GMT",
-          "x-mbx-used-weight": "124",
-          "x-mbx-used-weight-1m": "124"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105912400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:37.541000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:38.222000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:38 GMT",
-          "x-mbx-used-weight": "128",
-          "x-mbx-used-weight-1m": "128"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105913400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:38.618000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:39.352000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:39 GMT",
-          "x-mbx-used-weight": "132",
-          "x-mbx-used-weight-1m": "132"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105914400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:39.748000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:40.428000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:40 GMT",
-          "x-mbx-used-weight": "136",
-          "x-mbx-used-weight-1m": "136"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105915400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:40.824000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:41.533000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:41 GMT",
-          "x-mbx-used-weight": "140",
-          "x-mbx-used-weight-1m": "140"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105916400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:41.931000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:42.616000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:42 GMT",
-          "x-mbx-used-weight": "144",
-          "x-mbx-used-weight-1m": "144"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105917400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:43.014000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:43.702000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:43 GMT",
-          "x-mbx-used-weight": "148",
-          "x-mbx-used-weight-1m": "148"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105918400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:44.100000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:44.781000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:44 GMT",
-          "x-mbx-used-weight": "152",
-          "x-mbx-used-weight-1m": "152"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105919400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:45.179000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:45.857000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:45 GMT",
-          "x-mbx-used-weight": "156",
-          "x-mbx-used-weight-1m": "156"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105920400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:46.254000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:46.961000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:46 GMT",
-          "x-mbx-used-weight": "160",
-          "x-mbx-used-weight-1m": "160"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105921400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:47.359000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:47.918000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:47 GMT",
-          "x-mbx-used-weight": "164",
-          "x-mbx-used-weight-1m": "164"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105922400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:48.450000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:49.019000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:48 GMT",
-          "x-mbx-used-weight": "168",
-          "x-mbx-used-weight-1m": "168"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105923400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:49.551000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:50.237000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:50 GMT",
-          "x-mbx-used-weight": "172",
-          "x-mbx-used-weight-1m": "172"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105924400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:50.635000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:51.318000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:51 GMT",
-          "x-mbx-used-weight": "176",
-          "x-mbx-used-weight-1m": "176"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105925400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:51.717000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:52.408000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:52 GMT",
-          "x-mbx-used-weight": "180",
-          "x-mbx-used-weight-1m": "180"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105926400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:52.806000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:53.490000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:53 GMT",
-          "x-mbx-used-weight": "184",
-          "x-mbx-used-weight-1m": "184"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105927400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:53.889000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:54.572000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:54 GMT",
-          "x-mbx-used-weight": "188",
-          "x-mbx-used-weight-1m": "188"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105928400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:55.104000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:55.674000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:55 GMT",
-          "x-mbx-used-weight": "192",
-          "x-mbx-used-weight-1m": "192"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105929400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:56.206000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:56.761000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:56 GMT",
-          "x-mbx-used-weight": "196",
-          "x-mbx-used-weight-1m": "196"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105930400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:57.294000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:57.984000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:57 GMT",
-          "x-mbx-used-weight": "200",
-          "x-mbx-used-weight-1m": "200"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105931400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:58.383000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:15:59.064000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:58 GMT",
-          "x-mbx-used-weight": "204",
-          "x-mbx-used-weight-1m": "204"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105932400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:15:59.462000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:00.049000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:15:59 GMT",
-          "x-mbx-used-weight": "208",
-          "x-mbx-used-weight-1m": "208"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105933400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:00.581000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:01.261000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:01 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:01 GMT",
           "x-mbx-used-weight": "4",
           "x-mbx-used-weight-1m": "4"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105934400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106240153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:01.679000Z",
+        "requested_utc": "2026-11-04T11:10:01.832000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:02.368000Z",
+        "received_utc": "2026-11-04T11:10:02.468000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:02 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:02 GMT",
           "x-mbx-used-weight": "8",
           "x-mbx-used-weight-1m": "8"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105935400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106241153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:02.769000Z",
+        "requested_utc": "2026-11-04T11:10:03.064000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:03.455000Z",
+        "received_utc": "2026-11-04T11:10:03.861000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:03 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:03 GMT",
           "x-mbx-used-weight": "12",
           "x-mbx-used-weight-1m": "12"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105936400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106242153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:03.855000Z",
+        "requested_utc": "2026-11-04T11:10:04.304000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:04.556000Z",
+        "received_utc": "2026-11-04T11:10:05.100000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:04 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:04 GMT",
           "x-mbx-used-weight": "16",
           "x-mbx-used-weight-1m": "16"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105937400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106243153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:04.956000Z",
+        "requested_utc": "2026-11-04T11:10:05.542000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:05.660000Z",
+        "received_utc": "2026-11-04T11:10:06.177000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:05 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:06 GMT",
           "x-mbx-used-weight": "20",
           "x-mbx-used-weight-1m": "20"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105938400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106244153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:06.060000Z",
+        "requested_utc": "2026-11-04T11:10:06.772000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:06.740000Z",
+        "received_utc": "2026-11-04T11:10:07.588000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:06 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:07 GMT",
           "x-mbx-used-weight": "24",
           "x-mbx-used-weight-1m": "24"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105939400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106245153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:07.140000Z",
+        "requested_utc": "2026-11-04T11:10:08.031000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:07.831000Z",
+        "received_utc": "2026-11-04T11:10:08.822000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:07 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:08 GMT",
           "x-mbx-used-weight": "28",
           "x-mbx-used-weight-1m": "28"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105940400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106246153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:08.233000Z",
+        "requested_utc": "2026-11-04T11:10:09.262000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:08.924000Z",
+        "received_utc": "2026-11-04T11:10:09.918000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:08 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:09 GMT",
           "x-mbx-used-weight": "32",
           "x-mbx-used-weight-1m": "32"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105941400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106247153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:09.323000Z",
+        "requested_utc": "2026-11-04T11:10:10.514000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:10.031000Z",
+        "received_utc": "2026-11-04T11:10:11.307000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:09 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:11 GMT",
           "x-mbx-used-weight": "36",
           "x-mbx-used-weight-1m": "36"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105942400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106248153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:10.430000Z",
+        "requested_utc": "2026-11-04T11:10:11.747000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:11.115000Z",
+        "received_utc": "2026-11-04T11:10:12.611000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:10 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:12 GMT",
           "x-mbx-used-weight": "40",
           "x-mbx-used-weight-1m": "40"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105943400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106249153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:11.515000Z",
+        "requested_utc": "2026-11-04T11:10:13.053000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:12.209000Z",
+        "received_utc": "2026-11-04T11:10:13.849000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:12 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:13 GMT",
           "x-mbx-used-weight": "44",
           "x-mbx-used-weight-1m": "44"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105944400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106250153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:12.610000Z",
+        "requested_utc": "2026-11-04T11:10:14.290000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:13.294000Z",
+        "received_utc": "2026-11-04T11:10:15.155000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:13 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:14 GMT",
           "x-mbx-used-weight": "48",
           "x-mbx-used-weight-1m": "48"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105945400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106251153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:13.694000Z",
+        "requested_utc": "2026-11-04T11:10:15.597000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:14.376000Z",
+        "received_utc": "2026-11-04T11:10:16.389000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:14 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:16 GMT",
           "x-mbx-used-weight": "52",
           "x-mbx-used-weight-1m": "52"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105946400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106252153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:14.778000Z",
+        "requested_utc": "2026-11-04T11:10:16.829000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:15.465000Z",
+        "received_utc": "2026-11-04T11:10:17.625000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:15 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:17 GMT",
           "x-mbx-used-weight": "56",
           "x-mbx-used-weight-1m": "56"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105947400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106253153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:15.867000Z",
+        "requested_utc": "2026-11-04T11:10:18.068000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:16.866000Z",
+        "received_utc": "2026-11-04T11:10:18.878000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:16 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:18 GMT",
           "x-mbx-used-weight": "60",
           "x-mbx-used-weight-1m": "60"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105948400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106254153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:17.267000Z",
+        "requested_utc": "2026-11-04T11:10:19.319000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:17.815000Z",
+        "received_utc": "2026-11-04T11:10:20.125000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:17 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:19 GMT",
           "x-mbx-used-weight": "64",
           "x-mbx-used-weight-1m": "64"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105949400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106255153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:18.349000Z",
+        "requested_utc": "2026-11-04T11:10:20.565000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:19.029000Z",
+        "received_utc": "2026-11-04T11:10:21.205000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:18 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:21 GMT",
           "x-mbx-used-weight": "68",
           "x-mbx-used-weight-1m": "68"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105950400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106256153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:19.430000Z",
+        "requested_utc": "2026-11-04T11:10:21.803000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:20.111000Z",
+        "received_utc": "2026-11-04T11:10:22.600000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:19 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:22 GMT",
           "x-mbx-used-weight": "72",
           "x-mbx-used-weight-1m": "72"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105951400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106257153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:20.511000Z",
+        "requested_utc": "2026-11-04T11:10:23.043000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:21.199000Z",
+        "received_utc": "2026-11-04T11:10:23.840000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:20 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:23 GMT",
           "x-mbx-used-weight": "76",
           "x-mbx-used-weight-1m": "76"
         }
       },
       {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105952400",
+        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4106258153",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:21.602000Z",
+        "requested_utc": "2026-11-04T11:10:24.282000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:22.285000Z",
+        "received_utc": "2026-11-04T11:10:25.076000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:22 GMT",
+          "date": "Wed, 04 Nov 2026 11:10:24 GMT",
           "x-mbx-used-weight": "80",
           "x-mbx-used-weight-1m": "80"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105953400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:22.687000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:23.368000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:23 GMT",
-          "x-mbx-used-weight": "84",
-          "x-mbx-used-weight-1m": "84"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105954400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:23.769000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:24.461000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:24 GMT",
-          "x-mbx-used-weight": "88",
-          "x-mbx-used-weight-1m": "88"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105955400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:24.862000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:25.544000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:25 GMT",
-          "x-mbx-used-weight": "92",
-          "x-mbx-used-weight-1m": "92"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105956400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:25.948000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:26.514000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:26 GMT",
-          "x-mbx-used-weight": "96",
-          "x-mbx-used-weight-1m": "96"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105957400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:27.050000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:27.735000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:27 GMT",
-          "x-mbx-used-weight": "100",
-          "x-mbx-used-weight-1m": "100"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105958400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:28.137000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:28.824000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:28 GMT",
-          "x-mbx-used-weight": "104",
-          "x-mbx-used-weight-1m": "104"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105959400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:29.227000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:29.921000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:29 GMT",
-          "x-mbx-used-weight": "108",
-          "x-mbx-used-weight-1m": "108"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105960400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:30.324000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:31.010000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:30 GMT",
-          "x-mbx-used-weight": "112",
-          "x-mbx-used-weight-1m": "112"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105961400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:31.413000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:32.098000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:31 GMT",
-          "x-mbx-used-weight": "116",
-          "x-mbx-used-weight-1m": "116"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105962400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:32.502000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:33.213000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:33 GMT",
-          "x-mbx-used-weight": "120",
-          "x-mbx-used-weight-1m": "120"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105963400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:33.616000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:34.304000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:34 GMT",
-          "x-mbx-used-weight": "124",
-          "x-mbx-used-weight-1m": "124"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105964400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:34.710000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:35.404000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:35 GMT",
-          "x-mbx-used-weight": "128",
-          "x-mbx-used-weight-1m": "128"
-        }
-      },
-      {
-        "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&limit=1000&fromId=4105965400",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:35.806000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:36.486000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:36 GMT",
-          "x-mbx-used-weight": "132",
-          "x-mbx-used-weight-1m": "132"
         }
       }
     ],
@@ -2966,13 +1944,13 @@
       {
         "url": "https://data-api.binance.vision/api/v3/depth?symbol=BTCUSDT&limit=10",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:37.298000Z",
+        "requested_utc": "2026-11-04T11:10:25.550000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:37.841000Z",
+        "received_utc": "2026-11-04T11:10:26.185000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:37 GMT",
-          "x-mbx-used-weight": "137",
-          "x-mbx-used-weight-1m": "137"
+          "date": "Wed, 04 Nov 2026 11:10:26 GMT",
+          "x-mbx-used-weight": "85",
+          "x-mbx-used-weight-1m": "85"
         }
       }
     ],
@@ -2980,463 +1958,232 @@
       {
         "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:37.841000Z",
+        "requested_utc": "2026-11-04T11:10:26.185000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:37.904000Z",
+        "received_utc": "2026-11-04T11:10:26.237000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:37 GMT",
-          "cb-after": "1114730926"
+          "date": "Wed, 04 Nov 2026 11:10:26 GMT",
+          "cb-after": "1114908819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114730926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114908819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:38.139000Z",
+        "requested_utc": "2026-11-04T11:10:26.467000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:38.215000Z",
+        "received_utc": "2026-11-04T11:10:26.489000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:38 GMT",
-          "cb-after": "1114729926"
+          "date": "Wed, 04 Nov 2026 11:10:26 GMT",
+          "cb-after": "1114907819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114729926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114907819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:38.448000Z",
+        "requested_utc": "2026-11-04T11:10:26.719000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:38.525000Z",
+        "received_utc": "2026-11-04T11:10:26.740000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:38 GMT",
-          "cb-after": "1114728926"
+          "date": "Wed, 04 Nov 2026 11:10:26 GMT",
+          "cb-after": "1114906819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114728926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114906819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:38.758000Z",
+        "requested_utc": "2026-11-04T11:10:26.971000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:38.839000Z",
+        "received_utc": "2026-11-04T11:10:26.992000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:38 GMT",
-          "cb-after": "1114727926"
+          "date": "Wed, 04 Nov 2026 11:10:26 GMT",
+          "cb-after": "1114905819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114727926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114905819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:39.075000Z",
+        "requested_utc": "2026-11-04T11:10:27.225000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:39.151000Z",
+        "received_utc": "2026-11-04T11:10:27.276000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:39 GMT",
-          "cb-after": "1114726926"
+          "date": "Wed, 04 Nov 2026 11:10:27 GMT",
+          "cb-after": "1114904819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114726926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114904819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:39.384000Z",
+        "requested_utc": "2026-11-04T11:10:27.506000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:39.469000Z",
+        "received_utc": "2026-11-04T11:10:27.554000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:39 GMT",
-          "cb-after": "1114725926"
+          "date": "Wed, 04 Nov 2026 11:10:27 GMT",
+          "cb-after": "1114903819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114725926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114903819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:39.702000Z",
+        "requested_utc": "2026-11-04T11:10:27.784000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:39.855000Z",
+        "received_utc": "2026-11-04T11:10:27.828000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:39 GMT",
-          "cb-after": "1114724926"
+          "date": "Wed, 04 Nov 2026 11:10:27 GMT",
+          "cb-after": "1114902819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114724926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114902819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:40.089000Z",
+        "requested_utc": "2026-11-04T11:10:28.059000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:40.178000Z",
+        "received_utc": "2026-11-04T11:10:28.125000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:40 GMT",
-          "cb-after": "1114723926"
+          "date": "Wed, 04 Nov 2026 11:10:28 GMT",
+          "cb-after": "1114901819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114723926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114901819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:40.412000Z",
+        "requested_utc": "2026-11-04T11:10:28.355000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:40.500000Z",
+        "received_utc": "2026-11-04T11:10:28.413000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:40 GMT",
-          "cb-after": "1114722926"
+          "date": "Wed, 04 Nov 2026 11:10:28 GMT",
+          "cb-after": "1114900819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114722926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114900819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:40.733000Z",
+        "requested_utc": "2026-11-04T11:10:28.644000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:40.814000Z",
+        "received_utc": "2026-11-04T11:10:28.703000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:40 GMT",
-          "cb-after": "1114721926"
+          "date": "Wed, 04 Nov 2026 11:10:28 GMT",
+          "cb-after": "1114899819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114721926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114899819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:41.049000Z",
+        "requested_utc": "2026-11-04T11:10:28.934000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:41.141000Z",
+        "received_utc": "2026-11-04T11:10:28.982000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:41 GMT",
-          "cb-after": "1114720926"
+          "date": "Wed, 04 Nov 2026 11:10:28 GMT",
+          "cb-after": "1114898819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114720926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114898819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:41.376000Z",
+        "requested_utc": "2026-11-04T11:10:29.213000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:41.451000Z",
+        "received_utc": "2026-11-04T11:10:29.282000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:41 GMT",
-          "cb-after": "1114719926"
+          "date": "Wed, 04 Nov 2026 11:10:29 GMT",
+          "cb-after": "1114897819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114719926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114897819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:41.685000Z",
+        "requested_utc": "2026-11-04T11:10:29.512000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:41.778000Z",
+        "received_utc": "2026-11-04T11:10:29.560000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:41 GMT",
-          "cb-after": "1114718926"
+          "date": "Wed, 04 Nov 2026 11:10:29 GMT",
+          "cb-after": "1114896819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114718926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114896819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:42.012000Z",
+        "requested_utc": "2026-11-04T11:10:29.791000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:42.077000Z",
+        "received_utc": "2026-11-04T11:10:29.833000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:42 GMT",
-          "cb-after": "1114717926"
+          "date": "Wed, 04 Nov 2026 11:10:29 GMT",
+          "cb-after": "1114895819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114717926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114895819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:42.311000Z",
+        "requested_utc": "2026-11-04T11:10:30.064000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:42.407000Z",
+        "received_utc": "2026-11-04T11:10:30.107000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:42 GMT",
-          "cb-after": "1114716926"
+          "date": "Wed, 04 Nov 2026 11:10:30 GMT",
+          "cb-after": "1114894819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114716926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114894819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:42.643000Z",
+        "requested_utc": "2026-11-04T11:10:30.341000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:42.716000Z",
+        "received_utc": "2026-11-04T11:10:30.388000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:42 GMT",
-          "cb-after": "1114715926"
+          "date": "Wed, 04 Nov 2026 11:10:30 GMT",
+          "cb-after": "1114893819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114715926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114893819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:42.951000Z",
+        "requested_utc": "2026-11-04T11:10:30.619000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:43.033000Z",
+        "received_utc": "2026-11-04T11:10:30.675000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:43 GMT",
-          "cb-after": "1114714926"
+          "date": "Wed, 04 Nov 2026 11:10:30 GMT",
+          "cb-after": "1114892819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114714926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114892819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:43.267000Z",
+        "requested_utc": "2026-11-04T11:10:30.906000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:43.401000Z",
+        "received_utc": "2026-11-04T11:10:30.950000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:43 GMT",
-          "cb-after": "1114713926"
+          "date": "Wed, 04 Nov 2026 11:10:30 GMT",
+          "cb-after": "1114891819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114713926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114891819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:43.636000Z",
+        "requested_utc": "2026-11-04T11:10:31.182000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:43.758000Z",
+        "received_utc": "2026-11-04T11:10:31.236000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:43 GMT",
-          "cb-after": "1114712926"
+          "date": "Wed, 04 Nov 2026 11:10:31 GMT",
+          "cb-after": "1114890819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114712926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114890819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:43.993000Z",
+        "requested_utc": "2026-11-04T11:10:31.468000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:44.091000Z",
+        "received_utc": "2026-11-04T11:10:31.508000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:44 GMT",
-          "cb-after": "1114711926"
+          "date": "Wed, 04 Nov 2026 11:10:31 GMT",
+          "cb-after": "1114889819"
         }
       },
       {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114711926",
+        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114889819",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:44.326000Z",
+        "requested_utc": "2026-11-04T11:10:31.740000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:44.449000Z",
+        "received_utc": "2026-11-04T11:10:31.796000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:44 GMT",
-          "cb-after": "1114710926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114710926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:44.686000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:44.798000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:44 GMT",
-          "cb-after": "1114709926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114709926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:45.036000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:45.144000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:45 GMT",
-          "cb-after": "1114708926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114708926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:45.379000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:45.493000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:45 GMT",
-          "cb-after": "1114707926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114707926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:45.729000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:45.828000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:45 GMT",
-          "cb-after": "1114706926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114706926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:46.063000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:46.165000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:46 GMT",
-          "cb-after": "1114705926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114705926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:46.400000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:46.498000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:46 GMT",
-          "cb-after": "1114704926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114704926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:46.733000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:46.842000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:46 GMT",
-          "cb-after": "1114703926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114703926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:47.079000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:47.195000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:47 GMT",
-          "cb-after": "1114702926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114702926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:47.431000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:47.587000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:47 GMT",
-          "cb-after": "1114701926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114701926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:47.839000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:47.945000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:47 GMT",
-          "cb-after": "1114700926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114700926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:48.181000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:48.291000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:48 GMT",
-          "cb-after": "1114699926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114699926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:48.527000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:48.627000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:48 GMT",
-          "cb-after": "1114698926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114698926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:48.863000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:48.981000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:48 GMT",
-          "cb-after": "1114697926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114697926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:49.218000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:49.342000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:49 GMT",
-          "cb-after": "1114696926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114696926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:49.627000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:49.734000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:49 GMT",
-          "cb-after": "1114695926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114695926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:49.970000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:50.079000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:50 GMT",
-          "cb-after": "1114694926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114694926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:50.315000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:50.422000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:50 GMT",
-          "cb-after": "1114693926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114693926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:50.658000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:50.769000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:50 GMT",
-          "cb-after": "1114692926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114692926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:51.009000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:51.147000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:51 GMT",
-          "cb-after": "1114691926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114691926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:51.384000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:51.491000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:51 GMT",
-          "cb-after": "1114690926"
-        }
-      },
-      {
-        "url": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000&after=1114690926",
-        "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:51.729000Z",
-        "status": 200,
-        "received_utc": "2026-11-04T03:16:51.850000Z",
-        "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:51 GMT",
-          "cb-after": "1114689926"
+          "date": "Wed, 04 Nov 2026 11:10:31 GMT",
+          "cb-after": "1114888819"
         }
       }
     ],
@@ -3444,19 +2191,19 @@
       {
         "url": "https://api.exchange.coinbase.com/products/BTC-USD/book?level=2",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:52.114000Z",
+        "requested_utc": "2026-11-04T11:10:31.932000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:52.197000Z",
+        "received_utc": "2026-11-04T11:10:31.956000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:52 GMT"
+          "date": "Wed, 04 Nov 2026 11:10:31 GMT"
         }
       }
     ],
     "futures_oi": [
       {
-        "url": "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=5m&startTime=1793758200000&endTime=1793762100000&limit=30",
+        "url": "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=5m&startTime=1793786400000&endTime=1793790300000&limit=30",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:52.236000Z",
+        "requested_utc": "2026-11-04T11:10:31.977000Z",
         "status": 451,
         "error": "HTTPError"
       }
@@ -3465,16 +2212,16 @@
       {
         "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&limit=1",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:52.422000Z",
+        "requested_utc": "2026-11-04T11:10:32.161000Z",
         "status": 451,
         "error": "HTTPError"
       }
     ],
     "futures_flow": [
       {
-        "url": "https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1793758500000&endTime=1793762099999&limit=1000",
+        "url": "https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1793786700000&endTime=1793790299999&limit=1000",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:52.534000Z",
+        "requested_utc": "2026-11-04T11:10:32.199000Z",
         "status": 451,
         "error": "HTTPError"
       }
@@ -3483,11 +2230,11 @@
       {
         "url": "https://www.okx.com/api/v5/rubik/stat/contracts/open-interest-history?instId=BTC-USDT-SWAP&period=5m&limit=100",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:52.589000Z",
+        "requested_utc": "2026-11-04T11:10:32.228000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:52.884000Z",
+        "received_utc": "2026-11-04T11:10:32.460000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:52 GMT"
+          "date": "Wed, 04 Nov 2026 11:10:32 GMT"
         }
       }
     ],
@@ -3495,11 +2242,11 @@
       {
         "url": "https://www.okx.com/api/v5/public/funding-rate-history?instId=BTC-USDT-SWAP&limit=2",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:52.885000Z",
+        "requested_utc": "2026-11-04T11:10:32.461000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:53.091000Z",
+        "received_utc": "2026-11-04T11:10:32.644000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:53 GMT"
+          "date": "Wed, 04 Nov 2026 11:10:32 GMT"
         }
       }
     ],
@@ -3507,11 +2254,11 @@
       {
         "url": "https://www.okx.com/api/v5/rubik/stat/taker-volume-contract?instId=BTC-USDT-SWAP&period=5m&unit=0&limit=100",
         "attempt": 1,
-        "requested_utc": "2026-11-04T03:16:53.091000Z",
+        "requested_utc": "2026-11-04T11:10:32.644000Z",
         "status": 200,
-        "received_utc": "2026-11-04T03:16:53.340000Z",
+        "received_utc": "2026-11-04T11:10:32.852000Z",
         "rate_headers": {
-          "date": "Wed, 04 Nov 2026 03:16:53 GMT"
+          "date": "Wed, 04 Nov 2026 11:10:32 GMT"
         }
       }
     ]
@@ -3542,7 +2289,7 @@
   "cross_exchange_notional_aggregation": "disabled",
   "raw_archive": {
     "file": "lfm32_raw.json.gz",
-    "sha256": "c70a2967b03cc41fc0675bc6c0ec882df6e8dd3a770493af12b907bffdaf6988",
+    "sha256": "636a303531ee36d87fb234f09385104448dec3cf96ff53a30c1ccf5bed207456",
     "storage": "Actions artifact lfm32-source-<run_id>, 30 days retention; local file when run locally",
     "raw_format": "normalized lossless trade fields, boundary trades, original derivatives responses, request audit"
   },
@@ -3553,9 +2300,9 @@
     "USD and USDT never added; native quote thresholds do not assert FX parity.",
     "Phase 1 has no liquidation feed; heatmaps must carry their own source and observation time."
   ],
-  "quality_evaluated_utc": "2026-11-04T03:16:56.860000Z",
-  "data_age_seconds": 0.006,
-  "market_data_age_seconds": 116.86,
+  "quality_evaluated_utc": "2026-11-04T11:10:34.289000Z",
+  "data_age_seconds": 0.003,
+  "market_data_age_seconds": 334.289,
   "monitoring_eligible": true,
   "quality_status": "partial",
   "monitoring_scope": "verified fresh 5m/15m/60m spot trade windows; optional book/derivatives coverage is reported separately",
@@ -3563,17 +2310,17 @@
   "stale_after_seconds": 900,
   "analysis": {
     "signals": [
-      "疑似大资金主动卖出"
+      "信号冲突"
     ],
     "conditional_explanations": [],
     "exchange_agreement": {
-      "direction": "sell",
+      "direction": "conflict",
       "amount_aggregation": "disabled; USDT and USD are not added",
       "large_record_comparison_eligible": false,
       "spot_cvd_direction": "sell",
       "per_venue": {
         "binance": {
-          "large_flow_sign": -1,
+          "large_flow_sign": 1,
           "all_flow_sign": -1
         },
         "coinbase": {
@@ -3583,7 +2330,7 @@
       }
     },
     "buy_evidence_score_0_100": null,
-    "observed_evidence_points": 10.0,
+    "observed_evidence_points": 15.0,
     "available_weight": 45,
     "effective_dimensions": [
       "exchange_agreement",
@@ -3607,7 +2354,7 @@
       },
       "price_volume": {
         "weight": 20,
-        "value": 0.5,
+        "value": 0.75,
         "reason": "15m trade price direction and last5m BTC volume vs preceding two 5m mean"
       },
       "book_absorption": {
@@ -3630,18 +2377,18 @@
     "version": "1",
     "per_venue": {
       "binance": {
-        "score_0_100": 39.086,
-        "observed_points": 39.086,
+        "score_0_100": 41.942,
+        "observed_points": 41.942,
         "available_weight": 100,
         "dimensions": {
           "all_taker_flow": {
             "weight": 50,
-            "value": 0.3718801549648188,
+            "value": 0.4199870588422472,
             "reason": "15m taker buy / (buy + sell), native quote amounts within this venue"
           },
           "relative_large_records": {
             "weight": 25,
-            "value": 0.31969660916175,
+            "value": 0.33772273377673484,
             "reason": "15m buy share of feed records above this venue's same-window 60m empirical quantile; record granularity differs across venues"
           },
           "price_volume": {
@@ -3661,23 +2408,23 @@
         "confidence": "limited_unvalidated"
       },
       "coinbase": {
-        "score_0_100": 48.669,
-        "observed_points": 48.669,
+        "score_0_100": 60.513,
+        "observed_points": 60.513,
         "available_weight": 100,
         "dimensions": {
           "all_taker_flow": {
             "weight": 50,
-            "value": 0.4980175857890634,
+            "value": 0.4670794576076185,
             "reason": "15m taker buy / (buy + sell), native quote amounts within this venue"
           },
           "relative_large_records": {
             "weight": 25,
-            "value": 0.4507295046621423,
+            "value": 0.4863535310058149,
             "reason": "15m buy share of feed records above this venue's same-window 60m empirical quantile; record granularity differs across venues"
           },
           "price_volume": {
             "weight": 25,
-            "value": 0.5,
+            "value": 1,
             "reason": "15m price direction with last5m BTC volume vs previous two 5m bars; inconclusive=0.5"
           }
         },
