@@ -1,15 +1,16 @@
 {
-  "checked_utc": "2026-11-05T08:30:01.541025Z",
+  "checked_utc": "2026-11-05T22:16:47.285485Z",
   "health_status": "failed",
   "problems": [
-    "incomplete"
+    "incomplete",
+    "collector_failed"
   ],
   "quality_status": "incomplete",
   "monitoring_eligible": false,
-  "generated_utc": "2026-11-05T08:29:36.996000Z",
-  "latest_closed_5m_end_utc": "2026-11-05T08:25:00Z",
-  "data_age_seconds": 24.545,
-  "market_data_age_seconds": 301.541,
+  "generated_utc": "2026-11-05T22:16:20.046000Z",
+  "latest_closed_5m_end_utc": "2026-11-05T22:10:00Z",
+  "data_age_seconds": 27.239,
+  "market_data_age_seconds": 407.285,
   "missing_intervals": {
     "binance": {
       "15m": [],
@@ -23,7 +24,7 @@
   "history_quality": {
     "binance": {
       "coverage": "incomplete",
-      "missing_count": 3182,
+      "missing_count": 3208,
       "missing_intervals": [
         "2026-10-10T17:45:00Z",
         "2026-10-10T17:50:00Z",
@@ -127,11 +128,11 @@
         "2026-10-11T02:00:00Z"
       ],
       "missing_list_truncated": true,
-      "outside_backfill_horizon": 3182
+      "outside_backfill_horizon": 3208
     },
     "coinbase": {
       "coverage": "incomplete",
-      "missing_count": 3183,
+      "missing_count": 3243,
       "missing_intervals": [
         "2026-10-10T17:45:00Z",
         "2026-10-10T17:50:00Z",
@@ -235,20 +236,22 @@
         "2026-10-11T02:00:00Z"
       ],
       "missing_list_truncated": true,
-      "outside_backfill_horizon": 3183
+      "outside_backfill_horizon": 3240
     }
   },
-  "source_errors": {},
-  "unchanged_since_utc": "2026-11-05T08:29:36.996000Z",
-  "unchanged_seconds": 24.545,
+  "source_errors": {
+    "coinbase": "pagination limit reached"
+  },
+  "unchanged_since_utc": "2026-11-05T22:16:20.046000Z",
+  "unchanged_seconds": 27.239,
   "consecutive_unchanged_checks": 0,
   "latest_completed_collector": {
-    "id": 41994793911,
+    "id": 42119828332,
     "event": "schedule",
-    "created_at": "2026-11-05T08:28:56Z",
-    "updated_at": "2026-11-05T08:29:51Z",
-    "conclusion": "success",
-    "html_url": "https://github.com/devanhaozhen-ai/lfm2-spot/actions/runs/41994793911"
+    "created_at": "2026-11-05T22:14:46Z",
+    "updated_at": "2026-11-05T22:16:35Z",
+    "conclusion": "failure",
+    "html_url": "https://github.com/devanhaozhen-ai/lfm2-spot/actions/runs/42119828332"
   },
   "actions_check": "checked",
   "scheduler_dependency": "GitHub Actions; independent collector job, shared GitHub scheduler"
