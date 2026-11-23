@@ -1,27 +1,27 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-22T23:51:30.070000Z",
-  "latest_closed_5m_end_utc": "2026-11-22T23:50:00Z",
+  "generated_utc": "2026-11-23T04:05:22.099000Z",
+  "latest_closed_5m_end_utc": "2026-11-23T04:00:00Z",
   "markets": {
     "binance": {
       "15m": {
         "coverage": "complete",
         "intervals": 3,
         "expected": 3,
-        "buy_usd": 8417449.33,
-        "sell_usd": 5261770.43,
-        "cvd_usd": 3155678.9,
-        "taker_ratio": 1.59974,
+        "buy_usd": 4720086.1,
+        "sell_usd": 5006690.41,
+        "cvd_usd": -286604.31,
+        "taker_ratio": 0.94276,
         "missing_intervals": []
       },
       "60m": {
         "coverage": "complete",
         "intervals": 12,
         "expected": 12,
-        "buy_usd": 31989031.01,
-        "sell_usd": 23667106.75,
-        "cvd_usd": 8321924.26,
-        "taker_ratio": 1.35162,
+        "buy_usd": 48081407.98,
+        "sell_usd": 49717955.3,
+        "cvd_usd": -1636547.32,
+        "taker_ratio": 0.96708,
         "missing_intervals": []
       }
     },
@@ -30,20 +30,20 @@
         "coverage": "complete",
         "intervals": 3,
         "expected": 3,
-        "buy_usd": 11154686.55,
-        "sell_usd": 2712232.67,
-        "cvd_usd": 8442453.88,
-        "taker_ratio": 4.11273,
+        "buy_usd": 2458958.74,
+        "sell_usd": 1970032.05,
+        "cvd_usd": 488926.69,
+        "taker_ratio": 1.24818,
         "missing_intervals": []
       },
       "60m": {
         "coverage": "complete",
         "intervals": 12,
         "expected": 12,
-        "buy_usd": 29553852.66,
-        "sell_usd": 16623917.82,
-        "cvd_usd": 12929934.84,
-        "taker_ratio": 1.77779,
+        "buy_usd": 22386005.61,
+        "sell_usd": 21263963.37,
+        "cvd_usd": 1122042.24,
+        "taker_ratio": 1.05277,
         "missing_intervals": []
       }
     }
@@ -51,25 +51,25 @@
   "last_intervals": [
     {
       "exchange": "binance",
-      "start_utc": "2026-11-22T23:45:00Z",
-      "end_utc": "2026-11-22T23:50:00Z",
-      "buy_usd": 1651134.83,
-      "sell_usd": 1382588.43,
-      "cvd_usd": 268546.4,
-      "taker_ratio": 1.19423,
-      "trades": 17410,
+      "start_utc": "2026-11-23T03:55:00Z",
+      "end_utc": "2026-11-23T04:00:00Z",
+      "buy_usd": 1953250.39,
+      "sell_usd": 2041892.56,
+      "cvd_usd": -88642.17,
+      "taker_ratio": 0.95659,
+      "trades": 20040,
       "coverage": "complete",
       "reason": "1m closed candle taker quote volumes"
     },
     {
       "exchange": "coinbase",
-      "start_utc": "2026-11-22T23:45:00Z",
-      "end_utc": "2026-11-22T23:50:00Z",
-      "buy_usd": 827045.15,
-      "sell_usd": 1167429.35,
-      "cvd_usd": -340384.2,
-      "taker_ratio": 0.70843,
-      "trades": 4511,
+      "start_utc": "2026-11-23T03:55:00Z",
+      "end_utc": "2026-11-23T04:00:00Z",
+      "buy_usd": 1220275.24,
+      "sell_usd": 846001.31,
+      "cvd_usd": 374273.93,
+      "taker_ratio": 1.4424,
+      "trades": 3276,
       "coverage": "complete",
       "reason": ""
     }
@@ -79,7 +79,9 @@
     "Incomplete or stale data must not be used for directional signals.",
     "Binance legacy *_usd fields are USDT amounts, not converted USD. Do not add Binance and Coinbase notionals without an exchange rate."
   ],
-  "errors": {},
+  "errors": {
+    "coinbase": "pagination limit reached"
+  },
   "market_units": {
     "binance": {
       "symbol": "BTCUSDT",
@@ -95,32 +97,32 @@
     }
   },
   "cross_exchange_notional_aggregation": "disabled",
-  "collection_started_utc": "2026-11-22T23:50:15.744000Z",
-  "backfill_start_utc": "2026-11-22T18:40:00Z",
+  "collection_started_utc": "2026-11-23T04:03:56.004000Z",
+  "backfill_start_utc": "2026-11-22T23:50:00Z",
   "source_audit": {
     "data-api.binance.vision": {
       "requests": 1,
       "retries": 0
     },
     "binance": {
-      "candles": 310,
-      "expected_candles": 310,
+      "candles": 250,
+      "expected_candles": 250,
       "quote_currency": "USDT"
     },
     "api.exchange.coinbase.com": {
-      "requests": 182,
+      "requests": 200,
       "retries": 0
     },
     "coinbase": {
-      "pages": 182,
+      "pages": 200,
       "page_limit": 200,
-      "unique_trades": 182000,
+      "unique_trades": 200000,
       "duplicate_trades": 0,
       "trade_id_gaps": 0,
-      "newest_trade_utc": "2026-11-22T23:50:14.257000Z",
-      "oldest_trade_utc": "2026-11-22T18:37:28.325000Z",
+      "newest_trade_utc": "2026-11-23T04:03:53.564000Z",
+      "oldest_trade_utc": "2026-11-23T00:14:18.357000Z",
       "snapshot_covers_end": true,
-      "stop_reason": "reached before requested start",
+      "stop_reason": "pagination limit reached",
       "quote_currency": "USD"
     }
   },
@@ -235,7 +237,7 @@
     },
     "coinbase": {
       "coverage": "incomplete",
-      "missing_count": 5248,
+      "missing_count": 5253,
       "missing_intervals": [
         "2026-10-10T17:45:00Z",
         "2026-10-10T17:50:00Z",
@@ -343,12 +345,12 @@
     }
   },
   "collection_mode": "scheduled",
-  "request_id": "45085354978",
-  "collection_run_id": "45085354978",
+  "request_id": "45109566311",
+  "collection_run_id": "45109566311",
   "data_age_seconds": 0,
-  "market_data_age_seconds": 90.07,
+  "market_data_age_seconds": 322.099,
   "stale_after_seconds": 900,
-  "quality_evaluated_utc": "2026-11-22T23:51:30.070000Z",
+  "quality_evaluated_utc": "2026-11-23T04:05:22.099000Z",
   "missing_intervals": {
     "binance": {
       "15m": [],
