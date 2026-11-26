@@ -1,27 +1,27 @@
 {
   "schema_version": "1.0",
-  "generated_utc": "2026-11-26T05:13:33.342000Z",
-  "latest_closed_5m_end_utc": "2026-11-26T05:10:00Z",
+  "generated_utc": "2026-11-26T15:10:51.225000Z",
+  "latest_closed_5m_end_utc": "2026-11-26T15:05:00Z",
   "markets": {
     "binance": {
       "15m": {
         "coverage": "complete",
         "intervals": 3,
         "expected": 3,
-        "buy_usd": 4916626.84,
-        "sell_usd": 3353763.72,
-        "cvd_usd": 1562863.12,
-        "taker_ratio": 1.466,
+        "buy_usd": 11042575.27,
+        "sell_usd": 9954475.94,
+        "cvd_usd": 1088099.33,
+        "taker_ratio": 1.10931,
         "missing_intervals": []
       },
       "60m": {
         "coverage": "complete",
         "intervals": 12,
         "expected": 12,
-        "buy_usd": 19424097.25,
-        "sell_usd": 15518575.04,
-        "cvd_usd": 3905522.21,
-        "taker_ratio": 1.25167,
+        "buy_usd": 19670253.43,
+        "sell_usd": 25529495.5,
+        "cvd_usd": -5859242.07,
+        "taker_ratio": 0.77049,
         "missing_intervals": []
       }
     },
@@ -30,20 +30,20 @@
         "coverage": "complete",
         "intervals": 3,
         "expected": 3,
-        "buy_usd": 1356014.84,
-        "sell_usd": 2088700.06,
-        "cvd_usd": -732685.22,
-        "taker_ratio": 0.64921,
+        "buy_usd": 5048857.1,
+        "sell_usd": 3924712.43,
+        "cvd_usd": 1124144.67,
+        "taker_ratio": 1.28643,
         "missing_intervals": []
       },
       "60m": {
         "coverage": "complete",
         "intervals": 12,
         "expected": 12,
-        "buy_usd": 5717681.02,
-        "sell_usd": 6402881.35,
-        "cvd_usd": -685200.33,
-        "taker_ratio": 0.89299,
+        "buy_usd": 9841080.17,
+        "sell_usd": 8805769.85,
+        "cvd_usd": 1035310.32,
+        "taker_ratio": 1.11757,
         "missing_intervals": []
       }
     }
@@ -51,25 +51,25 @@
   "last_intervals": [
     {
       "exchange": "binance",
-      "start_utc": "2026-11-26T05:05:00Z",
-      "end_utc": "2026-11-26T05:10:00Z",
-      "buy_usd": 1198229.53,
-      "sell_usd": 795588.97,
-      "cvd_usd": 402640.56,
-      "taker_ratio": 1.50609,
-      "trades": 12961,
+      "start_utc": "2026-11-26T15:00:00Z",
+      "end_utc": "2026-11-26T15:05:00Z",
+      "buy_usd": 6668795.37,
+      "sell_usd": 8163655.68,
+      "cvd_usd": -1494860.31,
+      "taker_ratio": 0.81689,
+      "trades": 35029,
       "coverage": "complete",
       "reason": "1m closed candle taker quote volumes"
     },
     {
       "exchange": "coinbase",
-      "start_utc": "2026-11-26T05:05:00Z",
-      "end_utc": "2026-11-26T05:10:00Z",
-      "buy_usd": 643037.83,
-      "sell_usd": 469867.41,
-      "cvd_usd": 173170.42,
-      "taker_ratio": 1.36855,
-      "trades": 2658,
+      "start_utc": "2026-11-26T15:00:00Z",
+      "end_utc": "2026-11-26T15:05:00Z",
+      "buy_usd": 3361013.2,
+      "sell_usd": 3331267.16,
+      "cvd_usd": 29746.04,
+      "taker_ratio": 1.00893,
+      "trades": 8442,
       "coverage": "complete",
       "reason": ""
     }
@@ -79,9 +79,7 @@
     "Incomplete or stale data must not be used for directional signals.",
     "Binance legacy *_usd fields are USDT amounts, not converted USD. Do not add Binance and Coinbase notionals without an exchange rate."
   ],
-  "errors": {
-    "coinbase": "pagination limit reached"
-  },
+  "errors": {},
   "market_units": {
     "binance": {
       "symbol": "BTCUSDT",
@@ -97,39 +95,39 @@
     }
   },
   "cross_exchange_notional_aggregation": "disabled",
-  "collection_started_utc": "2026-11-26T05:11:30.027000Z",
-  "backfill_start_utc": "2026-11-25T23:20:00Z",
+  "collection_started_utc": "2026-11-26T15:06:55.138000Z",
+  "backfill_start_utc": "2026-11-26T09:05:00Z",
   "source_audit": {
     "data-api.binance.vision": {
       "requests": 1,
       "retries": 0
     },
     "binance": {
-      "candles": 350,
-      "expected_candles": 350,
+      "candles": 360,
+      "expected_candles": 360,
       "quote_currency": "USDT"
     },
     "api.exchange.coinbase.com": {
-      "requests": 200,
-      "retries": 0
+      "requests": 198,
+      "retries": 10
     },
     "coinbase": {
-      "pages": 200,
+      "pages": 188,
       "page_limit": 200,
-      "unique_trades": 200000,
+      "unique_trades": 188000,
       "duplicate_trades": 0,
       "trade_id_gaps": 0,
-      "newest_trade_utc": "2026-11-26T05:11:27.062000Z",
-      "oldest_trade_utc": "2026-11-26T00:24:19.069000Z",
+      "newest_trade_utc": "2026-11-26T15:06:49.334000Z",
+      "oldest_trade_utc": "2026-11-26T09:04:44.126000Z",
       "snapshot_covers_end": true,
-      "stop_reason": "pagination limit reached",
+      "stop_reason": "reached before requested start",
       "quote_currency": "USD"
     }
   },
   "history_quality": {
     "binance": {
       "coverage": "incomplete",
-      "missing_count": 4200,
+      "missing_count": 4247,
       "missing_intervals": [
         "2026-10-10T17:45:00Z",
         "2026-10-10T17:50:00Z",
@@ -233,11 +231,11 @@
         "2026-10-11T02:00:00Z"
       ],
       "missing_list_truncated": true,
-      "outside_backfill_horizon": 4200
+      "outside_backfill_horizon": 4247
     },
     "coinbase": {
       "coverage": "incomplete",
-      "missing_count": 5795,
+      "missing_count": 5842,
       "missing_intervals": [
         "2026-10-10T17:45:00Z",
         "2026-10-10T17:50:00Z",
@@ -341,16 +339,16 @@
         "2026-10-11T02:00:00Z"
       ],
       "missing_list_truncated": true,
-      "outside_backfill_horizon": 5782
+      "outside_backfill_horizon": 5842
     }
   },
   "collection_mode": "scheduled",
-  "request_id": "45759928889",
-  "collection_run_id": "45759928889",
+  "request_id": "45845766882",
+  "collection_run_id": "45845766882",
   "data_age_seconds": 0,
-  "market_data_age_seconds": 213.342,
+  "market_data_age_seconds": 351.225,
   "stale_after_seconds": 900,
-  "quality_evaluated_utc": "2026-11-26T05:13:33.342000Z",
+  "quality_evaluated_utc": "2026-11-26T15:10:51.225000Z",
   "missing_intervals": {
     "binance": {
       "15m": [],
